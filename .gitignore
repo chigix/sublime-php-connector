@@ -4,3 +4,4 @@ PhpConnector.sublime-workspace
 release.sh
 test/*
 .ropeproject
+/package-metadata.json
