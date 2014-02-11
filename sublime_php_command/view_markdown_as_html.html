@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link href="data:text/html; charset=iso-8859-1,%3C%21DOCTYPE%20HTML%20PUBLIC%20%22%2D%2F%2FIETF%2F%2FDTD%20HTML%202%2E0%2F%2FEN%22%3E%0A%3Chtml%3E%3Chead%3E%0A%3Ctitle%3E400%20Bad%20Request%3C%2Ftitle%3E%0A%3C%2Fhead%3E%3Cbody%3E%0A%3Ch1%3EBad%20Request%3C%2Fh1%3E%0A%3Cp%3EYour%20browser%20sent%20a%20request%20that%20this%20server%20could%20not%20understand%2E%3Cbr%20%2F%3E%0A%3C%2Fp%3E%0A%3C%2Fbody%3E%3C%2Fhtml%3E%0A" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<p><?php require_once('functions.php'); require_once('pandoc config.php'); $args="parseArgs();" $file_name="substr($args['file']," 0, strripos($args['file'], "." )); if (!file_exists($file_name . ".html" )) { 目标 PDF 文件不存在，需先进行 Pandoc 编译 exec("pandoc -s --self-contained -c \"" . $config['pandoc']['css_path'] . "\" \"" . $args['file'] . "\" -o \"" . $file_name . ".html\" ");
+    }
+    echo $file_name . '.html';
+?&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" ?>
