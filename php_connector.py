@@ -16,7 +16,8 @@ class PhpConnectorCommand(sublime_plugin.TextCommand):
 			print("SYSTEM ERROR");
 
 	def is_visible(self):
-		return self.view.file_name() and (self.view.file_name()[-3:] == ".md" or
-			#self.view.file_name()[-5:] == ".HTML" or
-			#self.view.file_name()[-4:] == ".htm" or
-			self.view.file_name()[-9:] == ".markdown")
+		return True;
+		# return self.view.file_name() and (self.view.file_name()[-3:] == ".md" or
+		# 	#self.view.file_name()[-5:] == ".HTML" or
+		# 	#self.view.file_name()[-4:] == ".htm" or
+		# 	self.view.file_name()[-9:] == ".markdown")
