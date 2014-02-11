@@ -1,0 +1,6 @@
+*.pyc
+PhpConnector.sublime-project
+PhpConnector.sublime-workspace
+release.sh
+test/*
+.ropeproject
