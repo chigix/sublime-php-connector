@@ -1,8 +1,13 @@
 [
     {
-        "caption": "Pandoc: Render Markdown to current PDF and View",
+        "caption": "Pandoc: Build Current PDF",
         "command": "php_connector",
         "args":{"script":"pandoc_render_markdown_to_pdf.php","args_string":"bankai=teststring"}
+    },
+    {
+        "caption": "Pandoc: View Current PDF",
+        "command": "php_open_fallback",
+        "args":{"script":"view_markdown_as_pdf.php","args_string":"bankai=teststring"}
     },
     {
         "caption": "Pandoc: Render Markdown to current HTML and View",
