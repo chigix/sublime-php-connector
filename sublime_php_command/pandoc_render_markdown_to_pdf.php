@@ -4,7 +4,7 @@
 	$args = parseArgs();
 	$file_name = substr($args['file'], 0, strripos($args['file'], '.'));
 	exec("pandoc \"" . $args['file'] . "\" -o \"" . $file_name . ".pdf\" " 
-		. "--latex-engine=xelatex --template=\"" . $config['pandoc']['template_path'] . "\"");
+		. "--latex-engine=xelatex --toc --template=\"" . $config['pandoc']['template_path'] . "\"");
 	//exec("nohup \"C:/Program Files (x86)/Foxit Software/Foxit Reader/Foxit Reader.exe\" \"" . $file_name . '.pdf" > /dev/null &');
 	// exec("\"C:/Program Files (x86)/Foxit Software/Foxit Reader/Foxit Reader.exe\" \"" . $file_name . '.pdf"');
 	// echo("\"C:/Program Files (x86)/Foxit Software/Foxit Reader/Foxit Reader.exe\" \"" . $file_name . '.pdf"');
