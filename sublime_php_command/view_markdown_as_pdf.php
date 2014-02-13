@@ -8,5 +8,11 @@
 		exec("pandoc \"" . $args['file'] . "\" -o \"" . $file_name . ".pdf\" " 
 			. "--latex-engine=xelatex --template=\"" . $config['pandoc']['template_path'] . "\""); 
 	}
-	echo $file_name . '.pdf';
+	$return = array(
+			'code'=>212,
+			'status_message'=>$file_name . '.pdf opened.',
+			'msg'=>'Open Successfully',
+			'data'=>$file_name . '.pdf'
+		);
+	echo json_encode($return);
 ?>

@@ -8,5 +8,11 @@
 	//exec("nohup \"C:/Program Files (x86)/Foxit Software/Foxit Reader/Foxit Reader.exe\" \"" . $file_name . '.pdf" > /dev/null &');
 	// exec("\"C:/Program Files (x86)/Foxit Software/Foxit Reader/Foxit Reader.exe\" \"" . $file_name . '.pdf"');
 	// echo("\"C:/Program Files (x86)/Foxit Software/Foxit Reader/Foxit Reader.exe\" \"" . $file_name . '.pdf"');
-	echo $file_name . '.html';
+	$return = array(
+			'code'=>200,
+			'status_message'=>$file_name . '.html builded SUCCESSFULLY, VIEW it directly.',
+			'msg'=>'Build Successfully',
+			'data'=>null
+		);
+	echo json_encode($return);
 ?>

@@ -932,6 +932,7 @@ h3 {
 }
 
 h1, h2 {
+    font-family:"Microsoft YaHei","Microsoft JhengHei",STHeiti,MingLiu;
     margin-bottom:.6em;
     line-height:1.1em;
 }
@@ -946,7 +947,8 @@ h3, h4, h5 {
 
 #TOC > ul > li {
     font-size:16px;
-    line-height:24px;
+    font-family: "Microsoft YaHei","Microsoft JhengHei",STHeiti,MingLiu;
+    line-height:30px;
     list-style-type:none;
 }
 
