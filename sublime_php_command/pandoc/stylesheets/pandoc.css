@@ -916,6 +916,7 @@ table tbody tr.info:hover>td{background-color:#c4e3f3;}
 body {
     font-size:16px;
     line-height:24px;
+    overflow:hidden;
 }
 
 .sidebar-nav-fixed {
@@ -943,6 +944,7 @@ body {
     }
     .container-fluid {
         width:940px;
+        margin-left: -470px;
     }
 }
 
@@ -1014,6 +1016,8 @@ sup, sub {
 
 header {
     position:fixed;
+    top: 0;
+    left: 0;
     width:100%;
     overflow:visible;
     display:block;
@@ -1055,9 +1059,12 @@ nav a:hover {
 }
 
 .container-fluid {
-    margin-left:auto;
-    margin-right:auto;
-    padding: 4em 0 4em 0;
+    padding: 2em 4em 4em 0;
+    overflow: overlay;
+    position: absolute;
+    top: 3em;
+    bottom: 0px;
+    left: 50%;
 }
 /*========SourceCode Style===============*/
 table.sourceCode tr.sourceCode td.lineNumbers {
