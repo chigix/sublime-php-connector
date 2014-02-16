@@ -1058,3 +1058,7 @@ nav a:hover {
     margin-right:auto;
     padding: 2em 0 4em 0;
 }
+/*========SourceCode Style===============*/
+table.sourceCode tr.sourceCode td.lineNumbers {
+	width: 60px;
+}
