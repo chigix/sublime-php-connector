@@ -1013,7 +1013,7 @@ sup, sub {
 }
 
 header {
-    position:static;
+    position:fixed;
     width:100%;
     overflow:visible;
     display:block;
@@ -1035,6 +1035,7 @@ header {
     margin-bottom:0;
     margin-left:auto;
     margin-right:auto;
+    
 }
 
 nav li:focus {
@@ -1056,9 +1057,25 @@ nav a:hover {
 .container-fluid {
     margin-left:auto;
     margin-right:auto;
-    padding: 2em 0 4em 0;
+    padding: 4em 0 4em 0;
 }
 /*========SourceCode Style===============*/
 table.sourceCode tr.sourceCode td.lineNumbers {
-	width: 60px;
+	width: 30%;
+}
+table.sourceCode tr.sourceCode td.lineNumbers pre {
+	border: 0px;
+}
+table.sourceCode tr.sourceCode td.sourceCode {
+	width: 60%;
+}
+table.sourceCode tr.sourceCode td.sourceCode code{
+	white-space:pre;
+	word-wrap: initial;
+	word-break: initial;
+}
+table.sourceCode tr.sourceCode td.sourceCode pre{
+	width: 500px;
+	overflow: overlay;
+	padding-bottom: 20px;
 }
