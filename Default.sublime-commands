@@ -1,27 +1,27 @@
 [
     {
         "caption": "PhpConnector: Launch Connection",
-        "command": "php_connector",
-        "args":{"script":"test_echo.php","args_string":"bankai=teststring"}
+        "command": "php_connector_text",
+        "args":{"script":"sublime.php","classPath":"Chigi\\Tester","args_string":"bankai=teststring"}
     },
     {
         "caption": "Pandoc: Build Current PDF",
-        "command": "php_connector",
+        "command": "php_connector_text",
         "args":{"script":"pandoc_render_markdown_to_pdf.php","args_string":"bankai=teststring"}
     },
     {
         "caption": "Pandoc: View Current PDF",
-        "command": "php_connector",
+        "command": "php_connector_text",
         "args":{"script":"view_markdown_as_pdf.php","args_string":"bankai=teststring"}
     },
     {
         "caption": "Pandoc: Build Current Html",
-        "command": "php_connector",
+        "command": "php_connector_text",
         "args":{"script":"pandoc_render_markdown_to_html.php","args_string":"bankai=teststring"}
     },
     {
         "caption": "Pandoc: View Current Html",
-        "command": "php_connector",
+        "command": "php_connector_text",
         "args":{"script":"view_markdown_as_html.php","args_string":"bankai=teststring"}
     }
 ]

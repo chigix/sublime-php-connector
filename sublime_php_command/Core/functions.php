@@ -1,5 +1,7 @@
 <?php 
 function parseArgs(){
+	$env = Environment::getInstance();
+	$editor = new Chigi\Sublime\Settings\Environment();
 	$args=array();
 	for ($i=0;$i<count($_SERVER['argv']);$i++){
 		$currentArgs=strtolower($_SERVER['argv'][$i]);

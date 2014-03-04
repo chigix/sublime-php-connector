@@ -1,60 +1,88 @@
 import sublime, sublime_plugin
 import os, subprocess, string, json, threading, re
+from chigi_args import ChigiArgs
 
-class PhpConnectorCommand(sublime_plugin.TextCommand):
-	def run(self, edit, script, args_string):
-		if self.view.file_name():
-			self.setting = sublime.load_settings("phpConnector.sublime-settings");
-			php_path = self.setting.get("php_path");
-			command_dir = self.setting.get("commands_dir");
-			check_php_path = os.popen(php_path + ' -v').read();
-			pattern = re.compile(r'^PHP \d+.\d+');
-			if pattern.match(check_php_path):
-				pass
-			else:
-				sublime.error_message("PhpConnector: \n\nPlease provide an available PHP binary file.");
-				return;
-			#print(php_path);
-			#print(command_dir + '/' + script);
-			result_str = os.popen(php_path + ' ' + command_dir+'/'+script + ' ' + args_string + ' file="' + self.view.file_name() + '"').read();
-			try:
-				result = json.loads(result_str);
-			except (ValueError):
-				print('The return value for the php plugin is wrong JSON.',True);
-				return;
-			result = json.loads(result_str);
-			if result.get('status_message'):
-				sublime.status_message('PhpConnector: ' + result.get('status_message'));
-			if result.get('code') >= 200 and result.get('code') < 300:
-				ten_bit = (result.get('code') % 100)/10;
-				if ten_bit == 0:
-					# NONE ACTION
-					pass;
-				elif ten_bit == 1:
-					# OPEN a File
-					try:
-						os.startfile(result.get('data'));
-					except Exception, e:
-						print(e);
-					finally:
-						pass;
-				else:
-					pass;
-			elif result.get('code') >= 500 and result.get('code') < 600:
-				# ERROR LEVEL: Must alert the msg.
-				if result.get('code') % 10 == 2:
-					sublime.error_message("PhpConnector: \n\n{0}".format(result.get('data')));
-				else:
-					sublime.error_message("PhpConnector: \n\n{0}".format(result.get('msg')));
-			else:
-				# WARNING LEVEL: Base upon the php return.
-				pass;
-		else :
-			print("SYSTEM ERROR");
-
+class PhpConnectorCommand(sublime_plugin.WindowCommand):
+	def __init__(self, window):
+		self.window = window;
+	def run(self):
+		ListCommandThread(self.window).start()
 	def is_visible(self):
 		return True;
-		# return self.view.file_name() and (self.view.file_name()[-3:] == ".md" or
-		# 	#self.view.file_name()[-5:] == ".HTML" or
-		# 	#self.view.file_name()[-4:] == ".htm" or
-		# 	self.view.file_name()[-9:] == ".markdown")
+
+class ListCommandThread(threading.Thread):
+    """
+    A thread to prevent the listing of commands from freezing the UI
+    """
+
+    def __init__(self, window):
+		args = ChigiArgs();
+		self.chigiArgs = args.getArgs();
+		self.setting = sublime.load_settings("phpConnector.sublime-settings");
+		self.commandsDir = self.setting.get("commands_dir");
+		self.php_path = self.setting.get("php_path");
+		self.window = window;
+		self.currentFileName = self.chigiArgs.get('view').file_name();
+		threading.Thread.__init__(self);
+
+    def run(self):
+        self.commandList = [];
+        self.commandObjList = [];
+        if self.chigiArgs.get('quick_load') is True:
+        	# Accelerate on ctrl+shift+r
+        	f = file(self.commandsDir+'/List.json');
+        	for command in json.load(f):
+				for format in command.get('format'):
+					if self.currentFileName[-len(format):] == format:
+						tmp_to_list = [];
+						tmp_to_list.append(command.get('name'));
+						self.commandObjList.append(command);
+						self.commandList.append(tmp_to_list);
+						pass;
+		pass;
+        else:
+        	# fetch the data of command list and render it into panel directly
+	        self.chigiArgs.get("view");
+        	for command in self.chigiArgs.get("commandList"):
+			    print(command.get('format'));
+			    tmp_to_list = [];
+			    tmp_to_list.append(command.get('name'));
+			    self.commandObjList.append(command);
+			    self.commandList.append(tmp_to_list);
+        	pass;
+        def show_quick_panel():
+            # if not self.package_list:
+                # print('There are no packages to list')
+                # return
+            self.window.show_quick_panel(self.commandList, self.on_done)
+        sublime.set_timeout(show_quick_panel, 10)
+    def on_done(self, picked):
+        """
+        Quick panel user selection handler - opens the homepage for any
+        selected package in the user's browser
+
+        :param picked:
+            An integer of the 0-based package name index from the presented
+            list. -1 means the user cancelled.
+        """
+        if picked >= 0:
+	        commandPicked = self.commandObjList[picked];
+	        self.window.run_command('php_connector_text',
+	        	{
+	        		"script":commandPicked['script'],
+	        		"classPath":commandPicked['class'],
+	        		"args_string":commandPicked['args_string']
+	        	});
+        	pass;
+        else:
+        	print("BANKAI");
+        	pass;
+
+        # if picked == -1:
+        #     return
+        # package_name = self.package_list[picked][0]
+
+        # def open_dir():
+        #     self.window.run_command('open_dir',
+        #         {"dir": os.path.join(sublime.packages_path(), package_name)})
+        # sublime.set_timeout(open_dir, 10)

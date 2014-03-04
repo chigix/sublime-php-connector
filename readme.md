@@ -1,3 +1,5 @@
+% PhpConnector for Sublime Text 2 & 3
+
 # PhpConnector for Sublime Text 2 & 3
 
 Author: Richard Lea (chigix@zoho.com)
@@ -5,14 +7,20 @@ Author: Richard Lea (chigix@zoho.com)
 ## Introduction
 The plugin is to add support for php developers to develop a sublime plugin using php.
 
+## Usage
+
+The only binding key map: `ctrl+shift+r`
+
+You can over ride it via user settings.
+
 ## What's new
 
+* Quick panel of commands development support via PHP.
 
 ### v0.1.0: Created!
 - php connect support
 
-## Done
-- php
+### v2.0: PHP programing interface framework. 
 
 ## Todo
 
@@ -21,7 +29,9 @@ The plugin is to add support for php developers to develop a sublime plugin usin
 
 ## For Developers
 
+Defaultly, All commands defination were in `sublime_php_command\Commands\` and the `List.json` file in the root directory of `sublime_php_command`, and every execute class should under a unique namespace and within a method called `run`.
 
+Demos are in the `sublime_php_command\Commands\Chigi\`, so as you can see, their namespace was `Chigi`.
 
 # License
 The plugin is licensed under the MIT license.
