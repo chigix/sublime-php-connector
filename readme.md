@@ -1,8 +1,11 @@
 % PhpConnector for Sublime Text 2 & 3
+% Richard Lea (chigix@zoho.com)
 
 # PhpConnector for Sublime Text 2 & 3
 
 Author: Richard Lea (chigix@zoho.com)
+
+Weibo: [@千木郷](http://weibo.com/chigix)
 
 ## Introduction
 The plugin is to add support for php developers to develop a sublime plugin using php.
