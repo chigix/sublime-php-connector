@@ -1,38 +1,46 @@
 [
-	{
-		"name" : "Pandoc: Build current markdown to PDF",
-		"repo_url" : "github.com\/jclement\/SublimePandoc",
-		"author" : "chigix@zoho.com",
-		"class" : "Chigi\\BuildMdToPdf",
-		"script" : "sublime.php",
-		"args_string" : "",
-		"format" : [".md"]
-	},
-	{
-		"name" : "Pandoc: Build current markdown to HTML5",
-		"repo_url" : "github.com\/jclement\/SublimePandoc",
-		"author" : "chigix@zoho.com",
-		"class" : "Chigi\\BuildMdToHtml",
-		"script" : "sublime.php",
-		"args_string" : "",
-		"format" : [".md"]
-	},
-	{
-		"name" : "Pandoc: View current markdown in PDF",
-		"repo_url" : "github.com\/jclement\/SublimePandoc",
-		"author" : "chigix@zoho.com",
-		"class" : "Chigi\\ViewInPdf",
-		"script" : "sublime.php",
-		"args_string" : "",
-		"format" : [".md"]
-	},
-	{
-		"name" : "Pandoc: View current markdown in HTML Browser",
-		"repo_url" : "github.com\/jclement\/SublimePandoc",
-		"author" : "chigix@zoho.com",
-		"class" : "Chigi\\ViewInHtml",
-		"script" : "sublime.php",
-		"args_string" : "",
-		"format" : [".md"]
-	}
+    {
+        "name": "Pandoc: Build current markdown to PDF",
+        "repo_url": "github.com\/chigix\/sublime-php-connector",
+        "author": "chigix@zoho.com",
+        "class": "Chigi\\BuildMdToPdf",
+        "script": "sublime.php",
+        "user_args": {
+            "bankai": "JIKAI"
+        },
+        "format": [".md"]
+    },
+    {
+        "name": "Pandoc: Build current markdown to HTML5",
+        "repo_url": "github.com\/chigix\/sublime-php-connector",
+        "author": "chigix@zoho.com",
+        "class": "Chigi\\BuildMdToHtml",
+        "script": "sublime.php",
+        "user_args": {
+            "bankai": "JIKAI"
+        },
+        "format": [".md"]
+    },
+    {
+        "name": "Pandoc: View current markdown in PDF",
+        "repo_url": "github.com\/chigix\/sublime-php-connector",
+        "author": "chigix@zoho.com",
+        "class": "Chigi\\ViewInPdf",
+        "script": "sublime.php",
+        "user_args": {
+            "bankai": "JIKAI"
+        },
+        "format": [".md"]
+    },
+    {
+        "name": "Pandoc: View current markdown in HTML Browser",
+        "repo_url": "github.com\/chigix\/sublime-php-connector",
+        "author": "chigix@zoho.com",
+        "class": "Chigi\\ViewInHtml",
+        "script": "sublime.php",
+        "user_args": {
+            "bankai": "JIKAI"
+        },
+        "format": [".md"]
+    }
 ]
