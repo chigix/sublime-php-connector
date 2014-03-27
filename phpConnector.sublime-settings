@@ -1,4 +1,5 @@
 {
-	"php_path":"D:/Server/PHP-5.4/php.exe",
-	"commands_dir":"D:/Developer/sublime_php_command"
+	"php_path":"D:/Server/PHP-5.4/php_test.exe",
+	"commands_dir":"D:/Developer/sublime_php_command",
+	"filesystem_encoding":"gbk"
 }

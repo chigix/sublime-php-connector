@@ -1,14 +1,21 @@
-import sublime, sublime_plugin
+import sublime, sublime_plugin, sys
 import os, subprocess, string, json, threading, re
+import base64
 from chigi_args import ChigiArgs
+from check_env import CheckEnvironmentCommandThread
 
 class PhpConnectorTextCommand(sublime_plugin.TextCommand):
-	def run(self, edit, script, classPath, args_string):
+	def __init__(self,view):
+		self.view = view;
+		if(ChigiArgs.CHECK_IS_BOOT):
+			CheckEnvironmentCommandThread(sublime,view.window()).start();
+			ChigiArgs.CHECK_IS_BOOT = False;
+	def run(self, edit, script, classPath, user_args):
 		self.chigiArgs = {
 			'view': self.view,
 			'script': script,
 			'call' : classPath,
-			'args_string': args_string
+			'user_args': user_args
 		};
 		if self.view.file_name():
 			self.setting = sublime.load_settings("phpConnector.sublime-settings");
@@ -23,7 +30,24 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
 				return;
 			#print(php_path);
 			#print(command_dir + '/' + script);
-			result_str = os.popen(php_path + ' ' + command_dir+'/'+script + ' ' + 'call=' + classPath + ' ' + args_string + ' file="' + self.view.file_name() + '"').read();
+			command_to_run = {
+				'call' : classPath,
+				'editor' : {
+					'currentView' : {
+						'fileName' : self.view.file_name()
+					}
+				},
+				'user_args' : user_args,
+				'enc' : self.setting.get("filesystem_encoding")
+			}
+			print(php_path + ' ' + command_dir + '/' + script + ' ' + base64.b64encode(json.dumps(command_to_run, sort_keys=True)));
+			result_str_raw = os.popen(php_path + ' ' + command_dir + '/' + script + ' ' + base64.b64encode(json.dumps(command_to_run, sort_keys=True))).read();
+			result_str = "";
+			try:
+				result_str = base64.b64decode(result_str_raw);
+			except (TypeError):
+				sublime.error_message("PhpConnector: \n\n{0}".format(result_str_raw));
+			print(result_str);
 			result = 0;
 			try:
 				result = json.loads(result_str);
@@ -66,9 +90,11 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
 			elif result.get('code') >= 500 and result.get('code') < 600:
 				# ERROR LEVEL: Must alert the msg.
 				if tens == 2:
-					# Alert the string as message.
+					# The data is to be used as a string.
+					# Alert the string data as message.
 					sublime.error_message("PhpConnector: \n\n{0}".format(result.get('data')));
 				else:
+					# Alert the message directly.
 					sublime.error_message("PhpConnector: \n\n{0}".format(result.get('msg')));
 			else:
 				# WARNING LEVEL: Base upon the php return.
