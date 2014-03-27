@@ -1,22 +1,49 @@
 <?php
-	namespace Chigi;
-	use Chigi\Sublime\Models\ReturnData;
-	use Chigi\Sublime\Settings\Environment;
-	use Chigi\Sublime\Models\File;
-	class BuildMdToPdf{
-		public function run(){
-			$env = Environment::getInstance();
-			$file = new File($env->getArgument('file'));
-			require_once('pandoc/config.php');
-			$cmd = "pandoc \"" . $env->getArgument('file') . "\" -o \"" . $file->getDirPath() . '/' .  $file->extractFileName() . ".pdf\" " 
-		. "--latex-engine=xelatex --toc --smart --template=\"" . $config['pandoc']['template_pdf'] . "\"";
-			exec($cmd);
-			$returnData = new ReturnData();
-			$returnData->setCode(208);
-			$returnData->setMsg('Build ended.');
-			$returnData->setStatusMsg($file->extractFileName() . '.html builded SUCCESSFULLY, VIEW it directly.');
-			$returnData->setData($cmd);
-			return $returnData;
-		}
-	}
+// Markdown 编译成 PDF
+namespace Chigi;
+
+use Chigi\Sublime\Models\ReturnData;
+use Chigi\Sublime\Settings\Environment;
+use Chigi\Sublime\Models\File;
+
+class BuildMdToPdf {
+
+    private $file;
+
+    public function __construct() {
+        $env = Environment::getInstance();
+        $this->file = $env->getEditor()->getCurrentEditingFile();
+    }
+
+    public function run() {
+        require('pandoc/config.php');
+        $cmd = "pandoc \"" . $this->file->getRealPath(FALSE) . "\" -o \"" . $this->file->getDirPath() . '/' . $this->file->extractFileName() . ".pdf\" "
+                . "--latex-engine=xelatex --toc --smart --template=\"" . $config['pandoc']['template_pdf'] . "\"";
+        $returnData = new ReturnData();
+        $this->execCmd($cmd, $returnData);
+        return $returnData;
+    }
+
+    public function execCmd($cmd, &$returnData) {
+        $outputFrmCmd = array();
+        $status = 0;
+        // $cmd = "pandoc -f";
+        exec(iconv('utf-8', Environment::getInstance()->getFileSystemEncoding(), $cmd) . ' 2>&1', $outputFrmCmd, $status);
+        if ($status == 2) {
+            // standard error output
+            $returnData->setCode(520);
+            $returnData->setMsg('Error Building.');
+            $returnData->setStatusMsg($outputFrmCmd[0]);
+            $returnData->setData($cmd);
+        } else {
+            // builded successfully
+            $returnData->setCode(208);
+            $returnData->setMsg('Build ended.');
+            $returnData->setStatusMsg($this->file->extractFileName() . '.pdf builded SUCCESSFULLY, VIEW it directly.');
+            $returnData->setData($cmd);
+        };
+    }
+
+}
+
 ?>
