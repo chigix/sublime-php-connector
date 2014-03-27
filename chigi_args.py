@@ -7,6 +7,7 @@ class ChigiArgs(object):
     '''my very first class:FooClass''' 
     version = 0.1   #static
     arguments = {}  #static
+    CHECK_IS_BOOT = True #static
     def __init__(self,name='hejian'):
         '''constructor'''
         self.name = name    #class instance(data) attribute
@@ -25,6 +26,7 @@ class ChigiArgs(object):
         return self.version
     def setVersion(self,ver):
         self.version = ver
+    # Get the current arguments only once and clear it
     def getArgs(self):
         tmpArgs = copy.copy(self.arguments);
         ChigiArgs.arguments = {};
