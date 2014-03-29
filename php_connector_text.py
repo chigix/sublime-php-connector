@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sublime, sublime_plugin, sys
 import os, subprocess, string, json, threading, re
 import base64
