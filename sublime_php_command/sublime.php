@@ -2,9 +2,10 @@
 
 namespace Chigi\Sublime;
 
-use Chigi\Sublime\Settings\Environment;
-use Chigi\Sublime\Models\ReturnData;
 use Chigi\Sublime\Exception\FileSystemEncodingException;
+use Chigi\Sublime\Exception\ScriptNotFoundException;
+use Chigi\Sublime\Models\ReturnData;
+use Chigi\Sublime\Settings\Environment;
 
 $base_dir = dirname(__FILE__);
 require_once($base_dir . '/Core/functions.php');
@@ -24,7 +25,18 @@ try {
 }
 //$classToCall = is_null($env->getArgument('call'))? ('\\'): ('\\' . $env->getArgument('call'));
 $classToCall = '\\' . $env->getArgument('call');
-$objToCall = new $classToCall();
+$objToCall;
+try {
+    $objToCall = new $classToCall();
+} catch (ScriptNotFoundException $exc) {
+    $returnData = new ReturnData();
+    $returnData->setCode(208);
+    $returnData->setMsg($exc->getMessage());
+    $returnData->setStatusMsg($exc->getMessage());
+    $returnData->setData($exc->getMessage());
+    echo base64_encode($returnData->getJSON());
+    exit;
+}
 //echo json_encode($objToCall->run());
 //var_dump($objToCall->run());
 //var_dump($objToCall->run()->getJSON());

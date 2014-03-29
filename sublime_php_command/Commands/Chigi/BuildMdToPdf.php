@@ -29,12 +29,12 @@ class BuildMdToPdf {
         $status = 0;
         // $cmd = "pandoc -f";
         exec(iconv('utf-8', Environment::getInstance()->getFileSystemEncoding(), $cmd) . ' 2>&1', $outputFrmCmd, $status);
-        if ($status == 2) {
+        if (count($outputFrmCmd) > 0) {
             // standard error output
             $returnData->setCode(520);
             $returnData->setMsg('Error Building.');
-            $returnData->setStatusMsg($outputFrmCmd[0]);
-            $returnData->setData($cmd);
+            $returnData->setStatusMsg('Error Building to PDF.');
+            $returnData->setData($cmd . "\n\n" . $outputFrmCmd[0]);
         } else {
             // builded successfully
             $returnData->setCode(208);
