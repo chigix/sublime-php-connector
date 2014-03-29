@@ -1,14 +1,14 @@
-import os
+import os, sublime
 import re
 
 import sublime,copy
 
 class ChigiArgs(object): 
-    '''my very first class:FooClass''' 
-    version = 0.1   #static
+    version = 2.5   #static
+    name = "PhpConnector";
     arguments = {}  #static
     CHECK_IS_BOOT = True #static
-    def __init__(self,name='hejian'):
+    def __init__(self,name='PhpConnector'):
         '''constructor'''
         self.name = name    #class instance(data) attribute
     def showname(self):
@@ -26,6 +26,8 @@ class ChigiArgs(object):
         return self.version
     def setVersion(self,ver):
         self.version = ver
+    def getName(self):
+    	return self.name;
     # Get the current arguments only once and clear it
     def getArgs(self):
         tmpArgs = copy.copy(self.arguments);
@@ -35,4 +37,13 @@ class ChigiArgs(object):
         return self.__class__.__name__
     @staticmethod
     def staticMethod():
-        print "static method"
+        print "static method";
+    @staticmethod
+    def PKGPATH():
+        return os.path.join(sublime.packages_path(), "PhpConnector");
+    @staticmethod
+    def CMD_DIR():
+        return os.path.join(ChigiArgs.PKGPATH(), 'sublime_php_command');
+    @staticmethod
+    def CMD_PATH():
+        return os.path.join(ChigiArgs.CMD_DIR(), 'sublime.php');

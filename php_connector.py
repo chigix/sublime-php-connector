@@ -21,7 +21,6 @@ class ListCommandThread(threading.Thread):
 		args = ChigiArgs();
 		self.chigiArgs = args.getArgs();
 		self.setting = sublime.load_settings("phpConnector.sublime-settings");
-		self.commandsDir = self.setting.get("commands_dir");
 		self.window = window;
 		self.currentFileName = self.chigiArgs.get('view').file_name();
 		threading.Thread.__init__(self);
@@ -31,7 +30,7 @@ class ListCommandThread(threading.Thread):
 		self.commandObjList = [];
 		if self.chigiArgs.get('quick_load') is True:
 			# Accelerate on ctrl+shift+r
-			f = file(self.commandsDir+'/List.json');
+			f = file(os.path.join(ChigiArgs.CMD_DIR(),'List.json'));
 			for command in json.load(f):
 				for format in command.get('format'):
 					if self.currentFileName[-len(format):] == format:
@@ -70,7 +69,6 @@ class ListCommandThread(threading.Thread):
 	        commandPicked = self.commandObjList[picked];
 	        self.window.run_command('php_connector_text',
 	        	{
-	        		"script":commandPicked['script'],
 	        		"classPath":commandPicked['class'],
 	        		"user_args":commandPicked['user_args']
 	        	});
@@ -78,12 +76,3 @@ class ListCommandThread(threading.Thread):
         else:
         	print("BANKAI");
         	pass;
-
-        # if picked == -1:
-        #     return
-        # package_name = self.package_list[picked][0]
-
-        # def open_dir():
-        #     self.window.run_command('open_dir',
-        #         {"dir": os.path.join(sublime.packages_path(), package_name)})
-        # sublime.set_timeout(open_dir, 10)

@@ -1,5 +1,7 @@
 {
-	"php_path":"D:/Server/PHP-5.4/php_test.exe",
-	"commands_dir":"D:/Developer/sublime_php_command",
-	"filesystem_encoding":"gbk"
+    "php_path":"D:/Server/PHP-5.4/php_test.exe",
+    "filesystem_encoding":"gbk",
+    "namespaces": {
+    	"Chigi\\":"${entryDir}/Commands/Chigi"
+    }
 }
