@@ -3,6 +3,8 @@
 
 # PhpConnector for Sublime Text 2 & 3
 
+**VERSION: 2.5 BETA**
+
 Author: Richard Lea (chigix@zoho.com)
 
 Weibo: [@千木郷](http://weibo.com/chigix)
@@ -25,10 +27,13 @@ You can over ride it via user settings.
 
 ### v2.0: PHP programing interface framework. 
 
-## Todo
+* ADD pandoc convert markdown to html support.
 
-- ADD pandoc convert markdown to html support.
+### v2.5: ....
 
+* ADD multi-language support.
+* ADD filesystem encoding support.
+* ADD configure wizard on php_path and filesystem encoding.
 
 ## For Developers
 
