@@ -4,7 +4,6 @@
         "repo_url": "github.com\/chigix\/sublime-php-connector",
         "author": "chigix@zoho.com",
         "class": "Chigi\\BuildMdToPdf",
-        "script": "sublime.php",
         "user_args": {
             "bankai": "JIKAI"
         },
@@ -15,7 +14,6 @@
         "repo_url": "github.com\/chigix\/sublime-php-connector",
         "author": "chigix@zoho.com",
         "class": "Chigi\\BuildMdToHtml",
-        "script": "sublime.php",
         "user_args": {
             "bankai": "JIKAI"
         },
@@ -26,7 +24,6 @@
         "repo_url": "github.com\/chigix\/sublime-php-connector",
         "author": "chigix@zoho.com",
         "class": "Chigi\\ViewInPdf",
-        "script": "sublime.php",
         "user_args": {
             "bankai": "JIKAI"
         },
@@ -37,7 +34,6 @@
         "repo_url": "github.com\/chigix\/sublime-php-connector",
         "author": "chigix@zoho.com",
         "class": "Chigi\\ViewInHtml",
-        "script": "sublime.php",
         "user_args": {
             "bankai": "JIKAI"
         },

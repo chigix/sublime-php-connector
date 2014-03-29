@@ -10,9 +10,22 @@ class Environment {
 
     private function __construct() {
         $this->arguments = json_decode(base64_decode($_SERVER['argv'][1]), true);
-        $this->userArgs = $this->arguments['user_args'];
         $this->corePath = dirname(dirname(__FILE__));
-        $this->fileSystemEncoding = $this->arguments['enc'];
+        // 特定细节参数处理
+        $this->userArgs = $this->rmArg('user_args');
+        $this->fileSystemEncoding = $this->rmArg('enc');
+        $this->namespacesMap = $this->rmArg('ns');
+    }
+    
+    /**
+     * 处理特定细节参数工具方法
+     * @param string $name
+     * @return mixed
+     */
+    private function rmArg($name) {
+        $value = $this->arguments[$name];
+        unset($this->arguments[$name]);
+        return $value;
     }
 
     /**
@@ -77,6 +90,11 @@ class Environment {
 
     public function getFileSystemEncoding() {
         return $this->fileSystemEncoding;
+    }
+    
+    private $namespacesMap = array();
+    public function getNamespacesMap() {
+        return $this->namespacesMap;
     }
 
 }
