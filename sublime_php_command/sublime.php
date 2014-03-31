@@ -16,7 +16,7 @@ try {
     $env = Environment::getInstance();
 } catch (FileSystemEncodingException $ex) {
     $returnData = new ReturnData();
-    $returnData->setCode(208);
+    $returnData->setCode(520);
     $returnData->setMsg('File system encoding specific error!!');
     $returnData->setStatusMsg('Please specific the correct system encoding.');
     $returnData->setData('Please specific the correct system encoding.');
@@ -30,7 +30,7 @@ try {
     $objToCall = new $classToCall();
 } catch (ScriptNotFoundException $exc) {
     $returnData = new ReturnData();
-    $returnData->setCode(208);
+    $returnData->setCode(520);
     $returnData->setMsg($exc->getMessage());
     $returnData->setStatusMsg($exc->getMessage());
     $returnData->setData($exc->getMessage());

@@ -29,7 +29,7 @@ class BuildMdToHtml {
         $cmd = "pandoc --toc -s --self-contained -c \"" . $config['pandoc']['css_path'] . "\"" 
                 . " \"" . $this->file->getRealPath(false) . "\"" 
                 . " -t html5 " 
-                . "-o \"" . $this->file->getDirPath() . '/' . $this->file->extractFileName() . ".html\" "
+                . "-o \"" . $this->file->getDirPath() . DIRECTORY_SEPARATOR . $this->file->extractFileName() . ".html\" "
                 . "--smart --template=\"" . $config['pandoc']['template_html'] . "\"";
         $returnData = new ReturnData();
         $this->execCmd($cmd, $returnData);

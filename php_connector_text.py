@@ -90,7 +90,8 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
                 if tens == 2:
                     # The data is to be used as a string.
                     # Alert the string data as message.
-                    sublime.error_message("PhpConnector: \n\n{0}".format(result.get('data')));
+                    print(result.get('data'));
+                    sublime.error_message(u"PhpConnector: \n\n{0}".format(result.get('data')));
                 else:
                     # Alert the message directly.
                     sublime.error_message("PhpConnector: \n\n{0}".format(result.get('msg')));

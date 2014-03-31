@@ -44,7 +44,7 @@ class File extends \SplFileInfo {
      * @return string
      */
     public function getDirPath() {
-        return dirname($this->getRealPath(FALSE));
+        return substr($this->getRealPath(FALSE), 0, strrpos($this->getRealPath(FALSE), DIRECTORY_SEPARATOR));
     }
 
     public function extractFileName() {
