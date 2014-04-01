@@ -38,7 +38,7 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
                 'user_args' : user_args,
                 'enc' : self.setting.get("filesystem_encoding")
             }
-            print(php_path + ' ' + ChigiArgs.CMD_PATH() + ' ' + base64.b64encode(json.dumps(command_to_run, sort_keys=True)));
+            print('"' + php_path + '" "' + ChigiArgs.CMD_PATH() + '" ' + base64.b64encode(json.dumps(command_to_run, sort_keys=True)));
             result_str_raw = os.popen(php_path + ' ' + ChigiArgs.CMD_PATH() + ' ' + base64.b64encode(json.dumps(command_to_run, sort_keys=True))).read();
             result_str = "";
             try:
