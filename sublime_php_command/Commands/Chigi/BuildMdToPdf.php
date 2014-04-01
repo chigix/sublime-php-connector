@@ -17,7 +17,7 @@ class BuildMdToPdf {
 
     public function run() {
         require('pandoc/config.php');
-        $cmd = $config['pandoc']['exe'] . " \"" . $this->file->getRealPath(FALSE) . "\" -o \"" . $this->file->getDirPath() . DIRECTORY_SEPARATOR . $this->file->extractFileName() . ".pdf\" "
+        $cmd = "\"" . $config['pandoc']['exe'] . "\" \"" . $this->file->getRealPath(FALSE) . "\" -o \"" . $this->file->getDirPath() . DIRECTORY_SEPARATOR . $this->file->extractFileName() . ".pdf\" "
                 . "--latex-engine=xelatex --toc --smart --template=\"" . $config['pandoc']['template_pdf'] . "\"";
         $returnData = new ReturnData();
         $this->execCmd($cmd, $returnData);

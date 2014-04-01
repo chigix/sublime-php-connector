@@ -26,7 +26,7 @@ class BuildMdToHtml {
 
     public function run() {
         require_once('pandoc/config.php');
-        $cmd = $config['pandoc']['exe'] . " --toc -s --self-contained -c \"" . $config['pandoc']['css_path'] . "\"" 
+        $cmd = "\"" . $config['pandoc']['exe'] . "\" --toc -s --self-contained -c \"" . $config['pandoc']['css_path'] . "\"" 
                 . " \"" . $this->file->getRealPath(false) . "\"" 
                 . " -t html5 " 
                 . "-o \"" . $this->file->getDirPath() . DIRECTORY_SEPARATOR . $this->file->extractFileName() . ".html\" "
