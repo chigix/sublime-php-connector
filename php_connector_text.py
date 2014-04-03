@@ -39,7 +39,8 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
                 'enc' : self.setting.get("filesystem_encoding")
             }
             print('"' + php_path + '" "' + ChigiArgs.CMD_PATH() + '" ' + base64.b64encode(json.dumps(command_to_run, sort_keys=True)));
-            result_str_raw = os.popen(php_path + ' ' + ChigiArgs.CMD_PATH() + ' ' + base64.b64encode(json.dumps(command_to_run, sort_keys=True))).read();
+            p1 = subprocess.Popen([php_path,ChigiArgs.CMD_PATH(),base64.b64encode(json.dumps(command_to_run, sort_keys=True))],stdout=subprocess.PIPE,shell=True);
+            result_str_raw = p1.communicate()[0];
             result_str = "";
             try:
                 result_str = base64.b64decode(result_str_raw);
