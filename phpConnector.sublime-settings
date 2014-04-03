@@ -1,6 +1,6 @@
 {
-    "php_path":"D:/Server/PHP-5.4/php_test.exe",
-    "filesystem_encoding":"gbk",
+    "php_path":"/usr/bin/php",
+    "filesystem_encoding":"utf-8",
     "namespaces": {
     	"Chigi\\":"${entryDir}/Commands/Chigi"
     }
