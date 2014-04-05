@@ -1,7 +1,6 @@
 [
 	{ 
 		"keys": ["ctrl+shift+r"],
-		"command": "php_quick_fallback", 
-		"args":{"script":"sublime.php","args_string":"bankai=teststring"}
+		"command": "php_quick_fallback"
 	}
 ]
