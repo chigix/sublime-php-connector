@@ -18,15 +18,19 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
             'user_args': user_args
         };
         if self.view.file_name():
+            # 1. 加载配置信息
             self.setting = sublime.load_settings("phpConnector.sublime-settings");
             php_path = self.setting.get("php_path");
-            check_php_path = os.popen(php_path + ' -v').read();
+            # 2. 验证当前 PHP 解释器可用性
+            p_check = subprocess.Popen([php_path,"-v"],stdout=subprocess.PIPE,shell=True);
+            check_php_path = p_check.communicate()[0];
             pattern = re.compile(r'^PHP \d+.\d+');
             if pattern.match(check_php_path):
                 pass
             else:
                 sublime.error_message("PhpConnector: \n\nPlease provide an available PHP binary file.");
                 return;
+            # 3. 加载参数列表
             command_to_run = {
                 'call' : classPath,
                 'editor' : {
@@ -38,6 +42,7 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
                 'user_args' : user_args,
                 'enc' : self.setting.get("filesystem_encoding")
             }
+            # 4. 开始进行 PHP 通信
             print('"' + php_path + '" "' + ChigiArgs.CMD_PATH() + '" ' + base64.b64encode(json.dumps(command_to_run, sort_keys=True)));
             p1 = subprocess.Popen([php_path,ChigiArgs.CMD_PATH(),base64.b64encode(json.dumps(command_to_run, sort_keys=True))],stdout=subprocess.PIPE,shell=True);
             result_str_raw = p1.communicate()[0];
@@ -55,6 +60,9 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
                 if len(result_str)>0:
                     sublime.error_message("PHP ERROR:\n{0}".format(result_str));
                 return;
+            # -------------------------------------------------------------------
+            #                 PHP 通信完成，开始处理结果
+            # -------------------------------------------------------------------
             # --push status message--
             if result.get('status_message'):
                 sublime.status_message('PhpConnector: ' + result.get('status_message'));
@@ -104,7 +112,3 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
             print("SYSTEM ERROR");
 	def is_visible(self):
 		return True;
-		# return self.view.file_name() and (self.view.file_name()[-3:] == ".md" or
-		# 	#self.view.file_name()[-5:] == ".HTML" or
-		# 	#self.view.file_name()[-4:] == ".htm" or
-		# 	self.view.file_name()[-9:] == ".markdown")
