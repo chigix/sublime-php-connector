@@ -50,7 +50,7 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
             try:
                 result_str = base64.b64decode(result_str_raw);
             except (TypeError):
-                sublime.error_message("PhpConnector: \n\n{0}".format(result_str_raw))
+                sublime.error_message(u"PhpConnector: \n\n{0}".format(result_str_raw))
                 print(result_str);
             result = 0;
             try:
@@ -58,14 +58,14 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
             except (ValueError):
                 print('The return value for the php plugin is wrong JSON.',True);
                 if len(result_str)>0:
-                    sublime.error_message("PHP ERROR:\n{0}".format(result_str));
+                    sublime.error_message(u"PHP ERROR:\n{0}".format(result_str));
                 return;
             # -------------------------------------------------------------------
             #                 PHP 通信完成，开始处理结果
             # -------------------------------------------------------------------
             # --push status message--
             if result.get('status_message'):
-                sublime.status_message('PhpConnector: ' + result.get('status_message'));
+                sublime.status_message(u'PhpConnector: ' + result.get('status_message'));
             # END--push status message--
 
             # --Determine on code--
@@ -103,7 +103,7 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
                     sublime.error_message(u"PhpConnector: \n\n{0}".format(result.get('data')));
                 else:
                     # Alert the message directly.
-                    sublime.error_message("PhpConnector: \n\n{0}".format(result.get('msg')));
+                    sublime.error_message(u"PhpConnector: \n\n{0}".format(result.get('msg')));
             else:
                 # WARNING LEVEL: Base upon the php return.
                 pass;
