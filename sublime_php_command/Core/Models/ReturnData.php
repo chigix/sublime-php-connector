@@ -2,8 +2,9 @@
 
 namespace Chigi\Sublime\Models;
 
-use Chigi\Sublime\Settings\Environment;
-
+/**
+ * 返回值数据抽象对象
+ */
 class ReturnData {
 
     public function __construct() {
@@ -62,6 +63,14 @@ class ReturnData {
             'data' => $this->data
         );
         return json_encode($return_arr);
+    }
+    
+    /**
+     * 判断当前返回数据是否2XX
+     * @return boolean
+     */
+    public function isValid() {
+        return ($this->code < 300 && $this->code >= 200);
     }
 
 }
