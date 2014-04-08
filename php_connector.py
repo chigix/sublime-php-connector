@@ -39,13 +39,19 @@ class ListCommandThread(threading.Thread):
                     for filename in fnmatch.filter(filenames, '*.phpconnector-commands'):
                         f = file(os.path.join(root, filename));
                         for command in json.load(f):
-                            for format in command.get('format'):
-                                if self.currentFileName[-len(format):] == format:
-                                    tmp_to_list = [];
-                                    tmp_to_list.append(command.get('name'));
-                                    self.commandObjList.append(command);
-                                    self.commandList.append(tmp_to_list);
-                                    pass;
+                            if command.get('format'):
+                                for format in command.get('format'):
+                                    if self.currentFileName[-len(format):] == format:
+                                        tmp_to_list = [];
+                                        tmp_to_list.append(command.get('name'));
+                                        self.commandObjList.append(command);
+                                        self.commandList.append(tmp_to_list);
+                                        pass;
+                            else:
+                                tmp_to_list = [];
+                                tmp_to_list.append(command.get('name'));
+                                self.commandObjList.append(command);
+                                self.commandList.append(tmp_to_list);
                         pass;
                     pass;
         else:

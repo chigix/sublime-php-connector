@@ -50,7 +50,7 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
             try:
                 result_str = base64.b64decode(result_str_raw);
             except (TypeError):
-                sublime.error_message(u"PhpConnector: \n\n{0}".format(result_str_raw))
+                sublime.error_message(u"PhpConnector: \n\n{0}".format(result_str_raw));
                 print(result_str);
             result = 0;
             try:
@@ -83,6 +83,10 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
                         print(e);
                     finally:
                         pass;
+                elif ones == 7:
+                    # Copy to Clipboard
+                    sublime.set_clipboard(result.get("data"));
+                    pass;
                 elif ones == 8:
                     print(result);
                     pass;
