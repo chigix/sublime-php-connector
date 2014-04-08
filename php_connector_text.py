@@ -50,8 +50,8 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
             try:
                 result_str = base64.b64decode(result_str_raw);
             except (TypeError):
-                sublime.error_message(u"PhpConnector: \n\n{0}".format(result_str_raw));
-                print(result_str);
+                print(result_str_raw);
+                sublime.error_message(u"PhpConnector: \n\nSYSTEM ERROR!!!");
             result = 0;
             try:
                 result = json.loads(result_str);
