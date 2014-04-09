@@ -28,7 +28,7 @@ function __autoload($class) {
                                 array_keys($quickPath), array_values($quickPath), $map[$tmpNamespace]
                         )
                         . '/' . implode('/', $tmpParts) . '.php';
-                if (!@include_once($scriptFile)) {
+                if (!@include_once(iconv('utf-8', Environment::getInstance()->getFileSystemEncoding(), $scriptFile))) {
                     throw new ScriptNotFoundException($scriptFile);
                 }
                 return;
@@ -38,7 +38,7 @@ function __autoload($class) {
                                 array_keys($quickPath), array_values($quickPath), $map[$tmpNamespace . '\\']
                         )
                         . '/' . implode('/', $tmpParts) . '.php';
-                if (!@include_once($scriptFile)) // @ - to suppress warnings, 
+                if (!@include_once(iconv('utf-8', Environment::getInstance()->getFileSystemEncoding(), $scriptFile))) // @ - to suppress warnings, 
                     throw new ScriptNotFoundException($scriptFile);
                 return;
             }
