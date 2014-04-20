@@ -12,6 +12,20 @@ Weibo: [@千木郷](http://weibo.com/chigix)
 ## Introduction
 The plugin is to add support for php developers to develop a sublime plugin using php.
 
+## Installation
+
+* With Package Control
+
+	If you have Package Control installed, you can install PhpConnector from inside Sublime Text itself. Open the Command Palette and select “Package Control: Install Package”, then search for PhpConnector.
+
+* Without Package Control
+
+	If you haven't got Package Control installed you will need to make a clone of this repository into your packages folder, like so:
+
+	`git clone https://github.com/chigix/sublime-php-connector.git "Codeigniter Codeintel Helper" `
+
+	If you find error or wathever just fork it and send me a pull request.
+
 ## Usage
 
 The only binding key map: `ctrl+shift+r`
