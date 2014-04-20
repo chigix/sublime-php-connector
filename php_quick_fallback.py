@@ -1,6 +1,11 @@
 import sublime, sublime_plugin
 import os, subprocess, string
-from chigi_args import ChigiArgs
+
+ST3 = int(sublime.version()) > 3000
+if ST3:
+    from .chigi_args import ChigiArgs
+else:
+    from chigi_args import ChigiArgs
 
 class PhpQuickFallbackCommand(sublime_plugin.TextCommand):
     def run(self, edit):

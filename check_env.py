@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 import sublime, sublime_plugin
 import os, subprocess, string, json, threading, re, time
-from chigi_args import ChigiArgs
+
+ST3 = int(sublime.version()) > 3000
+if ST3:
+    from .chigi_args import ChigiArgs
+else:
+    from chigi_args import ChigiArgs
+
 
 class CheckEnvironmentCommandThread(threading.Thread):
     """

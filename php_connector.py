@@ -1,16 +1,22 @@
 import sublime, sublime_plugin
 import os, subprocess, string, json, threading, re, time, fnmatch
-from chigi_args import ChigiArgs
-from check_env import CheckEnvironmentCommandThread
+
+ST3 = int(sublime.version()) > 3000
+if ST3:
+    from .chigi_args import ChigiArgs
+    from .check_env import CheckEnvironmentCommandThread
+else:
+    from chigi_args import ChigiArgs
+    from check_env import CheckEnvironmentCommandThread
 
 class PhpConnectorCommand(sublime_plugin.WindowCommand):
-	def __init__(self, window):
-		self.window = window;
-		setting = sublime.load_settings("phpConnector.sublime-settings");
-	def run(self):
-		ListCommandThread(self.window).start()
-	def is_visible(self):
-		return True;
+    def __init__(self, window):
+        self.window = window;
+        setting = sublime.load_settings("phpConnector.sublime-settings");
+    def run(self):
+        ListCommandThread(self.window).start()
+    def is_visible(self):
+        return True;
 
 class ListCommandThread(threading.Thread):
     """
@@ -37,7 +43,7 @@ class ListCommandThread(threading.Thread):
                     self.setting.namespaces[namespace] = self.setting.namespaces[namespace].replace(search, replace);
                 for root, dirnames, filenames in os.walk(self.setting.namespaces[namespace]):
                     for filename in fnmatch.filter(filenames, '*.phpconnector-commands'):
-                        f = file(os.path.join(root, filename));
+                        f = open(os.path.join(root, filename));
                         for command in json.load(f):
                             if command.get('format'):
                                 for format in command.get('format'):
