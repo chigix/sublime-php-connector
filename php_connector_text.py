@@ -85,7 +85,7 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
                     # OPEN a File
                     try:
                         os.startfile(result.get('data'));
-                    except Exception, e:
+                    except Exception as e:
                         print(e);
                     finally:
                         pass;
@@ -120,5 +120,5 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
             # END --Determine on code--
         else :
             print("SYSTEM ERROR");
-	def is_visible(self):
-		return True;
+    def is_visible(self):
+        return True;
