@@ -2,8 +2,14 @@
 import sublime, sublime_plugin, sys
 import os, subprocess, string, json, threading, re
 import base64
-from chigi_args import ChigiArgs
-from check_env import CheckEnvironmentCommandThread
+
+ST3 = int(sublime.version()) > 3000
+if ST3:
+    from .chigi_args import ChigiArgs
+    from .check_env import CheckEnvironmentCommandThread
+else:
+    from chigi_args import ChigiArgs
+    from check_env import CheckEnvironmentCommandThread
 
 class PhpConnectorTextCommand(sublime_plugin.TextCommand):
     def __init__(self,view):
