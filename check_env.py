@@ -5,6 +5,8 @@ import os, subprocess, string, json, threading, re, time
 ST3 = int(sublime.version()) > 3000
 if ST3:
     from .chigi_args import ChigiArgs
+    def cmp(str_a,str_b):
+        return  (str_a > str_b) - (str_a < str_b);
 else:
     from chigi_args import ChigiArgs
 

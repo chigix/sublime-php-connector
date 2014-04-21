@@ -86,13 +86,13 @@ class ListCommandThread(threading.Thread):
             list. -1 means the user cancelled.
         """
         if picked >= 0:
-	        commandPicked = self.commandObjList[picked];
-	        self.window.run_command('php_connector_text',
-	        	{
-	        		"classPath":commandPicked['class'],
-	        		"user_args":commandPicked['user_args']
-	        	});
-        	pass;
+            commandPicked = self.commandObjList[picked];
+            self.chigiArgs.get("view").run_command('php_connector_text',
+                {
+                    "classPath":commandPicked['class'],
+                    "user_args":commandPicked['user_args']
+                });
+            pass;
         else:
-        	print("BANKAI");
-        	pass;
+            print("BANKAI");
+            pass;
