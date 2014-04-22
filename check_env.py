@@ -65,6 +65,7 @@ class CheckEnvironmentCommandThread(threading.Thread):
         if(cmp(input.lower(),'gbk')==0):
             sublime.ok_cancel_dialog(u"开始嗨皮地使用 PHP 来开发 Sublime 插件吧~~");
             self.window.open_file(os.path.join(ChigiArgs.PKGPATH(),'readme.md'));
+            os.startfile(os.path.join(ChigiArgs.PKGPATH(),'docs','welcome.zhcn.html'));
             pass;
         else:
             self.window.open_file(os.path.join(ChigiArgs.PKGPATH(),'readme.md'));
