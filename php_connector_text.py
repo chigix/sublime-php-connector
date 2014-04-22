@@ -31,8 +31,8 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
             p_check = subprocess.Popen([php_path,"-v"],stdout=subprocess.PIPE,shell=True);
             check_php_path = p_check.communicate()[0];
             pattern = re.compile(r'^PHP \d+.\d+');
-            if pattern.match(check_php_path):
-                pass
+            if pattern.match(check_php_path.decode(self.setting.get("filesystem_encoding"))):
+                pass;
             else:
                 sublime.error_message("PhpConnector: \n\nPlease provide an available PHP binary file.");
                 return;
@@ -49,8 +49,8 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
                 'enc' : self.setting.get("filesystem_encoding")
             }
             # 4. 开始进行 PHP 通信
-            print('"' + php_path + '" "' + ChigiArgs.CMD_PATH() + '" ' + base64.b64encode(json.dumps(command_to_run, sort_keys=True)));
-            p1 = subprocess.Popen([php_path,ChigiArgs.CMD_PATH(),base64.b64encode(json.dumps(command_to_run, sort_keys=True))],stdout=subprocess.PIPE,shell=True);
+            print('"' + php_path + '" "' + ChigiArgs.CMD_PATH() + '" ' + base64.b64encode(json.dumps(command_to_run, sort_keys=True).encode('utf-8')).decode('utf-8'));
+            p1 = subprocess.Popen([php_path,ChigiArgs.CMD_PATH(),base64.b64encode(json.dumps(command_to_run, sort_keys=True).encode('utf-8')).decode('utf-8')],stdout=subprocess.PIPE,shell=True);
             result_str_raw = p1.communicate()[0];
             result_str = "";
             try:
@@ -60,7 +60,7 @@ class PhpConnectorTextCommand(sublime_plugin.TextCommand):
                 sublime.error_message(u"PhpConnector: \n\nSYSTEM ERROR!!!");
             result = 0;
             try:
-                result = json.loads(result_str);
+                result = json.loads(result_str.decode('utf-8'));
             except (ValueError):
                 print('The return value for the php plugin is wrong JSON.',True);
                 if len(result_str)>0:
