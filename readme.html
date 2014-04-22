@@ -27,12 +27,13 @@
 <ul>
 <li><a href="#phpconnector-for-sublime-text-2-3">PhpConnector for Sublime Text 2 &amp; 3</a><ul>
 <li><a href="#introduction">Introduction</a></li>
+<li><a href="#installation">Installation</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#whats-new">What’s new</a><ul>
 <li><a href="#v0.1.0-created">v0.1.0: Created!</a></li>
 <li><a href="#v2.0-php-programing-interface-framework.">v2.0: PHP programing interface framework.</a></li>
+<li><a href="#v2.5-.">v2.5: ….</a></li>
 </ul></li>
-<li><a href="#todo">Todo</a></li>
 <li><a href="#for-developers">For Developers</a></li>
 </ul></li>
 <li><a href="#license">License</a></li>
@@ -40,31 +41,46 @@
 </nav>
 </div>
 <div class="span8">
-<h1 id="phpconnector-for-sublime-text-2-3"><a href="#phpconnector-for-sublime-text-2-3">PhpConnector for Sublime Text 2 &amp; 3</a></h1>
+<h1 id="phpconnector-for-sublime-text-2-3">PhpConnector for Sublime Text 2 &amp; 3</h1>
+<p><strong>VERSION: 2.5 BETA</strong></p>
 <p>Author: Richard Lea (chigix@zoho.com)</p>
-<p>Weibo: <a href="http://weibo.com/chigix">@千木郷</a></p>
-<h2 id="introduction"><a href="#introduction">Introduction</a></h2>
+<p>Weibo: <span class="citation" data-cites="千木郷">[@千木郷]</span>(http://weibo.com/chigix)</p>
+<h2 id="introduction">Introduction</h2>
 <p>The plugin is to add support for php developers to develop a sublime plugin using php.</p>
-<h2 id="usage"><a href="#usage">Usage</a></h2>
+<h2 id="installation">Installation</h2>
+<ul>
+<li><p>With Package Control</p>
+<p>If you have Package Control installed, you can install PhpConnector from inside Sublime Text itself. Open the Command Palette and select “Package Control: Install Package”, then search for PhpConnector.</p></li>
+<li><p>Without Package Control</p>
+<p>If you haven’t got Package Control installed you will need to make a clone of this repository into your packages folder, like so:</p>
+<p><code>git clone https://github.com/chigix/sublime-php-connector.git &quot;Codeigniter Codeintel Helper&quot;</code></p>
+<p>If you find error or wathever just fork it and send me a pull request.</p></li>
+</ul>
+<h2 id="usage">Usage</h2>
 <p>The only binding key map: <code>ctrl+shift+r</code></p>
 <p>You can over ride it via user settings.</p>
-<h2 id="whats-new"><a href="#whats-new">What’s new</a></h2>
+<h2 id="whats-new">What’s new</h2>
 <ul>
 <li>Quick panel of commands development support via PHP.</li>
 </ul>
-<h3 id="v0.1.0-created"><a href="#v0.1.0-created">v0.1.0: Created!</a></h3>
+<h3 id="v0.1.0-created">v0.1.0: Created!</h3>
 <ul>
 <li>php connect support</li>
 </ul>
-<h3 id="v2.0-php-programing-interface-framework."><a href="#v2.0-php-programing-interface-framework.">v2.0: PHP programing interface framework.</a></h3>
-<h2 id="todo"><a href="#todo">Todo</a></h2>
+<h3 id="v2.0-php-programing-interface-framework.">v2.0: PHP programing interface framework.</h3>
 <ul>
 <li>ADD pandoc convert markdown to html support.</li>
 </ul>
-<h2 id="for-developers"><a href="#for-developers">For Developers</a></h2>
+<h3 id="v2.5-.">v2.5: ….</h3>
+<ul>
+<li>ADD multi-language support.</li>
+<li>ADD filesystem encoding support.</li>
+<li>ADD configure wizard on php_path and filesystem encoding.</li>
+</ul>
+<h2 id="for-developers">For Developers</h2>
 <p>Defaultly, All commands defination were in <code>sublime_php_command\Commands\</code> and the <code>List.json</code> file in the root directory of <code>sublime_php_command</code>, and every execute class should under a unique namespace and within a method called <code>run</code>.</p>
 <p>Demos are in the <code>sublime_php_command\Commands\Chigi\</code>, so as you can see, their namespace was <code>Chigi</code>.</p>
-<h1 id="license"><a href="#license">License</a></h1>
+<h1 id="license">License</h1>
 <p>The plugin is licensed under the MIT license.</p>
 <p>Copyright (C) &lt;2012&gt; Richard Lea <script type="text/javascript">
 <!--
