@@ -3,11 +3,11 @@
 
 # PhpConnector for Sublime Text 2 & 3
 
-**VERSION: 2.5 BETA**
+**VERSION: 2.5**
 
 Author: Richard Lea (chigix@zoho.com)
 
-Weibo: [@千木郷](http://weibo.com/chigix)
+Weibo: [\@千木郷](http://weibo.com/chigix)
 
 ## Introduction
 The plugin is to add support for php developers to develop a sublime plugin using php.
@@ -43,15 +43,18 @@ You can over ride it via user settings.
 
 * ADD pandoc convert markdown to html support.
 
-### v2.5: ....
+### v2.5: Welcome
 
 * ADD multi-language support.
 * ADD filesystem encoding support.
 * ADD configure wizard on php_path and filesystem encoding.
+* FIX sublime 3 support.
+* IMPROVE error exception catch.
+* Game start for hacking sublime with PHP.
 
 ## For Developers
 
-Defaultly, All commands defination were in `sublime_php_command\Commands\` and the `List.json` file in the root directory of `sublime_php_command`, and every execute class should under a unique namespace and within a method called `run`.
+Defaultly, All commands defination were in `sublime_php_command\Commands\` and the `Chigi.phpconnector-commands` file in the root directory of `sublime_php_command`, and every execute class should under a unique namespace and within a method called `run`.
 
 Demos are in the `sublime_php_command\Commands\Chigi\`, so as you can see, their namespace was `Chigi`.
 
@@ -59,7 +62,7 @@ Demos are in the `sublime_php_command\Commands\Chigi\`, so as you can see, their
 The plugin is licensed under the MIT license.
 
 
-Copyright (C) <2012> Richard Lea <chigix@zoho.com>
+Copyright (C) <2014> Richard Lea <chigix@zoho.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

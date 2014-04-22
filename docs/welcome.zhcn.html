@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <meta name="author" content="Richard Lea (chigix@zoho.com)">
-  <title>PhpConnector for Sublime Text 2 &amp; 3</title>
+  <title>PhpConnector 主题情报</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- <link href="../stylesheets/pandoc.css" rel="stylesheet"> -->
   <!-- <link href="../stylesheets/pandoc.css" rel="stylesheet"> -->
@@ -17,73 +16,65 @@
 <body>
 <!-- doc title / page header -->
 <header>
-<h1 class="title">PhpConnector for Sublime Text 2 &amp; 3</h1>
-<!--<h2 class="author">Richard Lea (chigix@zoho.com)</h2>-->
+<h1 class="title">PhpConnector 主题情报</h1>
 </header>
 <div class="container-fluid">
 <div class="row-fluid">
 <div class="span4">
 <nav id="TOC" class="sidebar-nav sidebar-nav-fixed">
 <ul>
-<li><a href="#phpconnector-for-sublime-text-2-3">PhpConnector for Sublime Text 2 &amp; 3</a><ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#usage">Usage</a></li>
-<li><a href="#whats-new">What’s new</a><ul>
-<li><a href="#v0.1.0-created">v0.1.0: Created!</a></li>
-<li><a href="#v2.0-php-programing-interface-framework.">v2.0: PHP programing interface framework.</a></li>
-<li><a href="#v2.5-welcome">v2.5: Welcome</a></li>
-</ul></li>
-<li><a href="#for-developers">For Developers</a></li>
-</ul></li>
-<li><a href="#license">License</a></li>
+<li><a href="#搭载">搭载</a></li>
+<li><a href="#操作">操作</a></li>
+<li><a href="#历史">历史</a></li>
+<li><a href="#插入">插入</a></li>
+<li><a href="#协议">协议</a></li>
 </ul>
 </nav>
 </div>
 <div class="span8">
-<h1 id="phpconnector-for-sublime-text-2-3">PhpConnector for Sublime Text 2 &amp; 3</h1>
-<p><strong>VERSION: 2.5</strong></p>
-<p>Author: Richard Lea (chigix@zoho.com)</p>
-<p>Weibo: <a href="http://weibo.com/chigix">@千木郷</a></p>
-<h2 id="introduction">Introduction</h2>
-<p>The plugin is to add support for php developers to develop a sublime plugin using php.</p>
-<h2 id="installation">Installation</h2>
+<p>主人，你好，小 P 插件已经为您搭载完毕，如果首次启动，请仔细阅读下面的<a href="#环境搭载">环境搭载</a>，老鸟可直接跳过。</p>
+<p>关于作者：</p>
+<iframe width="100%" height="550" class="share_self" frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&amp;width=0&amp;height=550&amp;fansRow=2&amp;ptype=1&amp;speed=50&amp;skin=1&amp;isTitle=1&amp;noborder=1&amp;isWeibo=1&amp;isFans=0&amp;uid=2913855812&amp;verifier=5375064e&amp;dpc=1"></iframe>
+
+<h1 id="搭载">搭载</h1>
+<p>如果您可以看到这个页面，99%的概率表明你当前是 中文 Windows 操作系统，99.5%的概率表明您当前是第一次安装本插件，但 100% 说明您当前仍处于新手。</p>
+<p>PhpConnector 的使用非常简单，您可以回到您刚刚打开的 Sublime 中，此时我已经为您打开了 PhpConnector 的 官方 readme.md 文件。</p>
+<p>这是一个 Markdown 文档文件，您可以把你的左手放在键盘上，使用当前机能正常的手指锁定 <code>Ctrl + Shift + r</code> 三个键 –&gt; 按下！于是美好的事情发生了：</p>
+<figure>
+<img src="data:image/png;base64,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" />
+</figure>
+<p>在这里，选择 <code>Pandoc:View current Markdown in Html Browser</code> 即可在浏览器中看到 readme.md 的 HTML 输出结果。包括本文档 亦是由 本插件中的 Markdown 编译脚本生成出来的哟~~。</p>
+<h1 id="操作">操作</h1>
+<p>本插件所占用的唯一快捷键仅是：<code>ctrl+shift+r</code>。这个快捷键的效果与 sublime 原生自带的 <code>ctrl+shift+p</code> 类似，只不过列出在这里的命令都是完全采用 PHP 开发的命令插件。</p>
+<p>当然，Sublime 支持 默认快捷键的用户配置文件覆盖与重写。</p>
+<h1 id="历史">历史</h1>
+<p>由于作者目前仅有一人在奋斗，且是 python 小白（否则也不会想用 PHP 开发插件啦），所以插件系统版本迭代较慢，下面是几个重要历史回忆：</p>
 <ul>
-<li><p>With Package Control</p>
-<p>If you have Package Control installed, you can install PhpConnector from inside Sublime Text itself. Open the Command Palette and select “Package Control: Install Package”, then search for PhpConnector.</p></li>
-<li><p>Without Package Control</p>
-<p>If you haven’t got Package Control installed you will need to make a clone of this repository into your packages folder, like so:</p>
-<p><code>git clone https://github.com/chigix/sublime-php-connector.git &quot;Codeigniter Codeintel Helper&quot;</code></p>
-<p>If you find error or wathever just fork it and send me a pull request.</p></li>
-</ul>
-<h2 id="usage">Usage</h2>
-<p>The only binding key map: <code>ctrl+shift+r</code></p>
-<p>You can over ride it via user settings.</p>
-<h2 id="whats-new">What’s new</h2>
+<li><p>v0.1.0：创生</p>
 <ul>
-<li>Quick panel of commands development support via PHP.</li>
-</ul>
-<h3 id="v0.1.0-created">v0.1.0: Created!</h3>
+<li>支持 与 PHP 建立通信，可通过 PHP 来简单输出到 Sublime。</li>
+</ul></li>
+<li><p>v2.0：骨架</p>
 <ul>
-<li>php connect support</li>
-</ul>
-<h3 id="v2.0-php-programing-interface-framework.">v2.0: PHP programing interface framework.</h3>
+<li>加入 OOP Sublime 插件开发接口框架</li>
+<li>提供 官方示例 PHP 脚本</li>
+<li>示例脚本嵌入 Pandoc 转换至 PDF、Html 的编译脚本。</li>
+</ul></li>
+<li><p>v2.5：待命</p>
 <ul>
-<li>ADD pandoc convert markdown to html support.</li>
+<li>加入 多语言支持</li>
+<li>加入 文件系统编码支持</li>
+<li>新增 <code>php_path</code> 和 <code>filesystem encoding</code> 两项的可视化配置向导程序。</li>
+<li>修复 Sublime 3 跨平台支持。</li>
+<li>提供 优化的 PHP 错误异常捕获机制。</li>
+<li>开始嗨皮地使用 PHP 来开发 Sublime 插件吧 ^_^</li>
+</ul></li>
 </ul>
-<h3 id="v2.5-welcome">v2.5: Welcome</h3>
-<ul>
-<li>ADD multi-language support.</li>
-<li>ADD filesystem encoding support.</li>
-<li>ADD configure wizard on php_path and filesystem encoding.</li>
-<li>FIX sublime 3 support.</li>
-<li>IMPROVE error exception catch.</li>
-<li>Game start for hacking sublime with PHP.</li>
-</ul>
-<h2 id="for-developers">For Developers</h2>
-<p>Defaultly, All commands defination were in <code>sublime_php_command\Commands\</code> and the <code>Chigi.phpconnector-commands</code> file in the root directory of <code>sublime_php_command</code>, and every execute class should under a unique namespace and within a method called <code>run</code>.</p>
-<p>Demos are in the <code>sublime_php_command\Commands\Chigi\</code>, so as you can see, their namespace was <code>Chigi</code>.</p>
-<h1 id="license">License</h1>
+<h1 id="插入">插入</h1>
+<p>本插件目前已支持直接通过 PHP 命名空间方式，来支援开发者基于 PhpConnector 直接开发 Sublime 插件。对于 Sublime 2 和3 与 Python 版本之间的跨平台性，PhpConnector 2.5 开始已在底层提供了原生的支持，开发者只需维护一套自己的脚本，即可直接插入到跨版本跨平台 Sublime 设备中。</p>
+<p>相关示例代码已在原生插件中有提供，及 NameSpace 如何插入，命令列表 <code>Chigi.phpconnector-commands</code> 示例均在 插件的 <code>sublime_php_command</code> 目录下。</p>
+<p>开发者自己开发的扩展可随意放置在自己 PC 的任意路径下，最后直接在 Sublime 中配置上 Namespace 的关联路径即可。</p>
+<h1 id="协议">协议</h1>
 <p>The plugin is licensed under the MIT license.</p>
 <p>Copyright (C) &lt;2014&gt; Richard Lea <script type="text/javascript">
 <!--
