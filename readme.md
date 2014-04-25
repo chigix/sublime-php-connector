@@ -22,7 +22,7 @@ The plugin is to add support for php developers to develop a sublime plugin usin
 
 	If you haven't got Package Control installed you will need to make a clone of this repository into your packages folder, like so:
 
-	`git clone https://github.com/chigix/sublime-php-connector.git "Codeigniter Codeintel Helper" `
+	`git clone https://github.com/chigix/sublime-php-connector.git "PhpConnector"`
 
 	If you find error or wathever just fork it and send me a pull request.
 
