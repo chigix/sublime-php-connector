@@ -1,34 +1,72 @@
 # -*- coding: utf-8 -*-
 import sublime, sublime_plugin
-import os, subprocess, string, json, threading, re, time
+import os, subprocess, string, json, threading, re, time, signal
 
 ST3 = int(sublime.version()) > 3000
 if ST3:
     from .chigi_args import ChigiArgs
+    from .php_input import PhpInputThread
+    from .php_output import PhpOutputThread
     def cmp(str_a,str_b):
         return  (str_a > str_b) - (str_a < str_b);
 else:
     from chigi_args import ChigiArgs
-
+    from php_input import PhpInputThread
+    from php_output import PhpOutputThread
 
 class CheckEnvironmentCommandThread(threading.Thread):
     """
     A thread to prevent wizard for configure from freezing the UI
     """
 
-    def __init__(self, sublime,window):
+    def __init__(self, commanderApp):
         threading.Thread.__init__(self);
-        self.window = window;
         self.setting = sublime.load_settings("phpConnector.sublime-settings");
-        php_path = self.setting.get("php_path");
-        check_php_path = os.popen(php_path + ' -v').read();
+        self.php_path = None;
+        self.window = None;
+        self.windows = [];
+        self.commanderApp = commanderApp;
+
+    def run(self):
+        # 检测 PHP 环境
+        def freshSettings():
+            self.setting = sublime.load_settings("phpConnector.sublime-settings");
+            self.php_path = self.setting.get("php_path");
+            print("1###");
+            print(self.php_path);
+        time.sleep(1);
+        sublime.set_timeout(freshSettings,1);
+        time.sleep(1);
+        print("2###");
+        check_php_path = os.popen(self.php_path + ' -v').read();
+        print("3###");
         pattern = re.compile(r'^PHP \d+.\d+');
         if pattern.match(check_php_path):
             self.check_php_path = True;
         else:
             self.check_php_path = False;
-
-    def run(self):
+        # 检测 sublime 窗口打开完毕
+        def freshWindows():
+            self.windows = sublime.windows();
+        while(True):
+            historyWindows = self.windows;
+            time.sleep(0.5);
+            sublime.set_timeout(freshWindows,1);
+            if(len(self.windows) > len(historyWindows)):
+                self.window = self.windows[0];
+                break;
+            pass;
+        if(self.check_php_path is True):
+            # 注册 PHP 主进程
+            php_main = subprocess.Popen([self.php_path,os.path.join(ChigiArgs.CMD_DIR(), 'shell.php')], stdin=subprocess.PIPE,stdout=subprocess.PIPE,shell=True, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NEW_CONSOLE);
+            self.commanderApp.PHP_MAIN = php_main;
+            PhpOutputThread(php_main.stdout).start();
+            php_main.stdin.write("bankai\n".encode("UTF-8"));
+            php_main.stdin.write("QQCUM\n".encode("UTF-8"));
+            #php_main.stdin.write(bytes("QQCUM\n","UTF-8"));
+            #print(self.commanderApp.PHP_MAIN);
+            return;
+        # 当前 PHP 解释器不可用，自动进入配置向导
         time.sleep(0.3);
         wizard_open = False;
         if(self.check_php_path is False):
