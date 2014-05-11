@@ -14,9 +14,6 @@ else:
 class PhpConnectorTextCommand(sublime_plugin.TextCommand):
     def __init__(self,view):
         self.view = view;
-        if(ChigiArgs.CHECK_IS_BOOT):
-            CheckEnvironmentCommandThread(sublime,view.window()).start();
-            ChigiArgs.CHECK_IS_BOOT = False;
     def run(self, edit, classPath, user_args):
         self.chigiArgs = {
             'view': self.view,
