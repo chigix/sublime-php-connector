@@ -1,6 +1,8 @@
 <?php
+
 /* @var $inputCommand string 完整命令接收传入 */
 $inputCommand = "";
+
 function non_block_read($fd, &$data) {
     $read = array($fd);
     $write = array();
@@ -21,9 +23,16 @@ while (1) {
     $x = "";
     if (non_block_read(STDIN, $x)) {
         if ($x == "\n") {
+            $return = array(
+                'code' => 200,
+                'status_message' => '状态栏测试文字',
+                'msg' => '开发者消息',
+                'data' => '开发者数据'
+            );
+            echo base64_encode(json_encode($return)) . "\n";
             echo "Input: " . $inputCommand . "\n";
             $inputCommand = "";
-        }  else {
+        } else {
             $inputCommand .= $x;
         }
         // handle your input here

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import sublime, sublime_plugin, sys
-import os, subprocess, string, json, threading, re, time, atexit
+import os, subprocess, string, json, threading, re, time, base64, binascii
 
 ST3 = int(sublime.version()) > 3000
 if ST3:
@@ -23,13 +23,38 @@ class PhpOutputThread(threading.Thread):
         os.system("php -a");
 
     def run(self):
+        temp_buffer = '';
         while True:
             out = self.stdout.read(1).decode("UTF-8");
             if out == '' and p.poll() != None:
                 # break;
                 pass;
-            if out != '':
-                sys.stdout.write(out);
-                sys.stdout.flush();
+            else:
+                if out == "\n":
+                    result_str_raw = temp_buffer;
+                    temp_buffer = "";
+                    result_str = "";
+                    try:
+                        result_str = base64.b64decode(result_str_raw);
+                    except (TypeError):
+                        print(result_str_raw);
+                        continue;
+                    except (binascii.Error):
+                        print(result_str_raw);
+                        continue;
+                    result = 0;
+                    try:
+                        result = json.loads(result_str.decode('utf-8'));
+                    except (ValueError):
+                        print('The return value for the php plugin is wrong JSON.',True);
+                        if len(result_str)>0:
+                            sublime.error_message(u"PHP ERROR:\n{0}".format(result_str));
+                        continue;
+                    # -------------------------------------------------------------------
+                    #                 PHP 通信完成，开始处理结果
+                    # -------------------------------------------------------------------
+                    print(result);
+                else:
+                    temp_buffer = temp_buffer + out;
     def onDone(self, input):
         pass;
