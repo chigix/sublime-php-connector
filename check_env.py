@@ -19,13 +19,12 @@ class CheckEnvironmentCommandThread(threading.Thread):
     A thread to prevent wizard for configure from freezing the UI
     """
 
-    def __init__(self, commanderApp):
+    def __init__(self):
         threading.Thread.__init__(self);
         self.setting = sublime.load_settings("phpConnector.sublime-settings");
         self.php_path = None;
         self.window = None;
         self.windows = [];
-        self.commanderApp = commanderApp;
 
     def run(self):
         # 检测 PHP 环境
@@ -59,7 +58,7 @@ class CheckEnvironmentCommandThread(threading.Thread):
         if(self.check_php_path is True):
             # 注册 PHP 主进程
             php_main = subprocess.Popen([self.php_path,os.path.join(ChigiArgs.CMD_DIR(), 'shell.php')], stdin=subprocess.PIPE,stdout=subprocess.PIPE,shell=True, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NEW_CONSOLE);
-            self.commanderApp.PHP_MAIN = php_main;
+            ChigiArgs.PHP_MAIN = php_main;
             PhpOutputThread(php_main.stdout).start();
             php_main.stdin.write("bankai\n".encode("UTF-8"));
             php_main.stdin.write("QQCUM\n".encode("UTF-8"));
