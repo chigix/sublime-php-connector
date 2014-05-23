@@ -48,7 +48,10 @@ class PhpOutputThread(threading.Thread):
                     except (ValueError):
                         print('The return value for the php plugin is wrong JSON.',True);
                         if len(result_str)>0:
-                            sublime.error_message(u"PHP ERROR:\n{0}".format(result_str));
+                            try:
+                                sublime.error_message(u"PHP ERROR:\n{0}".format(result_str.decode('utf-8')));
+                            except(UnicodeDecodeError):
+                                sublime.error_message(u"PHP ERROR:\n{0}".format(result_str_raw));
                         continue;
                     # -------------------------------------------------------------------
                     #                 PHP 通信完成，开始处理结果
