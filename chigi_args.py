@@ -10,6 +10,7 @@ class ChigiArgs(object):
     arguments = {};  #static
     CHECK_IS_BOOT = True; #static
     PHP_MAIN = None;
+    MANAGER = [];
     def __init__(self,name='PhpConnector'):
         '''constructor'''
         self.name = name    #class instance(data) attribute

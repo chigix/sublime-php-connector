@@ -56,7 +56,24 @@ class PhpOutputThread(threading.Thread):
                     # -------------------------------------------------------------------
                     #                 PHP 通信完成，开始处理结果
                     # -------------------------------------------------------------------
-                    print(result);
+                    returned_data = result[2];
+                    data_type = "UNKNONW";
+                    if(result[0][1] is 0):
+                        data_type = "NUMBER";
+                    elif result[0][1] is 1:
+                        data_type = "STRING";
+                    elif result[0][1] is 3:
+                        data_type = "ARRAY";
+                    elif result[0][1] is 4:
+                        data_type = "OBJECT";
+                    elif result[0][1] is 5:
+                        data_type = "NONE";
+                    if(result[0][0] is 0):
+                        # LOG LEVEL
+                        print(u"【" + data_type + u"】 " + result[1]);
+                        print(returned_data);
+                    else:
+                        print(result);
                 else:
                     temp_buffer = temp_buffer + out;
     def onDone(self, input):

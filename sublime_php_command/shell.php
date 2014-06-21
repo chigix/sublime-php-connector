@@ -1,23 +1,20 @@
 <?php
 
+namespace Chigi\Sublime;
+
+use Chigi\Sublime\Manager\ModelsManager;
+use Chigi\Sublime\Settings\Environment;
+
+$base_dir = dirname(__FILE__);
+
+require_once($base_dir . '/Core/functions.php');
+require_once( $base_dir . '/Core/autoload.php');
+
+// 开始系统环境初始化
+Models\Factory\ModelsFactory::initManager();
+
 /* @var $inputCommand string 完整命令接收传入 */
 $inputCommand = "";
-
-function non_block_read($fd, &$data) {
-    $read = array($fd);
-    $write = array();
-    $except = array();
-    $result = stream_select($read, $write, $except, 0);
-    if ($result === false) {
-        throw new Exception('stream_select failed');
-    }
-    if ($result === 0) {
-        return false;
-    }
-    $data = stream_get_line($fd, 1);
-    return true;
-}
-
 while (1) {
     /* @var $x string 临时接收字符 */
     $x = "";
@@ -29,8 +26,12 @@ while (1) {
                 'msg' => '开发者消息',
                 'data' => '开发者数据'
             );
-            echo base64_encode(json_encode($return)) . "\n";
-            echo "Input: " . $inputCommand . "\n";
+            // echo base64_encode(json_encode($return)) . "\n";
+            // echo "Input: " . $inputCommand . "\n";
+            //$env = new Environment(json_decode(base64_decode($inputCommand), TRUE));
+            //echo $inputCommand . "\n";
+            executePush(Models\Factory\ModelsFactory::createPlainMsg(json_decode(base64_decode($inputCommand), TRUE)));
+            executePush(Models\Factory\ModelsFactory::createPlainMsg("COMMAND FINISHED 指令结束"));
             $inputCommand = "";
         } else {
             $inputCommand .= $x;
