@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\HttpFoundation\File\Exception;
+namespace Chigi\Sublime\Exception;
 
 /**
  * Thrown when the access on a file was denied.
