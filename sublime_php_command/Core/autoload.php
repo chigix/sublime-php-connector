@@ -1,5 +1,7 @@
 <?php
 
+use Chigi\Sublime\Exception\ArrayIndexOutOfBoundsException;
+use Chigi\Sublime\Exception\ClassNotFoundException;
 use Chigi\Sublime\Exception\ScriptNotFoundException;
 use Chigi\Sublime\Settings\Environment;
 
@@ -27,11 +29,11 @@ function __autoload($class) {
                                 array_keys($quickPath), array_values($quickPath), $map[$tmpNamespace]
                         )
                         . '/' . implode('/', $tmpParts) . '.php';
-                if (@include_once(iconv('utf-8', Environment::getInstance()->getFileSystemEncoding(), $scriptFile))){ // @ - to suppress warnings, 
+                if (@include_once(iconv('utf-8', Environment::getInstance()->getFileSystemEncoding(), $scriptFile))) { // @ - to suppress warnings, 
+;
+                } else if (@include_once($scriptFile)) {
                     ;
-                } else if(@include_once($scriptFile)){
-                    ;
-                } else{
+                } else {
                     throw new ScriptNotFoundException($scriptFile);
                 }
                 return;
@@ -41,23 +43,23 @@ function __autoload($class) {
                                 array_keys($quickPath), array_values($quickPath), $map[$tmpNamespace . '\\']
                         )
                         . '/' . implode('/', $tmpParts) . '.php';
-                if (@include_once(iconv('utf-8', Environment::getInstance()->getFileSystemEncoding(), $scriptFile))){ // @ - to suppress warnings, 
+                if (@include_once(iconv('utf-8', Environment::getInstance()->getFileSystemEncoding(), $scriptFile))) { // @ - to suppress warnings, 
+;
+                } else if (@include_once($scriptFile)) {
                     ;
-                } else if(@include_once($scriptFile)){
-                    ;
-                } else{
+                } else {
                     throw new ScriptNotFoundException($scriptFile);
                 }
                 return;
-            }else{
+            } else {
                 // 都不符合，则将末节 namespace 移至 $tmpParts 前缀拼接，重新检索
                 try {
                     array_unshift($tmpParts, $parts[$i]);
                     unset($parts[$i]);
-                } catch (\Chigi\Sublime\Exception\ArrayIndexOutOfBoundsException $e) {
+                } catch (ArrayIndexOutOfBoundsException $e) {
                     $callStack = debug_backtrace();
                     $lastStack = $callStack[0];
-                    $exToThrow = new \Chigi\Sublime\Exception\ClassNotFoundException($class,0,null);
+                    $exToThrow = new ClassNotFoundException($class, 0, null);
                     $exToThrow->setFile($lastStack['file'])->setLine($lastStack['line']);
                     throw $exToThrow;
                     return;
