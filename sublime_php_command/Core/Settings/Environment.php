@@ -22,6 +22,7 @@ class Environment {
         $this->fileSystemEncoding = "UTF-8";
         $this->CommandsManager = new CommandManager();
         $this->ModelsManager = new ModelsManager();
+        $this->isDebug = FALSE;
     }
 
     /**
@@ -82,6 +83,26 @@ class Environment {
 
     public function getModelsManager() {
         return $this->ModelsManager;
+    }
+
+    private $isDebug = FALSE;
+
+    public function debugOn() {
+        $this->isDebug = TRUE;
+        return $this;
+    }
+
+    public function debugOff() {
+        $this->isDebug = FALSE;
+        return $this;
+    }
+    
+    /**
+     * Check Current Environment is in Debug.
+     * @return boolean
+     */
+    public function isDebug() {
+        return $this->isDebug;
     }
 
 }
