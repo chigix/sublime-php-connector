@@ -20,20 +20,18 @@ class AxTextCommand(sublime_plugin.TextCommand):
         pass;
     def id(self):
         return self.__id;
-    def run(self, edit, user_args):
+    def run(self, edit, call, cmd_args):
         # 1. 加载配置信息
         self.setting = sublime.load_settings("phpConnector.sublime-settings");
         command_to_run = {
             'id':self.id(),
-            'call':'Chigi\\Tester',
+            'call':call,
             'editor':{
                 'currentView':{
                     'filename':self.view.file_name()
                 }
             },
-            'ns' : self.setting.get("namespaces"),
-            'user_args' : user_args,
-            'enc' : self.setting.get("filesystem_encoding")
+            'args' : cmd_args
         };
         cmd_str = base64.b64encode(json.dumps(command_to_run, sort_keys=True).encode('utf-8')).decode('utf-8');
         ChigiArgs.PHP_MAIN.stdin.write(cmd_str.encode("UTF-8"));
