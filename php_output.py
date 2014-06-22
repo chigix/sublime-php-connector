@@ -70,17 +70,21 @@ class PhpOutputThread(threading.Thread):
                         data_type = "OBJECT";
                     elif result[0][1] is 5:
                         data_type = "NONE";
-                    if(result[0][0] is 0):
-                        # DEBUG LEVEL
-                        if(result[0][2] is 0):
-                            pass;
-                        elif result[0][2] is 6:
-                            print(u"【DEBUG】 " + result[1]);
-                        elif result[0][2] is 7:
-                            pass;
-                        elif result[0][2] is 8:
-                            print(u"【" + data_type + u"】 " + result[1]);
-                            print(returned_data);
+                    if(result[0][2] is 1):
+                        # TODO Open a file
+                        pass;
+                    elif result[0][2] is 6:
+                        print(u"【INFO】 " + result[1]);
+                    elif result[0][2] is 7:
+                        # TODO Copy to clipboard
+                        pass;
+                    elif result[0][2] is 8:
+                        # DEBUG
+                        print(u"【" + data_type + u"】 " + result[1]);
+                        print(returned_data);
+                    elif result[0][2] is 9:
+                        # TODO show quick panel
+                        pass;
                     else:
                         print(result);
                 else:

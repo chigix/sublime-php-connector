@@ -77,6 +77,11 @@ class ModelsFactory {
         if ($model instanceof PlainMsgData) {
             if ($model->getDataLevel() === ReturnDataLevel::DEBUG) {
                 $actionCode = EditorAction::PRINT_LOG;
+            } elseif ($model->getDataLevel() === ReturnDataLevel::INFO) {
+                if (is_string($model->getData())) {
+                    $model->setMsg($model->getData());
+                }
+                $actionCode = EditorAction::PRINT_MSG;
             }
         } elseif ($model instanceof QuickPanelData) {
             $actionCode = EditorAction::QUICK_PANEL;

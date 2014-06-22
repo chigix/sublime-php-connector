@@ -47,7 +47,7 @@ while (1) {
                 executePush($returnDataFrmRun->setMsg($returnDataFrmRun->getMsg() . " --Return Data From <" . $arguments['call'] . ">"));
             }
             // executePush(ModelsFactory::createPlainMsg(json_decode(base64_decode($inputCommand), TRUE)));
-            executePush(ModelsFactory::createPlainMsg("## COMMAND FINISHED 指令结束 : " . $arguments['call']));
+            executePush(ModelsFactory::createPlainMsg("")->setMsg("## COMMAND FINISHED 指令结束 : " . $arguments['call']));
             $inputCommand = "";
         } else {
             $inputCommand .= $x;
