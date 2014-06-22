@@ -62,6 +62,8 @@ class PhpOutputThread(threading.Thread):
                         data_type = "NUMBER";
                     elif result[0][1] is 1:
                         data_type = "STRING";
+                    elif result[0][1] is 2:
+                        data_type = "EXCEPTION";
                     elif result[0][1] is 3:
                         data_type = "ARRAY";
                     elif result[0][1] is 4:
