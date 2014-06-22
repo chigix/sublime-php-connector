@@ -20,8 +20,10 @@ while (1) {
     $x = "";
     if (non_block_read(STDIN, $x)) {
         if ($x == "\n") {
+            // 默认关闭调试模式
+            Settings\Environment::getInstance()->debugOff();
             $arguments = json_decode(base64_decode($inputCommand), TRUE);
-            executePush(ModelsFactory::createPlainMsg($arguments['args'])->setMsg("ARGUMENTS"));
+            executePush(ModelsFactory::createPlainMsg($arguments['args'])->setMsg("ARGUMENTS")->setDataLevel(Enums\ReturnDataLevel::DEBUG));
             try {
                 /* @var $command Models\BaseCommand */
                 $command = new $arguments['call']($arguments['id']);
@@ -29,7 +31,7 @@ while (1) {
             } catch (Exception\UnexpectedTypeException $exc) {
                 // call 参数中指定的不是正确的 BaseCommand 的子类
                 // 即无法作为正确的指令对象进行调用
-                executePush(ModelsFactory::createPlainMsg('<' . $arguments['call'] . '> IS not valid command class.'));
+                executePush(ModelsFactory::createPlainMsg('<' . $arguments['call'] . '> IS not valid command class.')->setDataLevel(Enums\ReturnDataLevel::ERROR));
             } catch (\Exception $exc) {
                 executePush($exc);
             }
@@ -44,9 +46,8 @@ while (1) {
             if (!is_null($returnDataFrmRun)) {
                 executePush($returnDataFrmRun->setMsg($returnDataFrmRun->getMsg() . " --Return Data From <" . $arguments['call'] . ">"));
             }
-            executePush(ModelsFactory::createPlainMsg(Settings\Environment::getInstance()->getFileSystemEncoding()));
             // executePush(ModelsFactory::createPlainMsg(json_decode(base64_decode($inputCommand), TRUE)));
-            executePush(ModelsFactory::createPlainMsg("COMMAND FINISHED 指令结束"));
+            executePush(ModelsFactory::createPlainMsg("## COMMAND FINISHED 指令结束 : " . $arguments['call']));
             $inputCommand = "";
         } else {
             $inputCommand .= $x;
