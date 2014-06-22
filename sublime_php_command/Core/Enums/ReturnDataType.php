@@ -24,9 +24,12 @@ namespace Chigi\Sublime\Enums;
  * @author 郷
  */
 class ReturnDataType {
+
     const NUMBER = 0;
     const STRING = 1;
+    const EXCEPTION = 2;
     const ARR = 3;
     const OBJECT = 4;
     const NONE = 5;
+
 }
