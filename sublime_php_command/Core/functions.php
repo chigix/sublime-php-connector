@@ -70,6 +70,8 @@ function non_block_read($fd, &$data) {
 function executePush($content) {
     if (is_string($content)) {
         // 封装字符串输出
+        $model = Chigi\Sublime\Models\Factory\ModelsFactory::createPlainMsg($content);
+        echo base64_encode(json_encode(\Chigi\Sublime\Models\Factory\ModelsFactory::pushFormatter($model))) . "\n";
     } elseif ($content instanceof BaseModel) {
         // 输出标准数据模型
         echo base64_encode(json_encode(\Chigi\Sublime\Models\Factory\ModelsFactory::pushFormatter($content))) . "\n";
