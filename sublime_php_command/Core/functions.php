@@ -34,6 +34,16 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
     if (error_reporting() & $severity) {
         if (strpos($message, "Undefined offset:") !== FALSE) {
             throw new ArrayIndexOutOfBoundsException($message, 0, new ErrorException($message, 0, $severity, $filename, $lineno));
+        } elseif (strpos($message, 'failed to open stream: No such file or directory') !== FALSE) {
+            //executePush($message);
+            $extractedArr = array();
+            preg_match("#^(require_once|include_once|require|include)\((.+)\): failed to open stream: No such file or directory$#", $message, $extractedArr);
+            //executePush(Chigi\Sublime\Models\Factory\ModelsFactory::createPlainMsg($extractedArr));
+            $exception = new Chigi\Sublime\Exception\FileNotFoundException($extractedArr[2]);
+            $exception->setCode(0);
+            $exception->setFile($filename);
+            $exception->setLine($lineno);
+            throw $exception;
         } else {
             throw new ErrorException($message, 0, $severity, $filename, $lineno);
         }
