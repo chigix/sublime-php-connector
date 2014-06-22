@@ -81,10 +81,24 @@ function executePush($content) {
     if (is_string($content)) {
         // 封装字符串输出
         $model = Chigi\Sublime\Models\Factory\ModelsFactory::createPlainMsg($content);
-        echo base64_encode(json_encode(\Chigi\Sublime\Models\Factory\ModelsFactory::pushFormatter($model))) . "\n";
+        if (Environment::getInstance()->isDebug()) {
+            // 仅针对调试模式时输出。
+            echo base64_encode(json_encode(\Chigi\Sublime\Models\Factory\ModelsFactory::pushFormatter($model))) . "\n";
+        }
+    } elseif ($content instanceof Chigi\Sublime\Models\BaseReturnData) {
+        if ($content->getDataLevel() === \Chigi\Sublime\Enums\ReturnDataLevel::DEBUG && !Environment::getInstance()->isDebug()) {
+            // 非调试模式下，所有调试级数据均不输出。
+            ;
+        } else {
+            echo base64_encode(json_encode(\Chigi\Sublime\Models\Factory\ModelsFactory::pushFormatter($content))) . "\n";
+        }
     } elseif ($content instanceof BaseModel) {
         // 输出标准数据模型
         echo base64_encode(json_encode(\Chigi\Sublime\Models\Factory\ModelsFactory::pushFormatter($content))) . "\n";
+    } elseif ($content instanceof \Chigi\Sublime\Exception\WrapperedException) {
+        // TODO: 该种已由开发者包装过的异常信息，用于弹窗显示。
+        $logMsg = Chigi\Sublime\Models\Factory\ModelsFactory::createPlainMsg($content);
+        echo base64_encode(json_encode(\Chigi\Sublime\Models\Factory\ModelsFactory::pushFormatter($logMsg))) . "\n";
     } elseif ($content instanceof \Exception) {
         $logMsg = Chigi\Sublime\Models\Factory\ModelsFactory::createPlainMsg($content);
         echo base64_encode(json_encode(\Chigi\Sublime\Models\Factory\ModelsFactory::pushFormatter($logMsg))) . "\n";
