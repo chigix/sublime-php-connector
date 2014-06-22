@@ -92,6 +92,7 @@ class ModelsFactory {
             if ($modelOrigData instanceof Exception) {
                 $dataType = ReturnDataType::EXCEPTION;
                 $model->setMsg("<" . get_class($modelOrigData) . ">  " . $modelOrigData->getMessage());
+                $model->setDataLevel(ReturnDataLevel::WARNING);
                 if ($model->getDataLevel() === ReturnDataLevel::DEBUG) {
                     // 按 调试模式，对异常信息格式化成文本字符串输出
                     $msg = "    " . $modelOrigData->getFile() . " : " . $modelOrigData->getLine() . "\n";
