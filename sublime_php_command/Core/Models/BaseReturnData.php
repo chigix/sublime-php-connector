@@ -27,9 +27,9 @@ use Chigi\Sublime\Enums\ReturnDataLevel;
  */
 abstract class BaseReturnData extends BaseModel {
 
-    private $dataLevel;
-    private $msg;
-    private $data;
+    private $dataLevel = 0;
+    private $msg = "Please Call BaseReturnData::__initial method when override";
+    private $data = null;
 
     /**
      * 获得数据级别
@@ -81,6 +81,9 @@ abstract class BaseReturnData extends BaseModel {
      * @return \Chigi\Sublime\Models\BaseReturnData
      */
     public function setData($data) {
+        if (is_object($data)) {
+            $this->msg = "FROM CLASS " . get_class($data);
+        }
         $this->data = $data;
         return $this;
     }
