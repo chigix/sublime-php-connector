@@ -1,7 +1,10 @@
 [
     {
         "caption": "PhpConnector: Launch Connection",
-        "command": "php_connector_text",
-        "args":{"classPath":"Chigi\\Tester","user_args":"bankai=teststring"}
+        "command": "ax_text",
+        "args":{
+            "call" : "\\Chigi\\Sublime\\Commands\\CommandsEntrancePanel", 
+            "cmd_args":{}
+        }
     }
 ]
