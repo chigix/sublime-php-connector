@@ -31,11 +31,6 @@ class Editor {
         return $this->currentEditingFile;
     }
 
-    // Operation Code mappings
-    public static $NONE_ACTION = 0;
-    public static $OPEN_FILE = 1;
-    public static $OPEN_QUICK_PANEL = 9;
-
 }
 
 ?>
