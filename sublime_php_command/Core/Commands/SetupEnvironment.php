@@ -38,7 +38,7 @@ class SetupEnvironment extends BaseCommand {
     private $arguments;
 
     public function __initial() {
-        
+        Environment::getInstance()->debugOn();
     }
 
     /**
@@ -69,7 +69,6 @@ class SetupEnvironment extends BaseCommand {
         if ($tmpValue = $this->arguments->getArg("namespace_map")) {
             Environment::getInstance()->setNamespacesMap($tmpValue);
         }
-        return ModelsFactory::createPlainMsg();
     }
 
 }
