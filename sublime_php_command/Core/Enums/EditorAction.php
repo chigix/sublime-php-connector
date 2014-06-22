@@ -26,6 +26,7 @@ namespace Chigi\Sublime\Enums;
 class EditorAction {
     const NONE = 0;
     const OPEN_FILE = 1;
+    const PRINT_MSG = 6;
     const CLIPBOARD = 7;
     const PRINT_LOG = 8;
     const QUICK_PANEL = 9;
