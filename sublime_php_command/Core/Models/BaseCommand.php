@@ -59,10 +59,20 @@ abstract class BaseCommand extends BaseModel {
      * @param array $arguments
      */
     public abstract function setArgs($arguments);
-    
+
     /**
      * 指令实现类的最核心实现：该指令的运行方法内容
      * @return BaseReturnData 
      */
     public abstract function run();
+
+    /**
+     * 设置当前指令是否显示在 Commands List Panel 中。<br/>
+     * 默认为 TRUE，若要修改，请在子类中重写本方法。
+     * @return boolean
+     */
+    public function isVisible() {
+        return TRUE;
+    }
+
 }
