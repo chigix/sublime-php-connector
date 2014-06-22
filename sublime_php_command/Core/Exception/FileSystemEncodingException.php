@@ -2,7 +2,7 @@
 
 namespace Chigi\Sublime\Exception;
 
-use Chigi\Sublime\Settings\Environment;
+use Exception;
 
 /**
  * Thrown when the fileSystemEnoding is incorrect.<br/>
@@ -10,7 +10,7 @@ use Chigi\Sublime\Settings\Environment;
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
-class FileSystemEncodingException extends \Exception
+class FileSystemEncodingException extends Exception
 {
     
     /**
@@ -18,8 +18,11 @@ class FileSystemEncodingException extends \Exception
      *
      * @param string $enc The encoding specificed in sublime settings.
      */
-    public function __construct($enc)
+    public function __construct($enc = null)
     {
+        if (is_null($enc)) {
+            $enc = \Chigi\Sublime\Settings\Environment::getInstance()->getFileSystemEncoding();
+        }
         parent::__construct(sprintf('"%s" isn\'t current filesystem encoding, please specific another right.', $enc));
     }
 }
