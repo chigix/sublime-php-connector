@@ -64,7 +64,7 @@ function non_block_read($fd, &$data) {
 
 /**
  * 执行模型指令
- * @param string|BaseModel $content
+ * @param string|BaseModel|Exception $content
  * @return boolean
  */
 function executePush($content) {
@@ -73,6 +73,9 @@ function executePush($content) {
     } elseif ($content instanceof BaseModel) {
         // 输出标准数据模型
         echo base64_encode(json_encode(\Chigi\Sublime\Models\Factory\ModelsFactory::pushFormatter($content))) . "\n";
+    } elseif ($content instanceof \Exception) {
+        $logMsg = Chigi\Sublime\Models\Factory\ModelsFactory::createPlainMsg($content);
+        echo base64_encode(json_encode(\Chigi\Sublime\Models\Factory\ModelsFactory::pushFormatter($logMsg))) . "\n";
     } else {
         // 不支持的数据类型格式，跳过
         // @TODO 可抛异常
