@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace Chigi\Sublime\Util;
+namespace Chigi\Sublime\Utils;
 
 /**
  * 返回值数据对象工具类

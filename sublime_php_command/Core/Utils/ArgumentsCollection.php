@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace Chigi\Sublime\Util;
+namespace Chigi\Sublime\Utils;
 
 /**
  * Description of ArgumentsCollection
