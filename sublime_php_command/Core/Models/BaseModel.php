@@ -26,6 +26,16 @@ namespace Chigi\Sublime\Models;
 abstract class BaseModel {
 
     /**
+     * (PHP 5 &gt;= 5.3.0)<br/>
+     * the "Late Static Binding" class name
+     * @link http://php.net/manual/en/function.get-called-class.php
+     * @return string the class name.
+     */
+    public static function getClassName() {
+        return get_called_class();
+    }
+
+    /**
      * @var int
      */
     private $id;
