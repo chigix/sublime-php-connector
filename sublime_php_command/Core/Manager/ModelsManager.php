@@ -27,17 +27,19 @@ use Chigi\Sublime\Models\BaseModel;
  * @author 郷
  */
 class ModelsManager {
+
     /**
      * 模型对象迭代器
      * @var ArrayIterator
      */
     private $modelsCollection = null;
+
     /**
      * 模型对象 ID 值索引记录
      * @var int
      */
     protected static $idIndex = 1;
-    
+
     function __construct() {
         $this->modelsCollection = new ArrayIterator();
     }
@@ -52,11 +54,15 @@ class ModelsManager {
      * @return ModelsManager
      */
     public function push(BaseModel $model) {
-        $model->setId(ModelsManager::$idIndex);
-        $this->modelsCollection->offsetSet(ModelsManager::$idIndex ++, $model);
+        if ($model->getId() < 0) {
+            $model->setId(ModelsManager::$idIndex);
+            $this->modelsCollection->offsetSet(ModelsManager::$idIndex ++, $model);
+        } else {
+            $this->modelsCollection->offsetSet($model->getId(), $model);
+        }
         return $this;
     }
-    
+
     /**
      * 移除模型对象
      * @param BaseModel $model
