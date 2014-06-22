@@ -21,10 +21,11 @@ namespace Chigi\Sublime\Models\Factory;
 use Chigi\Sublime\Enums\EditorAction;
 use Chigi\Sublime\Enums\ReturnDataLevel;
 use Chigi\Sublime\Enums\ReturnDataType;
-use Chigi\Sublime\Manager\ModelsManager;
 use Chigi\Sublime\Models\BaseModel;
 use Chigi\Sublime\Models\ReturnDataSpec\PlainMsgData;
 use Chigi\Sublime\Models\ReturnDataSpec\QuickPanelData;
+use Chigi\Sublime\Settings\Environment;
+use Exception;
 
 /**
  * Description of ModelsFactory
@@ -33,18 +34,12 @@ use Chigi\Sublime\Models\ReturnDataSpec\QuickPanelData;
  */
 class ModelsFactory {
 
-    /**
-     *
-     * @var ModelsManager
-     */
-    private static $manager;
-
     public static function initManager() {
-        self::$manager = new ModelsManager();
+        Environment::getInstance();
     }
 
     public static function registerModel(BaseModel $model) {
-        self::$manager->push($model);
+        Environment::getInstance()->getModelsManager()->push($model);
     }
 
     /**
@@ -53,8 +48,8 @@ class ModelsFactory {
      * @return PlainMsgData
      */
     public static function createPlainMsg($msg = null) {
-        $model = new PlainMsgData(0);
-        self::$manager->push($model);
+        $model = new PlainMsgData();
+        Environment::getInstance()->getModelsManager()->push($model);
         $model->setData($msg);
         return $model;
     }
@@ -64,8 +59,8 @@ class ModelsFactory {
      * @return QuickPanelData
      */
     public static function createQuickPanel() {
-        $model = new QuickPanelData(0);
-        self::$manager->push($model);
+        $model = new QuickPanelData();
+        Environment::getInstance()->getModelsManager()->push($model);
         return $model;
     }
 
@@ -93,7 +88,20 @@ class ModelsFactory {
         } elseif (is_array($model->getData())) {
             $dataType = ReturnDataType::ARR;
         } elseif (is_object($model->getData())) {
-            $dataType = ReturnDataType::OBJECT;
+            $modelOrigData = $model->getData();
+            if ($modelOrigData instanceof Exception) {
+                $dataType = ReturnDataType::EXCEPTION;
+                $model->setMsg("<" . get_class($modelOrigData) . ">  " . $modelOrigData->getMessage());
+                if ($model->getDataLevel() === ReturnDataLevel::DEBUG) {
+                    // 按 调试模式，对异常信息格式化成文本字符串输出
+                    $msg = "    " . $modelOrigData->getFile() . " : " . $modelOrigData->getLine() . "\n";
+                    $msg .= '    【CODE】' . $modelOrigData->getCode() . "\n";
+                    $msg .= '    【TRACE】' . str_replace("\n", "\n             ", $modelOrigData->getTraceAsString()) . "\n";
+                    $model->setData($msg);
+                }
+            } else {
+                $dataType = ReturnDataType::OBJECT;
+            }
         } elseif (is_null($model->getData())) {
             $dataType = ReturnDataType::NONE;
         }

@@ -3,29 +3,25 @@
 namespace Chigi\Sublime\Settings;
 
 use Chigi\Sublime\Exception\FileSystemEncodingException;
+use Chigi\Sublime\Manager\CommandManager;
+use Chigi\Sublime\Manager\ModelsManager;
 
+/**
+ * 运行环境类
+ */
 class Environment {
 
     private static $sInstance = null;
 
-    private function __construct() {
-        $this->arguments = json_decode(base64_decode($_SERVER['argv'][1]), true);
-        $this->corePath = dirname(dirname(__FILE__));
-        // 特定细节参数处理
-        $this->userArgs = $this->rmArg('user_args');
-        $this->fileSystemEncoding = $this->rmArg('enc');
-        $this->namespacesMap = $this->rmArg('ns');
-    }
-    
     /**
-     * 处理特定细节参数工具方法
-     * @param string $name
-     * @return mixed
+     * Envirionment 对象构造器
+     * @param array $params_arr
      */
-    private function rmArg($name) {
-        $value = $this->arguments[$name];
-        unset($this->arguments[$name]);
-        return $value;
+    private function __construct() {
+        $this->corePath = dirname(dirname(__FILE__));
+        $this->fileSystemEncoding = "UTF-8";
+        $this->CommandsManager = new CommandManager();
+        $this->ModelsManager = new ModelsManager();
     }
 
     /**
@@ -36,65 +32,56 @@ class Environment {
     public static function getInstance() {
         if (is_null(self::$sInstance)) {
             self::$sInstance = new Environment();
-            try {
-                self::$sInstance->editor = new Editor(self::$sInstance->arguments['editor']);
-            } catch (FileSystemEncodingException $exc) {
-                throw $exc;
-                //echo $exc->getTraceAsString();
-            }
         }
         return self::$sInstance;
-    }
-
-    /**
-     * 当前 sublime 编辑器配置信息
-     * @var Editor
-     */
-    private $editor;
-
-    /**
-     * 
-     * @return Editor
-     */
-    public function getEditor() {
-        return $this->editor;
-    }
-
-    private $arguments;
-
-    public function getArguments() {
-        return $this->arguments;
-    }
-
-    public function getArgument($argName) {
-        return isset($this->arguments[$argName]) ? $this->arguments[$argName] : NULL;
-    }
-
-    private $userArgs;
-
-    public function getUserArgs() {
-        return $this->userArgs;
-    }
-
-    public function getUserArg($argName) {
-        return isset($this->userArgs[$argName]) ? $this->userArgs[$argName] : NULL;
     }
 
     private $corePath;
 
     public function getCorePath() {
-        return $this->corePath;
+        return iconv($this->fileSystemEncoding, "utf-8", $this->corePath);
     }
 
-    private $fileSystemEncoding;
+    private $fileSystemEncoding = "UTF-8";
 
     public function getFileSystemEncoding() {
         return $this->fileSystemEncoding;
     }
-    
+
+    public function setFileSystemEncoding($fileSystemEncoding) {
+        $this->fileSystemEncoding = $fileSystemEncoding;
+        return $this;
+    }
+
     private $namespacesMap = array();
+
     public function getNamespacesMap() {
         return $this->namespacesMap;
+    }
+
+    public function setNamespacesMap($namespacesMap) {
+        $this->namespacesMap = $namespacesMap;
+        return $this;
+    }
+
+    /**
+     *
+     * @var CommandManager
+     */
+    private $CommandsManager;
+
+    public function getCommandsManager() {
+        return $this->CommandsManager;
+    }
+
+    /**
+     *
+     * @var ModelsManager
+     */
+    private $ModelsManager;
+
+    public function getModelsManager() {
+        return $this->ModelsManager;
     }
 
 }
