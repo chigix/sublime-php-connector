@@ -22,6 +22,8 @@ class CheckEnvironmentCommandThread(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self);
         self.setting = sublime.load_settings("phpConnector.sublime-settings");
+        self.encoding = self.setting.get("filesystem_encoding");
+        self.namespace = self.setting.get("namespaces");
         self.php_path = None;
         self.window = None;
         self.windows = [];
@@ -60,8 +62,18 @@ class CheckEnvironmentCommandThread(threading.Thread):
             php_main = subprocess.Popen([self.php_path,os.path.join(ChigiArgs.CMD_DIR(), 'shell.php')], stdin=subprocess.PIPE,stdout=subprocess.PIPE,shell=True, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NEW_CONSOLE);
             ChigiArgs.PHP_MAIN = php_main;
             PhpOutputThread(php_main.stdout).start();
-            php_main.stdin.write("bankai\n".encode("UTF-8"));
-            php_main.stdin.write("QQCUM\n".encode("UTF-8"));
+            def initPHP():
+                self.window.run_command("ax_text",{
+                    "call":"\\Chigi\\Sublime\\Commands\\SetupEnvironment",
+                    "cmd_args":{
+                        "file_system_encoding":self.encoding,
+                        "namespace_map":self.namespace
+                    }
+                });
+            sublime.set_timeout(initPHP, 1);
+            print("4###");
+            #php_main.stdin.write("bankai\n".encode("UTF-8"));
+            #php_main.stdin.write("QQCUM\n".encode("UTF-8"));
             #php_main.stdin.write(bytes("QQCUM\n","UTF-8"));
             #print(self.commanderApp.PHP_MAIN);
             return;
