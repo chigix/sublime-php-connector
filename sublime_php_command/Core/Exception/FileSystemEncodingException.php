@@ -5,7 +5,8 @@ namespace Chigi\Sublime\Exception;
 use Chigi\Sublime\Settings\Environment;
 
 /**
- * Thrown when a file was not found
+ * Thrown when the fileSystemEnoding is incorrect.<br/>
+ * The Checking Condition is if a file was surely found upon the given fileSystemEncoding.
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
