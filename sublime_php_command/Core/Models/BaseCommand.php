@@ -26,10 +26,18 @@ namespace Chigi\Sublime\Models;
 abstract class BaseCommand extends BaseModel {
 
     /**
-     * 获得标题，若实现类中不覆盖声明，则默认取胜 Command Name
+     * 获得标题，若实现类中不覆盖声明，则默认取自 Command Name
      * @return string
      */
     public function getTitle() {
+        return $this->getName();
+    }
+    
+    /**
+     * 获得描述信息字符串，若实现类中不覆盖声明，则默认取自 Command Name
+     * @return string
+     */
+    public function getDesc() {
         return $this->getName();
     }
 
@@ -74,5 +82,5 @@ abstract class BaseCommand extends BaseModel {
     public function isVisible() {
         return TRUE;
     }
-
-}
+    
+    }
