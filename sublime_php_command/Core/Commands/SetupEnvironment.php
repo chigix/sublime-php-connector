@@ -20,7 +20,6 @@ namespace Chigi\Sublime\Commands;
 
 use Chigi\Sublime\Models\BaseCommand;
 use Chigi\Sublime\Models\BaseReturnData;
-use Chigi\Sublime\Models\Factory\ModelsFactory;
 use Chigi\Sublime\Settings\Environment;
 use Chigi\Sublime\Utils\ArgumentsCollection;
 
@@ -70,5 +69,10 @@ class SetupEnvironment extends BaseCommand {
             Environment::getInstance()->setNamespacesMap($tmpValue);
         }
     }
+    
+    public function isVisible() {
+        return FALSE;
+    }
+
 
 }
