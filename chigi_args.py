@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import os, sublime
-import re
+import sublime, sublime_plugin, sys
+import os, subprocess, string, json, threading, re, time, base64, binascii
 
 import sublime,copy
 
@@ -10,7 +10,25 @@ class ChigiArgs(object):
     arguments = {};  #static
     CHECK_IS_BOOT = True; #static
     PHP_MAIN = None;
-    MANAGER = [];
+    MANAGER = {};
+    instance=None;
+    mutex=threading.Lock();
+    @staticmethod
+    def GetInstance():
+        if(ChigiArgs.instance==None):
+            ChigiArgs.mutex.acquire()
+            if(ChigiArgs.instance==None):
+                # print('初始化实例')
+                ChigiArgs.instance=ChigiArgs()
+            else:
+                # print('单例已经实例化')
+                pass;
+            ChigiArgs.mutex.release()
+        else:
+            #print('单例已经实例化')
+            pass;
+           
+        return ChigiArgs.instance
     def __init__(self,name='PhpConnector'):
         '''constructor'''
         self.name = name    #class instance(data) attribute
