@@ -19,6 +19,9 @@
 namespace Chigi\Sublime\Commands;
 
 use Chigi\Sublime\Models\BaseCommand;
+use Chigi\Sublime\Models\BaseReturnData;
+use Chigi\Sublime\Models\Factory\ModelsFactory;
+use Chigi\Sublime\Settings\Environment;
 
 /**
  * Description of CommandsListPanel
@@ -28,6 +31,7 @@ use Chigi\Sublime\Models\BaseCommand;
 class CommandsEntrancePanel extends BaseCommand {
 
     public function __initial() {
+        Environment::getInstance()->debugOn();
     }
 
     public function getAuthor() {
@@ -43,7 +47,10 @@ class CommandsEntrancePanel extends BaseCommand {
      * @return BaseReturnData 
      */
     public function run() {
-        executePush("BANKAI");
+        $panel_list = ModelsFactory::createQuickPanel();
+        $testCmd = new TestCmd();
+        $panel_list->pushItem($testCmd);
+        return $panel_list;
     }
 
     /**
@@ -55,7 +62,7 @@ class CommandsEntrancePanel extends BaseCommand {
     }
 
     public function isVisible() {
-        return FALSE;
+        return TRUE;
     }
 
 }
