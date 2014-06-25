@@ -21,7 +21,9 @@ namespace Chigi\Sublime\Models\Factory;
 use Chigi\Sublime\Enums\EditorAction;
 use Chigi\Sublime\Enums\ReturnDataLevel;
 use Chigi\Sublime\Enums\ReturnDataType;
+use Chigi\Sublime\Models\BaseCommand;
 use Chigi\Sublime\Models\BaseModel;
+use Chigi\Sublime\Models\Interfaces\ISublimeCmd;
 use Chigi\Sublime\Models\ReturnDataSpec\PlainMsgData;
 use Chigi\Sublime\Models\ReturnDataSpec\QuickPanelData;
 use Chigi\Sublime\Settings\Environment;
@@ -74,6 +76,19 @@ class ModelsFactory {
         $actionCode = 0;
         /* @var $dataType int */
         $dataType = 0;
+        /* @var $data mixed */
+        $data = null;
+        /* @var $dataLevel int */
+        $dataLevel = ReturnDataLevel::DEBUG;
+        /* @var $msg string */
+        $msg = "";
+        // 针对返回数据先初始化通用变量
+        if ($model instanceof \Chigi\Sublime\Models\BaseReturnData) {
+            $data = $model->getData();
+            $msg = $model->getMsg();
+            $dataLevel = $model->getDataLevel();
+        }
+        // 细节区分数据内容
         if ($model instanceof PlainMsgData) {
             if ($model->getDataLevel() === ReturnDataLevel::DEBUG) {
                 $actionCode = EditorAction::PRINT_LOG;
@@ -83,22 +98,37 @@ class ModelsFactory {
                 }
                 $actionCode = EditorAction::PRINT_MSG;
             }
+        } elseif ($model instanceof BaseCommand) {
+            $dataLevel = ReturnDataLevel::INFO;
+            $actionCode = EditorAction::RUN_PHP_CMD;
+            $msg = "Command To Call " . get_class($model);
+            $data = array(
+                $model->getId(),
+                $model->getName(),
+                get_class($model),
+                $model->getTitle(),
+                $model->getAuthor(),
+                $model->getDesc(),
+                $model->getTargetFileFormat()
+            );
         } elseif ($model instanceof QuickPanelData) {
             $actionCode = EditorAction::QUICK_PANEL;
+        } elseif ($model instanceof ISublimeCmd) {
+            $actionCode = EditorAction::RUN_EDITOR_CMD;
         }
-        if (is_int($model->getData()) || is_float($model->getData())) {
+        if (is_int($data) || is_float($data)) {
             $dataType = ReturnDataType::NUMBER;
-        } elseif (is_string($model->getData())) {
+        } elseif (is_string($data)) {
             $dataType = ReturnDataType::STRING;
-        } elseif (is_array($model->getData())) {
+        } elseif (is_array($data)) {
             $dataType = ReturnDataType::ARR;
-        } elseif (is_object($model->getData())) {
-            $modelOrigData = $model->getData();
+        } elseif (is_object($data)) {
+            $modelOrigData = $data;
             if ($modelOrigData instanceof Exception) {
                 $dataType = ReturnDataType::EXCEPTION;
                 $model->setMsg("<" . get_class($modelOrigData) . ">  " . $modelOrigData->getMessage());
                 $model->setDataLevel(ReturnDataLevel::WARNING);
-                if ($model->getDataLevel() === ReturnDataLevel::DEBUG) {
+                if ($dataLevel === ReturnDataLevel::DEBUG) {
                     // 按 调试模式，对异常信息格式化成文本字符串输出
                     $msg = "    " . $modelOrigData->getFile() . " : " . $modelOrigData->getLine() . "\n";
                     $msg .= '    【CODE】' . $modelOrigData->getCode() . "\n";
@@ -108,13 +138,14 @@ class ModelsFactory {
             } else {
                 $dataType = ReturnDataType::OBJECT;
             }
-        } elseif (is_null($model->getData())) {
+        } elseif (is_null($data)) {
             $dataType = ReturnDataType::NONE;
         }
+        // 返回结果
         return array(
-            array($model->getDataLevel(), $dataType, $actionCode),
-            $model->getMsg(),
-            $model->getData()
+            array($dataLevel, $dataType, $actionCode),
+            $msg,
+            $data
         );
     }
 
