@@ -78,7 +78,7 @@ function non_block_read($fd, &$data) {
  * @return boolean
  */
 function executePush($content) {
-    if (is_string($content)) {
+    if (is_string($content) || is_array($content)) {
         // 封装字符串输出
         $model = Chigi\Sublime\Models\Factory\ModelsFactory::createPlainMsg($content);
         if (Environment::getInstance()->isDebug()) {
