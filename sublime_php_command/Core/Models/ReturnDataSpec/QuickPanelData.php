@@ -49,7 +49,7 @@ class QuickPanelData extends BaseReturnData {
             if ($model instanceof \Chigi\Sublime\Models\BaseCommand && $model->isVisible()) {
                 // Panel 中展示用的文字
                 $item[0] = array(
-                    $model->getTitle()
+                    $model->getTitle()? $model->getTitle(): "UNKNOWN"
                 );
                 // 将真实数据本身存入
                 $item[1] = \Chigi\Sublime\Models\Factory\ModelsFactory::pushFormatter($model);
