@@ -17,7 +17,9 @@
  */
 namespace Chigi\Sublime\Models\Interfaces;
 /**
- * Sublime 指令调用实现接口
+ * Sublime 指令调用实现接口<br/>
+ * 即针对于直接调用 Sublime 自身所提供的 python 指令脚本，而无需再在 PHP 和 PYTHON 双边封装响应。<br/>
+ * 主要针对 EditorAction 具有操作性的 ReturnData
  * @author 郷
  */
 interface ISublimeCmd {
