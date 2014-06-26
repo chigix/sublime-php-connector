@@ -30,11 +30,12 @@ The plugin is to add support for php developers to develop a sublime plugin usin
 
 The only binding key map: `ctrl+shift+r`
 
-You can over ride it via user settings.
+You can override it via user settings.
 
 ## What's new
 
-* Quick panel of commands development support via PHP.
+* High speed communication towards php interpretor embedded
+* Greatly improved developing experience with sophisticated model and command utils.
 
 ### v0.1.0: Created!
 - php connect support
@@ -51,6 +52,13 @@ You can over ride it via user settings.
 * FIX sublime 3 support.
 * IMPROVE error exception catch.
 * Game start for hacking sublime with PHP.
+
+### v3.0: Play Gardon
+
+* Thoroughly individual php interpretor embedded 
+* Accelerate Communication between PYTHON and PHP.
+* Rewrite Markdown building script for the new version.
+* Improve the whole framework upon php with Data Model and Command Manager.
 
 ## For Developers
 
