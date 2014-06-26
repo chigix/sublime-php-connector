@@ -37,6 +37,8 @@ class PhpOutputThread(threading.Thread):
             data_type = "OBJECT";
         elif result[0][1] is 5:
             data_type = "NONE";
+        elif result[0][1] is 6:
+            data_type = "BOOLEAN";
         if(result[0][2] is 1):
             # TODO Open a file
             pass;
@@ -64,7 +66,8 @@ class PhpOutputThread(threading.Thread):
                 show_list.append(item[0]);
                 obj_list.append(item[1]);
             def quick_panel_ondone(input):
-                self.executeReceive(obj_list[input]);
+                if(input >= 0):
+                    self.executeReceive(obj_list[input]);
             def quick_panel_run_command():
                 ChigiArgs.GetInstance().currentView.window().show_quick_panel(show_list, quick_panel_ondone);
             sublime.set_timeout(quick_panel_run_command, 1)
