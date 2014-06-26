@@ -1,0 +1,26 @@
+[
+    {
+        "class": "\\Connector\\Commands\\Pandoc\\BuildMdToPdf",
+        "args": {
+            "bankai": "JIKAI"
+        }
+    },
+    {
+        "class": "\\Connector\\Commands\\Pandoc\\BuildMdToHtml",
+        "args": {
+            "bankai": "JIKAI"
+        }
+    },
+    {
+        "class": "\\Connector\\Commands\\Pandoc\\ViewInPdf",
+        "args": {
+            "bankai": "JIKAI"
+        }
+    },
+    {
+        "class": "\\Connector\\Commands\\Pandoc\\ViewInHtml",
+        "args": {
+            "bankai": "JIKAI"
+        }
+    }
+]
