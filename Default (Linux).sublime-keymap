@@ -1,6 +1,10 @@
 [
 	{ 
 		"keys": ["ctrl+shift+r"],
-		"command": "php_quick_fallback"
+		"command": "ax_text", 
+            "args":{
+                "call" : "\\Chigi\\Sublime\\Commands\\CommandsEntrancePanel",
+                "cmd_args":{}
+            }
 	}
 ]

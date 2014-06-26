@@ -2,6 +2,6 @@
     "php_path":"/usr/bin/php",
     "filesystem_encoding":"utf-8",
     "namespaces": {
-    	"Chigi\\":"${entryDir}/Commands/Chigi"
+    	"Connector\\Commands\\Pandoc\\": "${entryDir}/Commands/Pandoc"
     }
 }
