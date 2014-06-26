@@ -31,5 +31,6 @@ class ReturnDataType {
     const ARR = 3;
     const OBJECT = 4;
     const NONE = 5;
+    const BOOLEAN = 6;
 
 }
