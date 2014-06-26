@@ -2,9 +2,11 @@
 
 namespace Chigi\Sublime\Settings;
 
+use Chigi\Sublime\Commands\CommandsEntrancePanel;
 use Chigi\Sublime\Exception\FileSystemEncodingException;
 use Chigi\Sublime\Manager\CommandManager;
 use Chigi\Sublime\Manager\ModelsManager;
+use Chigi\Sublime\Models\BaseCommand;
 
 /**
  * 运行环境类
@@ -61,6 +63,24 @@ class Environment {
     }
 
     public function setNamespacesMap($namespacesMap) {
+        CommandsEntrancePanel::$COMMANDS_LIST = array();
+        foreach ($namespacesMap as $key => $value) {
+            $dir_to_search = $namespacesMap[$key] = str_replace('${entryDir}', dirname($this->getCorePath()), $value);
+            if (!in_array(substr($dir_to_search, -1), array('/', '\\'), TRUE)) {
+                $dir_to_search .= DIRECTORY_SEPARATOR;
+            }
+            if (file_exists($dir_to_search . 'phpconnector.commands')) {
+                $propers = json_decode(file_get_contents($dir_to_search . 'phpconnector.commands'), TRUE);
+                foreach ($propers as $item) {
+                    if (substr($item['class'], 0, 1) !== '\\') {
+                        $item['class'] = '\\' . $item['class'];
+                    }
+                    array_push(CommandsEntrancePanel::$COMMANDS_LIST
+                            , array($item['class'], $item['args'])
+                    );
+                }
+            }
+        }
         $this->namespacesMap = $namespacesMap;
         return $this;
     }
@@ -96,7 +116,7 @@ class Environment {
         $this->isDebug = FALSE;
         return $this;
     }
-    
+
     /**
      * Check Current Environment is in Debug.
      * @return boolean
