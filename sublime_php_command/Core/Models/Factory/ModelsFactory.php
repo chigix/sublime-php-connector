@@ -118,6 +118,9 @@ class ModelsFactory {
         }
         if (is_int($data) || is_float($data)) {
             $dataType = ReturnDataType::NUMBER;
+        } elseif (is_bool($data)) {
+            $dataType = ReturnDataType::BOOLEAN;
+            $data = $data ? "TRUE":"FALSE";
         } elseif (is_string($data)) {
             $dataType = ReturnDataType::STRING;
         } elseif (is_array($data)) {
