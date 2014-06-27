@@ -49,7 +49,20 @@ class PhpOutputThread(threading.Thread):
                 "cmd_args":result[2][7]
             });
             pass;
+        elif result[0][2] is 5:
+            # set the status message
+            def set_status_message():
+                sublime.status_message(result[3]);
+            if data_type is "STRING":
+                def set_status_message():
+                    sublime.status_message(result[2]);
+                sublime.set_timeout(set_status_message, 1);
+            else:
+                def set_status_message():
+                    sublime.status_message(result[1]);
+                sublime.set_timeout(set_status_message,1);
         elif result[0][2] is 6:
+            # PRINT the message
             print(u"【INFO】 " + result[1]);
         elif result[0][2] is 7:
             # TODO Copy to clipboard
@@ -70,7 +83,7 @@ class PhpOutputThread(threading.Thread):
                     self.executeReceive(obj_list[input]);
             def quick_panel_run_command():
                 ChigiArgs.GetInstance().currentView.window().show_quick_panel(show_list, quick_panel_ondone);
-            sublime.set_timeout(quick_panel_run_command, 1)
+            sublime.set_timeout(quick_panel_run_command, 1);
             pass;
         else:
             print(result);
