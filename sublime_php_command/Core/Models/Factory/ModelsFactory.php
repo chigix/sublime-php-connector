@@ -23,9 +23,11 @@ use Chigi\Sublime\Enums\ReturnDataLevel;
 use Chigi\Sublime\Enums\ReturnDataType;
 use Chigi\Sublime\Models\BaseCommand;
 use Chigi\Sublime\Models\BaseModel;
+use Chigi\Sublime\Models\BaseReturnData;
 use Chigi\Sublime\Models\Interfaces\ISublimeCmd;
 use Chigi\Sublime\Models\ReturnDataSpec\PlainMsgData;
 use Chigi\Sublime\Models\ReturnDataSpec\QuickPanelData;
+use Chigi\Sublime\Models\ReturnDataSpec\StatusMsgData;
 use Chigi\Sublime\Settings\Environment;
 use Exception;
 
@@ -67,6 +69,18 @@ class ModelsFactory {
     }
 
     /**
+     * Status Message 工厂
+     * @param string $str 要输出于状态栏上的字符串
+     * @return StatusMsgData
+     */
+    public static function createStatusMsg($str = null) {
+        $model = new StatusMsgData();
+        $model->setData($str);
+        Environment::getInstance()->getModelsManager()->push($model);
+        return $model;
+    }
+
+    /**
      * 
      * @param BaseModel $model
      * @return array
@@ -83,7 +97,7 @@ class ModelsFactory {
         /* @var $msg string */
         $msg = "";
         // 针对返回数据先初始化通用变量
-        if ($model instanceof \Chigi\Sublime\Models\BaseReturnData) {
+        if ($model instanceof BaseReturnData) {
             $data = $model->getData();
             $msg = $model->getMsg();
             $dataLevel = $model->getDataLevel();
@@ -111,6 +125,8 @@ class ModelsFactory {
                 $model->getDesc(),
                 $model->getTargetFileFormat()
             );
+        } elseif ($model instanceof StatusMsgData) {
+            $actionCode = EditorAction::STATUS_MSG;
         } elseif ($model instanceof QuickPanelData) {
             $actionCode = EditorAction::QUICK_PANEL;
         } elseif ($model instanceof ISublimeCmd) {
@@ -120,7 +136,7 @@ class ModelsFactory {
             $dataType = ReturnDataType::NUMBER;
         } elseif (is_bool($data)) {
             $dataType = ReturnDataType::BOOLEAN;
-            $data = $data ? "TRUE":"FALSE";
+            $data = $data ? "TRUE" : "FALSE";
         } elseif (is_string($data)) {
             $dataType = ReturnDataType::STRING;
         } elseif (is_array($data)) {

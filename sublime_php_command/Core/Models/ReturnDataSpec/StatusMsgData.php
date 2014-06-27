@@ -16,21 +16,25 @@
  * limitations under the License.
  */
 
-namespace Chigi\Sublime\Enums;
+namespace Chigi\Sublime\Models\ReturnDataSpec;
+
+use Chigi\Sublime\Models\BaseReturnData;
 
 /**
- * Description of EditorAction
+ * 底部状态栏文字设置
  *
  * @author 郷
  */
-class EditorAction {
-    const NONE = 0;
-    const OPEN_FILE = 1;
-    const RUN_EDITOR_CMD = 2;
-    const RUN_PHP_CMD = 3;
-    const STATUS_MSG = 5;
-    const PRINT_MSG = 6;
-    const CLIPBOARD = 7;
-    const PRINT_LOG = 8;
-    const QUICK_PANEL = 9;
+class StatusMsgData extends BaseReturnData {
+    /**
+     * 设置要输出到状态栏的字符串内容
+     * @param string $data
+     * @return StatusMsgData
+     */
+    public function setData($data) {
+        if (!is_string($data)) {
+            $data = print_r($data, TRUE);
+        }
+        return parent::setData($data);
+    }
 }
