@@ -10,7 +10,6 @@ class ChigiArgs(object):
     arguments = {};  #static
     CHECK_IS_BOOT = True; #static
     PHP_MAIN = None;
-    MANAGER = {};
     instance=None;
     mutex=threading.Lock();
     @staticmethod
@@ -32,6 +31,8 @@ class ChigiArgs(object):
     def __init__(self,name='PhpConnector'):
         '''constructor'''
         self.name = name    #class instance(data) attribute
+        self.cmdManager = {};
+        self.currentView = None;
     def showname(self):
         '''display instance attribute and class name'''
         print('Your name is ' + self.name);

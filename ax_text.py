@@ -12,14 +12,15 @@ else:
 class AxTextCommand(sublime_plugin.TextCommand):
     def __init__(self,view):
         self.view = view;
-        ChigiArgs.MANAGER[id(self)] = self;
+        ChigiArgs.GetInstance().cmdManager[id(self)] = self;
     def __del__(self):
         print(u"结束");
-        ChigiArgs.MANAGER[id(self)] = None;
+        ChigiArgs.GetInstance().cmdManager[id(self)] = None;
         pass;
     def run(self, edit, call, cmd_args):
         # 1. 加载配置信息
         self.setting = sublime.load_settings("phpConnector.sublime-settings");
+        print(self.view.id());
         command_to_run = {
             'id':id(self),
             'call':call,
