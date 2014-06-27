@@ -20,6 +20,7 @@ namespace Chigi\Sublime\Commands;
 
 use Chigi\Sublime\Models\BaseCommand;
 use Chigi\Sublime\Models\BaseReturnData;
+use Chigi\Sublime\Models\Factory\ModelsFactory;
 use Chigi\Sublime\Settings\Environment;
 use Chigi\Sublime\Utils\ArgumentsCollection;
 
@@ -68,11 +69,11 @@ class SetupEnvironment extends BaseCommand {
         if ($tmpValue = $this->arguments->getArg("namespace_map")) {
             Environment::getInstance()->setNamespacesMap($tmpValue);
         }
+        return ModelsFactory::createStatusMsg("PhpConnector loading complete");
     }
-    
+
     public function isVisible() {
         return FALSE;
     }
-
 
 }
