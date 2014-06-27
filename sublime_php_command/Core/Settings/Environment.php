@@ -69,8 +69,8 @@ class Environment {
             if (!in_array(substr($dir_to_search, -1), array('/', '\\'), TRUE)) {
                 $dir_to_search .= DIRECTORY_SEPARATOR;
             }
-            if (file_exists($dir_to_search . 'phpconnector.commands')) {
-                $propers = json_decode(file_get_contents($dir_to_search . 'phpconnector.commands'), TRUE);
+            if (file_exists(iconv('utf-8', $this->getFileSystemEncoding(), $dir_to_search . 'phpconnector.commands'))) {
+                $propers = json_decode(file_get_contents(iconv('utf-8', $this->getFileSystemEncoding(), $dir_to_search . 'phpconnector.commands')), TRUE);
                 foreach ($propers as $item) {
                     if (substr($item['class'], 0, 1) !== '\\') {
                         $item['class'] = '\\' . $item['class'];
