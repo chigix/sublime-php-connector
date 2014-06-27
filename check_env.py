@@ -32,6 +32,8 @@ class CheckEnvironmentCommandThread(threading.Thread):
         # 检测 PHP 环境
         def freshSettings():
             self.setting = sublime.load_settings("phpConnector.sublime-settings");
+            self.encoding = self.setting.get("filesystem_encoding");
+            self.namespace = self.setting.get("namespaces");
             self.php_path = self.setting.get("php_path");
             print("1###");
             print(self.php_path);
