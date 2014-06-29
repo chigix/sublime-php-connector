@@ -33,6 +33,7 @@ class ChigiArgs(object):
         self.name = name    #class instance(data) attribute
         self.cmdManager = {};
         self.currentView = None;
+        self.viewManager = {};
     def showname(self):
         '''display instance attribute and class name'''
         print('Your name is ' + self.name);
