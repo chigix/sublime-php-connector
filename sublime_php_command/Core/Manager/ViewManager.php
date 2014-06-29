@@ -18,10 +18,60 @@
 
 namespace Chigi\Sublime\Manager;
 
+use Chigi\Sublime\Exception\UnexpectedTypeException;
+use Chigi\Sublime\Models\SublimeView;
+
 /**
  * SublimeView 对象管理器
  *
  * @author 郷
  */
 class ViewManager {
+
+    /**
+     *
+     * @var array<SublimeView>
+     */
+    private $viewsCollection = array();
+    private $currentView = null;
+
+    function __construct() {
+        $this->viewsCollection = array();
+    }
+
+    /**
+     * 通过 ID 获取 Editor View 对象
+     * @param int $id
+     * @return SublimeView
+     */
+    public function getViewById($id) {
+        if (isset($this->viewsCollection[$id])) {
+            return $this->viewsCollection[$id];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 注册目标编辑视图对象
+     * @param SublimeView $view
+     * @throws UnexpectedTypeException
+     */
+    public function registView(SublimeView $view) {
+        if ($view instanceof SublimeView) {
+            $this->viewsCollection[$view->getId()] = $view;
+            $this->currentView = $view;
+        } else {
+            throw new UnexpectedTypeException($view, SublimeView::getClassName());
+        }
+    }
+
+    /**
+     * 
+     * @return SublimeView
+     */
+    public function getCurrentView() {
+        return $this->currentView;
+    }
+
 }

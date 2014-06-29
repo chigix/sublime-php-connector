@@ -34,7 +34,7 @@ class SublimeView extends BaseModel {
      * @var string
      */
     private $viewName = "";
-    
+
     public function getViewName() {
         return $this->viewName;
     }
@@ -44,5 +44,24 @@ class SublimeView extends BaseModel {
         return $this;
     }
 
+    private $fileName = "";
+
+    /**
+     * 获取当前编辑视图所编辑的目标文件名
+     * @return string
+     */
+    public function getFileName() {
+        return $this->fileName;
+    }
+
+    /**
+     * 设置文件名
+     * @param string $fileName
+     * @return SublimeView
+     */
+    public function setFileName($fileName) {
+        $this->fileName = $fileName;
+        return $this;
+    }
 
 }

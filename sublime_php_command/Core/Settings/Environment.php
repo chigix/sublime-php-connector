@@ -6,7 +6,7 @@ use Chigi\Sublime\Commands\CommandsEntrancePanel;
 use Chigi\Sublime\Exception\FileSystemEncodingException;
 use Chigi\Sublime\Manager\CommandManager;
 use Chigi\Sublime\Manager\ModelsManager;
-use Chigi\Sublime\Models\BaseCommand;
+use Chigi\Sublime\Manager\ViewManager;
 
 /**
  * 运行环境类
@@ -24,6 +24,7 @@ class Environment {
         $this->fileSystemEncoding = "UTF-8";
         $this->CommandsManager = new CommandManager();
         $this->ModelsManager = new ModelsManager();
+        $this->viewsManager = new ViewManager();
         $this->isDebug = FALSE;
     }
 
@@ -103,6 +104,16 @@ class Environment {
 
     public function getModelsManager() {
         return $this->ModelsManager;
+    }
+
+    /**
+     *
+     * @var ViewManager
+     */
+    private $viewsManager;
+
+    public function getViewsManager() {
+        return $this->viewsManager;
     }
 
     private $isDebug = FALSE;

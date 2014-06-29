@@ -20,19 +20,25 @@ class AxTextCommand(sublime_plugin.TextCommand):
     def run(self, edit, call, cmd_args):
         # 1. 加载配置信息
         self.setting = sublime.load_settings("phpConnector.sublime-settings");
-        print(self.view.id());
+        ChigiArgs.GetInstance().viewManager[self.view.id()] = self.view;
+        ChigiArgs.GetInstance().currentView = self.view;
+        command_to_run = {
+            'id':id(self),
+            'call':"\\Chigi\\Sublime\\Commands\\UpdateCurrentView",
+            'args' : {
+                'id' : self.view.id(),
+                'file_name' : self.view.file_name()
+            }
+        };
+        cmd_str = base64.b64encode(json.dumps(command_to_run, sort_keys=True).encode('utf-8')).decode('utf-8');
+        ChigiArgs.PHP_MAIN.stdin.write(cmd_str.encode("UTF-8"));
+        ChigiArgs.PHP_MAIN.stdin.write("\n".encode("UTF-8"));
         command_to_run = {
             'id':id(self),
             'call':call,
-            'editor':{
-                'currentView':{
-                    'filename':self.view.file_name()
-                }
-            },
             'args' : cmd_args
         };
         cmd_str = base64.b64encode(json.dumps(command_to_run, sort_keys=True).encode('utf-8')).decode('utf-8');
-        ChigiArgs.GetInstance().currentView = self.view;
         ChigiArgs.PHP_MAIN.stdin.write(cmd_str.encode("UTF-8"));
         ChigiArgs.PHP_MAIN.stdin.write("\n".encode("UTF-8"));
         pass;
