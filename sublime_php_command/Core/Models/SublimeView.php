@@ -44,24 +44,45 @@ class SublimeView extends BaseModel {
         return $this;
     }
 
-    private $fileName = "";
+    /**
+     *
+     * @var File
+     */
+    private $file = null;
 
     /**
      * 获取当前编辑视图所编辑的目标文件名
      * @return string
      */
     public function getFileName() {
-        return $this->fileName;
+        return $this->file->getRealPath(TRUE);
     }
 
     /**
      * 设置文件名
-     * @param string $fileName
+     * @param string $fileName 必须为 UTF-8 格式的路径字符串
      * @return SublimeView
      */
     public function setFileName($fileName) {
-        $this->fileName = $fileName;
+        try {
+            $this->file = new File($fileName);
+        } catch (\Chigi\Sublime\Exception\FileNotFoundException $exc) {
+            if (empty($fileName)) {
+                return $this;
+            }  else {
+                executePush($exc);
+            }
+        }
+
         return $this;
+    }
+    
+    /**
+     * 获取本视图 Editor View 所对应的 File 对象
+     * @return File
+     */
+    public function getFile() {
+        return $this->file;
     }
 
 }
