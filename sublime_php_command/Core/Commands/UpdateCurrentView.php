@@ -36,7 +36,7 @@ class UpdateCurrentView extends BaseCommand {
     private $viewToSet = null;
 
     public function __initial() {
-        Environment::getInstance()->debugOn();
+        Environment::getInstance()->debugOff();
     }
 
     public function getAuthor() {

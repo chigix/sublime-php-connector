@@ -32,7 +32,7 @@ class CommandsEntrancePanel extends BaseCommand {
 
     public static $COMMANDS_LIST = array();
     public function __initial() {
-        Environment::getInstance()->debugOn();
+        Environment::getInstance()->debugOff();
     }
 
     public function getAuthor() {
@@ -52,7 +52,7 @@ class CommandsEntrancePanel extends BaseCommand {
         foreach (self::$COMMANDS_LIST as $item) {
             $command = new $item[0]();
             if ($command instanceof BaseCommand) {
-                $command->setArgs($item[1]);
+                // $command->setArgs($item[1]);
             }
             $panel_list->pushItem($command);
         }

@@ -38,7 +38,7 @@ class SetupEnvironment extends BaseCommand {
     private $arguments;
 
     public function __initial() {
-        Environment::getInstance()->debugOn();
+        Environment::getInstance()->debugOff();
     }
 
     /**
