@@ -49,6 +49,9 @@ class PhpOutputThread(threading.Thread):
                 "cmd_args":result[2][7]
             });
             pass;
+        elif result[0][2] is 4:
+            # Alert error message
+            sublime.error_message(result[2]);
         elif result[0][2] is 5:
             # set the status message
             def set_status_message():

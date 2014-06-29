@@ -16,22 +16,27 @@
  * limitations under the License.
  */
 
-namespace Chigi\Sublime\Enums;
+namespace Chigi\Sublime\Models\ReturnDataSpec;
+
+use Chigi\Sublime\Enums\ReturnDataLevel;
+use Chigi\Sublime\Models\BaseReturnData;
 
 /**
- * Description of EditorAction
+ * Alert out the error message.
  *
  * @author 郷
  */
-class EditorAction {
-    const NONE = 0;
-    const OPEN_FILE = 1;
-    const RUN_EDITOR_CMD = 2;
-    const RUN_PHP_CMD = 3;
-    const ERROR_ALERT = 4;
-    const STATUS_MSG = 5;
-    const PRINT_MSG = 6;
-    const CLIPBOARD = 7;
-    const PRINT_LOG = 8;
-    const QUICK_PANEL = 9;
+class AlertMsgData extends BaseReturnData {
+
+    private $dataLevel = ReturnDataLevel::ERROR;
+
+    public function setDataLevel($dataLevel) {
+        $this->dataLevel = $dataLevel;
+        return $this;
+    }
+
+    public function getDataLevel() {
+        return $this->dataLevel;
+    }
+
 }
