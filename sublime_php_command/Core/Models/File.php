@@ -72,6 +72,16 @@ class File extends \SplFileInfo {
         $suffix = substr($this->path_str, strripos($this->path_str, '.') + 1);
         return $suffix;
     }
+    
+    /**
+     * 获取当前文件所在文件系统所采用的文件系统编码格式
+     * @return string
+     */
+    public function getEnc() {
+        return $this->enc;
+    }
+
+
 
 }
 
