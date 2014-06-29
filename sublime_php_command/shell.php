@@ -23,7 +23,7 @@ while (1) {
             // 默认关闭调试模式
             Settings\Environment::getInstance()->debugOff();
             $arguments = json_decode(base64_decode($inputCommand), TRUE);
-            executePush(ModelsFactory::createPlainMsg($arguments['args'])->setMsg("ARGUMENTS")->setDataLevel(Enums\ReturnDataLevel::DEBUG));
+            // executePush(ModelsFactory::createPlainMsg($arguments['args'])->setMsg("ARGUMENTS")->setDataLevel(Enums\ReturnDataLevel::DEBUG));
             try {
                 /* @var $command Models\BaseCommand */
                 $command = new $arguments['call']($arguments['id']);
