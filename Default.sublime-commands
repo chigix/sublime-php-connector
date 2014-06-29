@@ -14,5 +14,13 @@
             "call" : "\\Chigi\\Sublime\\Commands\\TestCmd", 
             "cmd_args":{}
         }
+    },
+    {
+        "caption": "PhpConnector: Test IEditorView Interface",
+        "command": "ax_text",
+        "args":{
+            "call" : "\\Chigi\\Sublime\\Commands\\TestIEditorView", 
+            "cmd_args":{}
+        }
     }
 ]

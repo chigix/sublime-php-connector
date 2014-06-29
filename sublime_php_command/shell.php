@@ -36,6 +36,11 @@ while (1) {
                 executePush($exc);
             }
             $command->setArgs($arguments['args']);
+            // 针对自动注入接口进行自动操作
+            if ($command instanceof Models\Interfaces\IEditorViewAware) {
+                $command->setEditorView(Settings\Environment::getInstance()->getViewsManager()->getCurrentView());
+            }
+            // 开始运行 指令对象
             $returnDataFrmRun = null;
             try {
                 /* @var $returnDataFrmRun Models\BaseReturnData */
@@ -43,6 +48,7 @@ while (1) {
             } catch (Exception $exc) {
                 executePush($exc);
             }
+            // 对指令对象返回进行处理和判断
             if (!is_null($returnDataFrmRun)) {
                 executePush($returnDataFrmRun->setMsg($returnDataFrmRun->getMsg() . " --Return Data From <" . $arguments['call'] . ">"));
             }
