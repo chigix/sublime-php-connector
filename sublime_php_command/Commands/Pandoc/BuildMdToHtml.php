@@ -18,8 +18,10 @@
 
 namespace Connector\Commands\Pandoc;
 
+use Chigi\Sublime\Enums\ReturnDataLevel;
 use Chigi\Sublime\Models\BaseCommand;
 use Chigi\Sublime\Models\Factory\ModelsFactory;
+use Chigi\Sublime\Models\File;
 use Chigi\Sublime\Settings\Environment;
 
 /**
@@ -28,6 +30,12 @@ use Chigi\Sublime\Settings\Environment;
  * @author 郷
  */
 class BuildMdToHtml extends BaseCommand {
+
+    /**
+     * 本条指令要编辑的目标文件对象
+     * @var File 
+     */
+    private $file;
 
     public function __initial() {
         Environment::getInstance()->debugOn();
@@ -42,11 +50,42 @@ class BuildMdToHtml extends BaseCommand {
     }
 
     public function run() {
-        executePush("BANKAISSFDFDFDF");
+        require_once 'pandoc/config.php';
+        $cmd = "\"" . $config['pandoc']['exe'] . "\" --toc -s --self-contained -c \"" . $config['pandoc']['css_path'] . "\""
+                . " \"" . $this->file->getRealPath(TRUE) . "\""
+                . " -t html5 "
+                . "-o \"" . $this->file->getDirPath(TRUE) . DIRECTORY_SEPARATOR . $this->file->extractFileName() . ".html\" "
+                . "--smart --template=\"" . $config['pandoc']['template_html'] . "\"";
+        return $this->execCmd($cmd);
+    }
+
+    public function execCmd($cmd) {
+        $returnData = null;
+        $outputFrmCmd = array();
+        $status = 0;
+        exec(iconv('utf-8', $this->file->getEnc(), $cmd) . ' 2>&1', $outputFrmCmd, $status);
+        executePush($cmd);
+        if (count($outputFrmCmd) > 0) {
+            // standard error output
+            $returnData = ModelsFactory::createAlertMsg();
+            $returnData->setMsg("Error Building to HTML");
+            $returnData->setData("$cmd\n\n" . $outputFrmCmd[0]);
+        } else {
+            // builded successfully
+            $returnData = ModelsFactory::createStatusMsg();
+            $returnData->setDataLevel(ReturnDataLevel::SUCCESS);
+            $returnData->setMsg("Build Ended");
+            $returnData->setData($this->file->extractFileName() . '.html builded SUCCESSFULLY, VIEW it directly.');
+        };
+        return $returnData;
     }
 
     public function setArgs($arguments) {
-        executePush(ModelsFactory::createPlainMsg($arguments)->setMsg("ARGUMENTS"));
+        if (isset($arguments['file'])) {
+            $this->file = new File($arguments['file']);
+        } else {
+            $this->file = Environment::getInstance()->getViewsManager()->getCurrentView()->getFile();
+        }
     }
 
 }
