@@ -73,6 +73,12 @@ class Environment {
             if (file_exists(iconv('utf-8', $this->getFileSystemEncoding(), $dir_to_search . 'phpconnector.commands'))) {
                 $propers = json_decode(file_get_contents(iconv('utf-8', $this->getFileSystemEncoding(), $dir_to_search . 'phpconnector.commands')), TRUE);
                 foreach ($propers as $item) {
+                    if (!isset($item['class'])) {
+                        continue;
+                    }
+                    if (!isset($item['args'])) {
+                        $item['args'] = array();
+                    }
                     if (substr($item['class'], 0, 1) !== '\\') {
                         $item['class'] = '\\' . $item['class'];
                     }
