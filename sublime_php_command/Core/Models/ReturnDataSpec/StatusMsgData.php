@@ -18,6 +18,7 @@
 
 namespace Chigi\Sublime\Models\ReturnDataSpec;
 
+use Chigi\Sublime\Enums\ReturnDataLevel;
 use Chigi\Sublime\Models\BaseReturnData;
 
 /**
@@ -26,6 +27,7 @@ use Chigi\Sublime\Models\BaseReturnData;
  * @author 郷
  */
 class StatusMsgData extends BaseReturnData {
+
     /**
      * 设置要输出到状态栏的字符串内容
      * @param string $data
@@ -37,4 +39,9 @@ class StatusMsgData extends BaseReturnData {
         }
         return parent::setData($data);
     }
+
+    public function getDataLevel() {
+        return ReturnDataLevel::SUCCESS;
+    }
+
 }

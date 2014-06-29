@@ -9,8 +9,11 @@
 namespace Chigi\Sublime\Models\ReturnDataSpec;
 
 use ArrayIterator;
+use Chigi\Sublime\Enums\ReturnDataLevel;
+use Chigi\Sublime\Models\BaseCommand;
 use Chigi\Sublime\Models\BaseModel;
 use Chigi\Sublime\Models\BaseReturnData;
+use Chigi\Sublime\Models\Factory\ModelsFactory;
 
 /**
  * QuickPanel 列表显示返回数据
@@ -46,13 +49,13 @@ class QuickPanelData extends BaseReturnData {
         $item_list = array();
         foreach ($this->itemCollection as $model) {
             $item = array();
-            if ($model instanceof \Chigi\Sublime\Models\BaseCommand && $model->isVisible()) {
+            if ($model instanceof BaseCommand && $model->isVisible()) {
                 // Panel 中展示用的文字
                 $item[0] = array(
                     $model->getTitle()? $model->getTitle(): "UNKNOWN"
                 );
                 // 将真实数据本身存入
-                $item[1] = \Chigi\Sublime\Models\Factory\ModelsFactory::pushFormatter($model);
+                $item[1] = ModelsFactory::pushFormatter($model);
                 array_push($item[1][2], array());
             }
             array_push($item_list, $item);
@@ -64,4 +67,8 @@ class QuickPanelData extends BaseReturnData {
         unset($data);
         return $this;
     }
+    public function getDataLevel() {
+        return ReturnDataLevel::INFO;
+    }
+
 }
