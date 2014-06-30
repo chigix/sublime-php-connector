@@ -31,6 +31,7 @@ use Chigi\Sublime\Settings\Environment;
 class CommandsEntrancePanel extends BaseCommand {
 
     public static $COMMANDS_LIST = array();
+
     public function __initial() {
         Environment::getInstance()->debugOff();
     }
@@ -52,9 +53,12 @@ class CommandsEntrancePanel extends BaseCommand {
         foreach (self::$COMMANDS_LIST as $item) {
             $command = new $item[0]();
             if ($command instanceof BaseCommand) {
-                // $command->setArgs($item[1]);
+                if ($command->isVisible()) {
+                    $panel_list->pushItem($command);
+                }
+            } else {
+                $panel_list->pushItem($command);
             }
-            $panel_list->pushItem($command);
         }
         return $panel_list;
     }
