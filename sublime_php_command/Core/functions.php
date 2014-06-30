@@ -96,9 +96,12 @@ function executePush($content) {
         // 输出标准数据模型
         echo base64_encode(json_encode(\Chigi\Sublime\Models\Factory\ModelsFactory::pushFormatter($content))) . "\n";
     } elseif ($content instanceof \Chigi\Sublime\Exception\WrapperedException) {
-        // TODO: 该种已由开发者包装过的异常信息，用于弹窗显示。
-        $logMsg = Chigi\Sublime\Models\Factory\ModelsFactory::createPlainMsg($content);
-        echo base64_encode(json_encode(\Chigi\Sublime\Models\Factory\ModelsFactory::pushFormatter($logMsg))) . "\n";
+        $exc = $content->getPrevious();
+        $model = \Chigi\Sublime\Models\Factory\ModelsFactory::createAlertMsg($content->getMessage());
+        if (Environment::getInstance()->isDebug()) {
+            executePush($exc);
+        }
+        echo base64_encode(json_encode(\Chigi\Sublime\Models\Factory\ModelsFactory::pushFormatter($model))) . "\n";
     } elseif ($content instanceof \Exception) {
         $logMsg = Chigi\Sublime\Models\Factory\ModelsFactory::createPlainMsg($content);
         echo base64_encode(json_encode(\Chigi\Sublime\Models\Factory\ModelsFactory::pushFormatter($logMsg))) . "\n";
