@@ -17,6 +17,7 @@ class FileNotFoundException extends FileException {
      * @param string $path The path to the file that was not found
      */
     public function __construct($path) {
+        $this->path = $path;
         parent::__construct(sprintf('The file "%s" does not exist', $path));
     }
 
@@ -31,5 +32,13 @@ class FileNotFoundException extends FileException {
     public function setFile($file) {
         $this->file = $file;
     }
+    
+    private $path;
+    
+    public function getPath() {
+        return $this->path;
+    }
+
+
 
 }
