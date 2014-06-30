@@ -87,5 +87,14 @@ class BuildMdToHtml extends BaseCommand {
             $this->file = Environment::getInstance()->getViewsManager()->getCurrentView()->getFile();
         }
     }
+    
+    public function isVisible() {
+        if (in_array(Environment::getInstance()->getViewsManager()->getCurrentView()->getFile()->extractFileSuffix(), array('md'), TRUE)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
 
 }
