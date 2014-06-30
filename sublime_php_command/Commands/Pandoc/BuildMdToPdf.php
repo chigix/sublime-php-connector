@@ -18,7 +18,11 @@
 
 namespace Connector\Commands\Pandoc;
 
+use Chigi\Sublime\Enums\ReturnDataLevel;
 use Chigi\Sublime\Models\BaseCommand;
+use Chigi\Sublime\Models\Factory\ModelsFactory;
+use Chigi\Sublime\Models\File;
+use Chigi\Sublime\Settings\Environment;
 
 /**
  * Description of BuildMdToPdf
@@ -27,24 +31,66 @@ use Chigi\Sublime\Models\BaseCommand;
  */
 class BuildMdToPdf extends BaseCommand {
 
+    /**
+     *
+     * @var File
+     */
+    private $file;
+
     public function __initial() {
-        
+        Environment::getInstance()->debugOn();
     }
 
     public function getAuthor() {
-        
+        return "chigix@zoho.com";
     }
 
     public function getName() {
-        
+        return "Markdown: Build to PDF";
     }
 
     public function run() {
-        
+        require_once 'pandoc/config.php';
+        $cmd = "\"" . $config['pandoc']['exe'] . "\" \"" . $this->file->getRealPath(TRUE) . "\" -o \"" . $this->file->getDirPath(TRUE) . DIRECTORY_SEPARATOR . $this->file->extractFileName() . ".pdf\" "
+                . "--latex-engine=xelatex --toc --smart --template=\"" . $config['pandoc']['template_pdf'] . "\"";
+        return $this->execCmd($cmd);
+    }
+    
+    public function execCmd($cmd) {
+        $returnData = null;
+        $outputFrmCmd = array();
+        $status = 0;
+        exec(iconv('utf-8', $this->file->getEnc(), $cmd) . ' 2>&1', $outputFrmCmd, $status);
+        if (count($outputFrmCmd) > 0) {
+            // standard error output
+            $returnData = ModelsFactory::createAlertMsg();
+            $returnData->setMsg('Error Building to PDF.');
+            $returnData->setData($cmd . "\n\n" . $outputFrmCmd[0]);
+        } else {
+            // builded successfully
+            $returnData = ModelsFactory::createStatusMsg();
+            $returnData->setDataLevel(ReturnDataLevel::SUCCESS);
+            $returnData->setMsg('Build ended.');
+            $returnData->setData($this->file->extractFileName() . '.pdf builded SUCCESSFULLY, VIEW it directly.');
+        };
+        return $returnData;
     }
 
     public function setArgs($arguments) {
-        
+        if (isset($arguments['file'])) {
+            $this->file = new File($arguments['file']);
+        } else {
+            $this->file = Environment::getInstance()->getViewsManager()->getCurrentView()->getFile();
+        }
     }
+    
+    public function isVisible() {
+        if (in_array(Environment::getInstance()->getViewsManager()->getCurrentView()->getFile()->extractFileSuffix(), array('md'), TRUE)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
 
 }

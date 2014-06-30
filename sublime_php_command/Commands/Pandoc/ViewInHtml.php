@@ -18,7 +18,12 @@
 
 namespace Connector\Commands\Pandoc;
 
+use Chigi\Sublime\Exception\FileNotFoundException;
+use Chigi\Sublime\Exception\WrapperedException;
 use Chigi\Sublime\Models\BaseCommand;
+use Chigi\Sublime\Models\Factory\ModelsFactory;
+use Chigi\Sublime\Models\File;
+use Chigi\Sublime\Settings\Environment;
 
 /**
  * Description of ViewInHtml
@@ -27,24 +32,50 @@ use Chigi\Sublime\Models\BaseCommand;
  */
 class ViewInHtml extends BaseCommand {
 
+    /**
+     *
+     * @var File
+     */
+    private $file;
+
     public function __initial() {
-        
+        Environment::getInstance()->debugOn();
     }
 
     public function getAuthor() {
-        
+        return "chigix@zoho.com";
     }
 
     public function getName() {
-        
+        return "Markdown: View in HTML";
     }
 
     public function run() {
-        
+        $returnData = null;
+        try {
+            $returnData = ModelsFactory::createOpenFileInOS($this->file->getDirPath(TRUE) . DIRECTORY_SEPARATOR . $this->file->extractFileName() . '.html');
+        } catch (FileNotFoundException $exc) {
+            throw new WrapperedException($exc->getMessage(), 0, $exc);
+        }
+        $returnData->setMsg("Open Successfully");
+        executePush(ModelsFactory::createStatusMsg($this->file->extractFileName() . '.html opened.'));
+        return $returnData;
     }
 
     public function setArgs($arguments) {
-        
+        if (isset($arguments['file'])) {
+            $this->file = new File($arguments['file']);
+        } else {
+            $this->file = Environment::getInstance()->getViewsManager()->getCurrentView()->getFile();
+        }
+    }
+
+    public function isVisible() {
+        if (in_array(Environment::getInstance()->getViewsManager()->getCurrentView()->getFile()->extractFileSuffix(), array('md'), TRUE)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 
 }
