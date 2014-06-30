@@ -27,6 +27,7 @@ use Chigi\Sublime\Models\BaseModel;
 use Chigi\Sublime\Models\BaseReturnData;
 use Chigi\Sublime\Models\Interfaces\ISublimeCmd;
 use Chigi\Sublime\Models\ReturnDataSpec\AlertMsgData;
+use Chigi\Sublime\Models\ReturnDataSpec\ClipBoardData;
 use Chigi\Sublime\Models\ReturnDataSpec\OpenFileDataInOs;
 use Chigi\Sublime\Models\ReturnDataSpec\PlainMsgData;
 use Chigi\Sublime\Models\ReturnDataSpec\QuickPanelData;
@@ -168,6 +169,8 @@ class ModelsFactory {
             $actionCode = EditorAction::STATUS_MSG;
         } elseif ($model instanceof QuickPanelData) {
             $actionCode = EditorAction::QUICK_PANEL;
+        } elseif ($model instanceof ClipBoardData) {
+            $actionCode = EditorAction::CLIPBOARD;
         } elseif ($model instanceof OpenFileDataInOs) {
             $actionCode = EditorAction::OPEN_FILE;
         } elseif ($model instanceof ISublimeCmd) {
