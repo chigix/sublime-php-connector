@@ -40,7 +40,8 @@ class PhpOutputThread(threading.Thread):
         elif result[0][1] is 6:
             data_type = "BOOLEAN";
         if(result[0][2] is 1):
-            # TODO Open a file
+            # OPEN the file in OS
+            os.startfile(result[2]);
             pass;
         elif result[0][2] is 3:
             # RUN Developed PHP CMD OBJ
@@ -54,8 +55,6 @@ class PhpOutputThread(threading.Thread):
             sublime.error_message(result[2]);
         elif result[0][2] is 5:
             # set the status message
-            def set_status_message():
-                sublime.status_message(result[3]);
             if data_type is "STRING":
                 def set_status_message():
                     sublime.status_message(result[2]);
@@ -75,7 +74,7 @@ class PhpOutputThread(threading.Thread):
             print(u"【" + data_type + u"】 " + result[1]);
             print(returned_data);
         elif result[0][2] is 9:
-            # TODO show quick panel
+            # show quick panel
             show_list = [];
             obj_list = [];
             for item in result[2]:

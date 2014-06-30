@@ -21,11 +21,13 @@ namespace Chigi\Sublime\Models\Factory;
 use Chigi\Sublime\Enums\EditorAction;
 use Chigi\Sublime\Enums\ReturnDataLevel;
 use Chigi\Sublime\Enums\ReturnDataType;
+use Chigi\Sublime\Exception\FileNotFoundException;
 use Chigi\Sublime\Models\BaseCommand;
 use Chigi\Sublime\Models\BaseModel;
 use Chigi\Sublime\Models\BaseReturnData;
 use Chigi\Sublime\Models\Interfaces\ISublimeCmd;
 use Chigi\Sublime\Models\ReturnDataSpec\AlertMsgData;
+use Chigi\Sublime\Models\ReturnDataSpec\OpenFileDataInOs;
 use Chigi\Sublime\Models\ReturnDataSpec\PlainMsgData;
 use Chigi\Sublime\Models\ReturnDataSpec\QuickPanelData;
 use Chigi\Sublime\Models\ReturnDataSpec\StatusMsgData;
@@ -80,7 +82,7 @@ class ModelsFactory {
         Environment::getInstance()->getModelsManager()->push($model);
         return $model;
     }
-    
+
     /**
      * Alert Error Message 工厂
      * @param string $str 要输出于状态栏上的字符串
@@ -89,6 +91,25 @@ class ModelsFactory {
     public static function createAlertMsg($str = null) {
         $model = new AlertMsgData();
         $model->setData($str);
+        Environment::getInstance()->getModelsManager()->push($model);
+        return $model;
+    }
+
+    /**
+     * Alert Error Message 工厂
+     * @param string $str 要输出于状态栏上的字符串
+     * @return AlertMsgData
+     * @throws FileNotFoundException
+     */
+    public static function createOpenFileInOS($path = null) {
+        $model = new OpenFileDataInOs();
+        if (is_string($path)) {
+            try {
+                $model->setData($path);
+            } catch (FileNotFoundException $exc) {
+                throw $exc;
+            }
+        }
         Environment::getInstance()->getModelsManager()->push($model);
         return $model;
     }
@@ -147,6 +168,8 @@ class ModelsFactory {
             $actionCode = EditorAction::STATUS_MSG;
         } elseif ($model instanceof QuickPanelData) {
             $actionCode = EditorAction::QUICK_PANEL;
+        } elseif ($model instanceof OpenFileDataInOs) {
+            $actionCode = EditorAction::OPEN_FILE;
         } elseif ($model instanceof ISublimeCmd) {
             $actionCode = EditorAction::RUN_EDITOR_CMD;
         }
