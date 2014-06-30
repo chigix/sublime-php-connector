@@ -38,7 +38,7 @@ class BuildMdToHtml extends BaseCommand {
     private $file;
 
     public function __initial() {
-        Environment::getInstance()->debugOn();
+        Environment::getInstance()->debugOff();
     }
 
     public function getAuthor() {
