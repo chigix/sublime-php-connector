@@ -45,7 +45,7 @@ while (1) {
             try {
                 /* @var $returnDataFrmRun Models\BaseReturnData */
                 $returnDataFrmRun = $command->run();
-            } catch (Exception $exc) {
+            } catch (\Exception $exc) {
                 executePush($exc);
             }
             // 对指令对象返回进行处理和判断
