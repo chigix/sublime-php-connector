@@ -18,6 +18,7 @@
 
 namespace Chigi\Sublime\Models\ReturnDataSpec;
 
+use Chigi\Sublime\Enums\ReturnDataLevel;
 use Chigi\Sublime\Models\BaseReturnData;
 
 /**
@@ -26,4 +27,16 @@ use Chigi\Sublime\Models\BaseReturnData;
  * @author 郷
  */
 class ClipBoardData extends BaseReturnData {
+
+    private $dataLevel = ReturnDataLevel::SUCCESS;
+
+    public function getDataLevel() {
+        return $this->dataLevel;
+    }
+
+    public function setDataLevel($dataLevel) {
+        $this->dataLevel = $dataLevel;
+        return $this;
+    }
+
 }

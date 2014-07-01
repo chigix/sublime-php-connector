@@ -67,13 +67,15 @@ class PhpOutputThread(threading.Thread):
             # PRINT the message
             print(u"【INFO】 " + result[1]);
         elif result[0][2] is 7:
-            # sublime.set_clipboard(result.get("data"));
-            print("COPY TO CLIPBOARD");
+            # COPY TO CLIPBOARD
             if data_type is "STRING":
-                sublime.set_clipboard(result[2]);
+                def copy_to_clip_board():
+                    sublime.set_clipboard(result[2]);
+                sublime.set_timeout(copy_to_clip_board, 1);
             else:
-                sublime.set_clipboard(result[1]);
-            print(result);
+                def copy_to_clip_board():
+                    sublime.set_clipboard(result[1]);
+                sublime.set_timeout(copy_to_clip_board, 1);
             pass;
         elif result[0][2] is 8:
             # DEBUG

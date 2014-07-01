@@ -83,6 +83,17 @@ class ModelsFactory {
         Environment::getInstance()->getModelsManager()->push($model);
         return $model;
     }
+    /**
+     * ClipBoard Data 工厂
+     * @param string $str 要输出到剪贴板中的字符串
+     * @return StatusMsgData
+     */
+    public static function createClipBoardCopy($str = null) {
+        $model = new ClipBoardData();
+        $model->setData($str);
+        Environment::getInstance()->getModelsManager()->push($model);
+        return $model;
+    }
 
     /**
      * Alert Error Message 工厂
@@ -110,6 +121,10 @@ class ModelsFactory {
             } catch (FileNotFoundException $exc) {
                 throw $exc;
             }
+        }  elseif ($path instanceof \Chigi\Sublime\Models\File) {
+            $model->setData($path);
+        }  else {
+            return null;
         }
         Environment::getInstance()->getModelsManager()->push($model);
         return $model;
