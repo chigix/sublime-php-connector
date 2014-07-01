@@ -18,6 +18,7 @@
 
 namespace Chigi\Sublime\Models\ReturnDataSpec;
 
+use Chigi\Sublime\Enums\ReturnDataLevel;
 use Chigi\Sublime\Exception\FileNotFoundException;
 use Chigi\Sublime\Exception\UnexpectedTypeException;
 use Chigi\Sublime\Models\BaseReturnData;
@@ -61,5 +62,17 @@ class OpenFileDataInOs extends BaseReturnData {
             throw new UnexpectedTypeException($data, '\Chigi\Sublime\Models\File');
         }
     }
+    
+    private $dataLevel = ReturnDataLevel::SUCCESS;
+    
+    public function setDataLevel($dataLevel) {
+        $this->dataLevel = $dataLevel;
+        return $this;
+    }
+
+    public function getDataLevel() {
+        return $this->dataLevel;
+    }
+
 
 }
