@@ -50,7 +50,7 @@ class BuildMdToHtml extends BaseCommand {
     }
 
     public function run() {
-        require_once 'pandoc/config.php';
+        require 'pandoc/config.php';
         $cmd = "\"" . $config['pandoc']['exe'] . "\" --toc -s --self-contained -c \"" . $config['pandoc']['css_path'] . "\""
                 . " \"" . $this->file->getRealPath(TRUE) . "\""
                 . " -t html5 "

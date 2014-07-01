@@ -50,7 +50,7 @@ class BuildMdToPdf extends BaseCommand {
     }
 
     public function run() {
-        require_once 'pandoc/config.php';
+        require 'pandoc/config.php';
         $cmd = "\"" . $config['pandoc']['exe'] . "\" \"" . $this->file->getRealPath(TRUE) . "\" -o \"" . $this->file->getDirPath(TRUE) . DIRECTORY_SEPARATOR . $this->file->extractFileName() . ".pdf\" "
                 . "--latex-engine=xelatex --toc --smart --template=\"" . $config['pandoc']['template_pdf'] . "\"";
         return $this->execCmd($cmd);
