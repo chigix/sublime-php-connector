@@ -3,7 +3,7 @@
 
 # PhpConnector for Sublime Text 2 & 3
 
-**VERSION: 2.5**
+**VERSION: 3.0**
 
 Author: Richard Lea (chigix@zoho.com)
 
