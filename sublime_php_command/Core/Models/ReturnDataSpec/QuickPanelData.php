@@ -49,14 +49,19 @@ class QuickPanelData extends BaseReturnData {
         $item_list = array();
         foreach ($this->itemCollection as $model) {
             $item = array();
-            if ($model instanceof BaseCommand && $model->isVisible()) {
-                // Panel 中展示用的文字
-                $item[0] = array(
-                    $model->getTitle()? $model->getTitle(): "UNKNOWN"
-                );
-                // 将真实数据本身存入
-                $item[1] = ModelsFactory::pushFormatter($model);
-                array_push($item[1][2], array());
+            try {
+                if ($model instanceof BaseCommand && $model->isVisible()) {
+                    // Panel 中展示用的文字
+                    $item[0] = array(
+                        $model->getTitle() ? $model->getTitle() : "UNKNOWN"
+                    );
+                    // 将真实数据本身存入
+                    $item[1] = ModelsFactory::pushFormatter($model);
+                    array_push($item[1][2], array());
+                }
+            } catch (Exception $exc) {
+                executePush($exc);
+                continue;
             }
             array_push($item_list, $item);
         }
