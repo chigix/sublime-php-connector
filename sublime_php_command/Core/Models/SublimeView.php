@@ -18,6 +18,9 @@
 
 namespace Chigi\Sublime\Models;
 
+use Chigi\Sublime\Exception\FileNotFoundException;
+use Chigi\Sublime\Exception\NonFileBoundException;
+
 /**
  * Description of SublimeView
  *
@@ -66,23 +69,69 @@ class SublimeView extends BaseModel {
     public function setFileName($fileName) {
         try {
             $this->file = new File($fileName);
-        } catch (\Chigi\Sublime\Exception\FileNotFoundException $exc) {
+        } catch (FileNotFoundException $exc) {
             if (empty($fileName)) {
                 return $this;
-            }  else {
+            } else {
                 executePush($exc);
             }
         }
 
         return $this;
     }
-    
+
     /**
      * 获取本视图 Editor View 所对应的 File 对象
      * @return File
+     * @throws NonFileBoundException
      */
     public function getFile() {
+        if (is_null($this->file)) {
+            throw new NonFileBoundException();
+        }
         return $this->file;
     }
+
+    /**
+     * 当前编辑器中被选中的文字区域
+     * @var SelectionRegion
+     */
+    private $selection;
+
+    public function getSelection() {
+        return $this->selection;
+    }
+
+    public function setSelection(SelectionRegion $selection) {
+        $this->selection = $selection;
+        return $this;
+    }
+
+        
+    /**
+     * 全局文件的语法
+     * @var string
+     */
+    private $scope;
+    
+    /**
+     * 获得文件所用的语言格式
+     * @return string
+     */
+    public function getScope() {
+        return $this->scope;
+    }
+
+    /**
+     * 设置文件所用的语言格式
+     * @param string $scope
+     * @return SublimeView
+     */
+    public function setScope($scope) {
+        $this->scope = $scope;
+        return $this;
+    }
+
+
 
 }

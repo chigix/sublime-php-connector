@@ -27,7 +27,10 @@ class AxTextCommand(sublime_plugin.TextCommand):
             'call':"\\Chigi\\Sublime\\Commands\\UpdateCurrentView",
             'args' : {
                 'id' : self.view.id(),
-                'file_name' : self.view.file_name()
+                'file_name' : self.view.file_name(),
+                'file_scope' : self.view.scope_name(0),
+                'sel_pos' : [self.view.sel()[0].begin(),self.view.sel()[0].end()],
+                'sel_scope' : self.view.scope_name(self.view.sel()[0].begin())
             }
         };
         cmd_str = base64.b64encode(json.dumps(command_to_run, sort_keys=True).encode('utf-8')).decode('utf-8');

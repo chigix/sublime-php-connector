@@ -53,6 +53,10 @@ class UpdateCurrentView extends BaseCommand {
     public function setArgs($arguments) {
         $this->viewToSet = new SublimeView($arguments['id']);
         $this->viewToSet->setFileName($arguments['file_name']);
+        $selection = new \Chigi\Sublime\Models\SelectionRegion($arguments['sel_pos'][0], $arguments['sel_pos'][1]);
+        $this->viewToSet->setSelection($selection);
+        $this->viewToSet->setScope($arguments['sel_scope']);
+        $selection->setScope($arguments['sel_scope']);
         Environment::getInstance()->getViewsManager()->registView($this->viewToSet);
     }
 
