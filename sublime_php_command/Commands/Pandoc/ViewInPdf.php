@@ -19,6 +19,7 @@
 namespace Connector\Commands\Pandoc;
 
 use Chigi\Sublime\Exception\FileNotFoundException;
+use Chigi\Sublime\Exception\NonFileBoundException;
 use Chigi\Sublime\Exception\WrapperedException;
 use Chigi\Sublime\Models\BaseCommand;
 use Chigi\Sublime\Models\Factory\ModelsFactory;
@@ -37,6 +38,7 @@ class ViewInPdf extends BaseCommand {
      * @var File
      */
     private $file;
+
     public function __initial() {
         Environment::getInstance()->debugOn();
     }
@@ -68,14 +70,17 @@ class ViewInPdf extends BaseCommand {
             $this->file = Environment::getInstance()->getViewsManager()->getCurrentView()->getFile();
         }
     }
-    
+
     public function isVisible() {
-        if (in_array(Environment::getInstance()->getViewsManager()->getCurrentView()->getFile()->extractFileSuffix(), array('md'), TRUE)) {
-            return TRUE;
-        } else {
-            return FALSE;
+        try {
+            if (in_array(Environment::getInstance()->getViewsManager()->getCurrentView()->getFile()->extractFileSuffix(), array('md'), TRUE)) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        } catch (NonFileBoundException $exc) {
+            return strpos(Environment::getInstance()->getViewsManager()->getCurrentView()->getScope(), 'text.html.markdown') === FALSE ? FALSE : TRUE;
         }
     }
-
 
 }

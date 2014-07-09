@@ -19,6 +19,7 @@
 namespace Connector\Commands\Pandoc;
 
 use Chigi\Sublime\Enums\ReturnDataLevel;
+use Chigi\Sublime\Exception\NonFileBoundException;
 use Chigi\Sublime\Models\BaseCommand;
 use Chigi\Sublime\Models\Factory\ModelsFactory;
 use Chigi\Sublime\Models\File;
@@ -55,7 +56,7 @@ class BuildMdToPdf extends BaseCommand {
                 . "--latex-engine=xelatex --toc --smart --template=\"" . $config['pandoc']['template_pdf'] . "\"";
         return $this->execCmd($cmd);
     }
-    
+
     public function execCmd($cmd) {
         $returnData = null;
         $outputFrmCmd = array();
@@ -83,14 +84,17 @@ class BuildMdToPdf extends BaseCommand {
             $this->file = Environment::getInstance()->getViewsManager()->getCurrentView()->getFile();
         }
     }
-    
+
     public function isVisible() {
-        if (in_array(Environment::getInstance()->getViewsManager()->getCurrentView()->getFile()->extractFileSuffix(), array('md'), TRUE)) {
-            return TRUE;
-        } else {
-            return FALSE;
+        try {
+            if (in_array(Environment::getInstance()->getViewsManager()->getCurrentView()->getFile()->extractFileSuffix(), array('md'), TRUE)) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        } catch (NonFileBoundException $exc) {
+            return strpos(Environment::getInstance()->getViewsManager()->getCurrentView()->getScope(), 'text.html.markdown') === FALSE ? FALSE : TRUE;
         }
     }
-
 
 }
