@@ -1,6 +1,8 @@
 {
     "php_path":"/usr/bin/php",
     "filesystem_encoding":"utf-8",
+    // $_SERVER['argv'][1]
+    "composer":"",
     "namespaces": {
     	"Connector\\Commands\\Pandoc\\": "${entryDir}/Commands/Pandoc"
     }

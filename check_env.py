@@ -24,6 +24,7 @@ class CheckEnvironmentCommandThread(threading.Thread):
         self.setting = sublime.load_settings("phpConnector.sublime-settings");
         self.encoding = self.setting.get("filesystem_encoding");
         self.namespace = self.setting.get("namespaces");
+        self.composer = self.setting.get("composer");
         self.php_path = None;
         self.window = None;
         self.windows = [];
@@ -61,7 +62,7 @@ class CheckEnvironmentCommandThread(threading.Thread):
             pass;
         if(self.check_php_path is True):
             # 注册 PHP 主进程
-            php_main = subprocess.Popen([self.php_path,os.path.join(ChigiArgs.CMD_DIR(), 'shell.php')], stdin=subprocess.PIPE,stdout=subprocess.PIPE,shell=True, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NEW_CONSOLE);
+            php_main = subprocess.Popen([self.php_path,os.path.join(ChigiArgs.CMD_DIR(), 'shell.php'),self.composer], stdin=subprocess.PIPE,stdout=subprocess.PIPE,shell=True, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NEW_CONSOLE);
             ChigiArgs.PHP_MAIN = php_main;
             PhpOutputThread(php_main.stdout).start();
             def initPHP():
