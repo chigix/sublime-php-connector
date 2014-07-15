@@ -8,6 +8,14 @@
         }
     },
     {
+        "caption": "PhpConnector: Refresh Project Context",
+        "command": "tool_refresh_project",
+        "args":{
+            "call" : "\\Chigi\\Sublime\\Commands\\RefreshProject", 
+            "cmd_args":{}
+        }
+    },
+    {
         "caption": "PhpConnector: TestCOMMAND FRM Panel",
         "command": "ax_text",
         "args":{

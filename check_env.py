@@ -63,7 +63,7 @@ class CheckEnvironmentCommandThread(threading.Thread):
         if(self.check_php_path is True):
             # 注册 PHP 主进程
             php_main = subprocess.Popen([self.php_path,os.path.join(ChigiArgs.CMD_DIR(), 'shell.php'),self.composer], stdin=subprocess.PIPE,stdout=subprocess.PIPE,shell=True, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NEW_CONSOLE);
-            ChigiArgs.PHP_MAIN = php_main;
+            ChigiArgs.GetInstance().phpMain = php_main;
             PhpOutputThread(php_main.stdout).start();
             def initPHP():
                 self.window.run_command("ax_text",{

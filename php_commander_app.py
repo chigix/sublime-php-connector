@@ -20,8 +20,8 @@ class PhpConnectorAppCommand(sublime_plugin.ApplicationCommand):
         CheckEnvironmentCommandThread().start();
     def __del__(self):
         # sulime.error_message(ChigiArgs.PHP_MAIN);
-        ChigiArgs.PHP_MAIN.stdin.write("quit\n");
-        ChigiArgs.PHP_MAIN.kill();
+        ChigiArgs.GetInstance().phpMain.stdin.write("quit\n");
+        ChigiArgs.GetInstance().phpMain.kill();
         # time.sleep(6);
         # os.system("php -a");
         # os.system(ChigiArgs.PHP_MAIN);

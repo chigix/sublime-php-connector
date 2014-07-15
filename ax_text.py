@@ -34,16 +34,16 @@ class AxTextCommand(sublime_plugin.TextCommand):
             }
         };
         cmd_str = base64.b64encode(json.dumps(command_to_run, sort_keys=True).encode('utf-8')).decode('utf-8');
-        ChigiArgs.PHP_MAIN.stdin.write(cmd_str.encode("UTF-8"));
-        ChigiArgs.PHP_MAIN.stdin.write("\n".encode("UTF-8"));
+        ChigiArgs.GetInstance().phpMain.stdin.write(cmd_str.encode("UTF-8"));
+        ChigiArgs.GetInstance().phpMain.stdin.write("\n".encode("UTF-8"));
         command_to_run = {
             'id':id(self),
             'call':call,
             'args' : cmd_args
         };
         cmd_str = base64.b64encode(json.dumps(command_to_run, sort_keys=True).encode('utf-8')).decode('utf-8');
-        ChigiArgs.PHP_MAIN.stdin.write(cmd_str.encode("UTF-8"));
-        ChigiArgs.PHP_MAIN.stdin.write("\n".encode("UTF-8"));
+        ChigiArgs.GetInstance().phpMain.stdin.write(cmd_str.encode("UTF-8"));
+        ChigiArgs.GetInstance().phpMain.stdin.write("\n".encode("UTF-8"));
         pass;
 
     def is_visible(self):
