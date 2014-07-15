@@ -5,7 +5,13 @@ use Chigi\Sublime\Exception\ClassNotFoundException;
 use Chigi\Sublime\Exception\ScriptNotFoundException;
 use Chigi\Sublime\Settings\Environment;
 
-function __autoload($class) {
+// ADD COMPOSER support
+$loader = null;
+if (!empty($_SERVER['argv'][1]) && file_exists($_SERVER['argv'][1])) {
+    $loader = require $_SERVER['argv'][1];
+}
+
+function __chigi_loader($class) {
     $baseDir = dirname(dirname(__FILE__));
     $parts = explode('\\', $class);
     if ($parts[0] == 'Chigi' && $parts[1] == 'Sublime') {
@@ -72,4 +78,8 @@ function __autoload($class) {
     }
 }
 
+spl_autoload_register("__chigi_loader");
+if (!is_null($loader)) {
+    Environment::getInstance()->setComposerLoader($loader);
+}
 ?>

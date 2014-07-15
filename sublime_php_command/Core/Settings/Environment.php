@@ -7,6 +7,7 @@ use Chigi\Sublime\Exception\FileSystemEncodingException;
 use Chigi\Sublime\Manager\CommandManager;
 use Chigi\Sublime\Manager\ModelsManager;
 use Chigi\Sublime\Manager\ViewManager;
+use Composer\Autoload\ClassLoader;
 
 /**
  * 运行环境类
@@ -59,6 +60,10 @@ class Environment {
 
     private $namespacesMap = array();
 
+    /**
+     * Get the current namespace map for paths.
+     * @return array<namespace=>path>
+     */
     public function getNamespacesMap() {
         return $this->namespacesMap;
     }
@@ -141,6 +146,23 @@ class Environment {
     public function isDebug() {
         return $this->isDebug;
     }
+    
+    /**
+     * The third class loader from composer
+     * @var ClassLoader
+     */
+    private $composerLoader = null;
+    
+    public function getComposerLoader() {
+        return $this->composerLoader;
+    }
+
+    public function setComposerLoader(ClassLoader $composerLoader) {
+        $this->composerLoader = $composerLoader;
+        return $this;
+    }
+
+
 
 }
 

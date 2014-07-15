@@ -67,6 +67,14 @@ class SetupEnvironment extends BaseCommand {
             Environment::getInstance()->setFileSystemEncoding($tmpValue);
         }
         if ($tmpValue = $this->arguments->getArg("namespace_map")) {
+            if (!is_null(Environment::getInstance()->getComposerLoader()->getPrefixes())) {
+                foreach (Environment::getInstance()->getComposerLoader()->getPrefixes() as $key=>$paths_arr) {
+                    $tmpValue[$key] = $paths_arr[0];
+                }
+                foreach (Environment::getInstance()->getComposerLoader()->getPrefixesPsr4() as $key=>$paths_arr) {
+                    $tmpValue[$key] = $paths_arr[0];
+                }
+            }
             Environment::getInstance()->setNamespacesMap($tmpValue);
         }
         return ModelsFactory::createStatusMsg("PhpConnector loading complete");

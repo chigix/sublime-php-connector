@@ -216,6 +216,10 @@ class ModelsFactory {
             } else {
                 $dataType = ReturnDataType::OBJECT;
             }
+            
+            if ($dataLevel === ReturnDataLevel::DEBUG) {
+                $data = var_export($modelOrigData, TRUE);
+            }
         } elseif (is_null($data)) {
             $dataType = ReturnDataType::NONE;
         }
