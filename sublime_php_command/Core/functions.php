@@ -37,8 +37,8 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         } elseif (strpos($message, 'failed to open stream: No such file or directory') !== FALSE) {
             //executePush($message);
             $extractedArr = array();
-            preg_match("#^(require_once|include_once|require|include)\((.+)\): failed to open stream: No such file or directory$#", $message, $extractedArr);
-            //executePush(Chigi\Sublime\Models\Factory\ModelsFactory::createPlainMsg($extractedArr));
+            preg_match("#^(file_get_contents|require_once|include_once|require|include)\((.+)\): failed to open stream: No such file or directory$#", $message, $extractedArr);
+            // executePush(Chigi\Sublime\Models\Factory\ModelsFactory::createPlainMsg($message));
             $exception = new Chigi\Sublime\Exception\FileNotFoundException($extractedArr[2]);
             $exception->setCode(0);
             $exception->setFile($filename);
