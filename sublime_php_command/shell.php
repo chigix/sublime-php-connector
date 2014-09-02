@@ -35,23 +35,24 @@ while (1) {
             } catch (\Exception $exc) {
                 executePush($exc);
             }
-            $command->setArgs($arguments['args']);
-            // 针对自动注入接口进行自动操作
-            if ($command instanceof Models\Interfaces\IEditorViewAware) {
-                $command->setEditorView(Settings\Environment::getInstance()->getViewsManager()->getCurrentView());
-            }
-            // 开始运行 指令对象
-            $returnDataFrmRun = null;
             try {
+                $command->setArgs($arguments['args']);
+                // 针对自动注入接口进行自动操作
+                if ($command instanceof Models\Interfaces\IEditorViewAware) {
+                    $command->setEditorView(Settings\Environment::getInstance()->getViewsManager()->getCurrentView());
+                }
+                // 开始运行 指令对象
+                $returnDataFrmRun = null;
                 /* @var $returnDataFrmRun Models\BaseReturnData */
                 $returnDataFrmRun = $command->run();
+                // 对指令对象返回进行处理和判断
+                if (!is_null($returnDataFrmRun)) {
+                    executePush($returnDataFrmRun->setMsg($returnDataFrmRun->getMsg() . " --Return Data From <" . $arguments['call'] . ">"));
+                }
             } catch (\Exception $exc) {
                 executePush($exc);
             }
-            // 对指令对象返回进行处理和判断
-            if (!is_null($returnDataFrmRun)) {
-                executePush($returnDataFrmRun->setMsg($returnDataFrmRun->getMsg() . " --Return Data From <" . $arguments['call'] . ">"));
-            }
+
             // executePush(ModelsFactory::createPlainMsg(json_decode(base64_decode($inputCommand), TRUE)));
             executePush(ModelsFactory::createPlainMsg("")->setMsg("## COMMAND FINISHED 指令结束 : " . $arguments['call']));
             $inputCommand = "";
