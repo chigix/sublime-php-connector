@@ -79,8 +79,13 @@ class PhpOutputThread(threading.Thread):
             pass;
         elif result[0][2] is 8:
             # DEBUG
-            print(u"【" + data_type + u"】 " + result[1]);
-            print(returned_data);
+            try:
+                print(u"【" + data_type + u"】 " + result[1]);
+            except TypeError:
+                print(result);
+            finally:
+                print(returned_data);
+                pass
         elif result[0][2] is 9:
             # show quick panel
             show_list = [];
@@ -101,8 +106,13 @@ class PhpOutputThread(threading.Thread):
     def run(self):
         temp_buffer = '';
         while True:
-            out = self.stdout.read(1).decode("UTF-8");
-            if out == '' and p.poll() != None:
+            out = self.stdout.read(1);
+            try:
+                out = out.decode("UTF-8");
+            except UnicodeDecodeError as e:
+                print(out);
+                continue;
+            if out == '' and ChigiArgs.GetInstance().phpMain.poll() != None:
                 # break;
                 pass;
             else:
