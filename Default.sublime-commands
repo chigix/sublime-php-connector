@@ -9,11 +9,7 @@
     },
     {
         "caption": "PhpConnector: Refresh Project Context",
-        "command": "tool_refresh_project",
-        "args":{
-            "call" : "\\Chigi\\Sublime\\Commands\\RefreshProject", 
-            "cmd_args":{}
-        }
+        "command": "tool_refresh_project"
     },
     {
         "caption": "PhpConnector: TestCOMMAND FRM Panel",
