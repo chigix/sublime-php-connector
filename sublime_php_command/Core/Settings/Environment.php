@@ -7,6 +7,7 @@ use Chigi\Sublime\Exception\FileSystemEncodingException;
 use Chigi\Sublime\Manager\CommandManager;
 use Chigi\Sublime\Manager\ModelsManager;
 use Chigi\Sublime\Manager\ViewManager;
+use Chigi\Sublime\Models\BaseProject;
 use Composer\Autoload\ClassLoader;
 
 /**
@@ -161,7 +162,21 @@ class Environment {
         $this->composerLoader = $composerLoader;
         return $this;
     }
+    
+    /**
+     * 当前全局项目环境
+     * @var BaseProject
+     */
+    private $contextProject = null;
 
+    public function getContextProject() {
+        return $this->contextProject;
+    }
+
+    public function setContextProject(BaseProject $contextProject) {
+        $this->contextProject = $contextProject;
+        return $this;
+    }
 
 
 }
