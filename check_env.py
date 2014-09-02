@@ -62,7 +62,11 @@ class CheckEnvironmentCommandThread(threading.Thread):
             pass;
         if(self.check_php_path is True):
             # 注册 PHP 主进程
-            php_main = subprocess.Popen([self.php_path,os.path.join(ChigiArgs.CMD_DIR(), 'shell.php'),self.composer], stdin=subprocess.PIPE,stdout=subprocess.PIPE,shell=True, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NEW_CONSOLE);
+            popen_list = [self.php_path, os.path.join(ChigiArgs.CMD_DIR(), 'shell.php')];
+            if self.composer:
+                popen_list.append(self.composer);
+                pass
+            php_main = subprocess.Popen(popen_list, stdin=subprocess.PIPE,stdout=subprocess.PIPE,shell=True, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NEW_CONSOLE);
             ChigiArgs.GetInstance().phpMain = php_main;
             PhpOutputThread(php_main.stdout).start();
             def initPHP():
