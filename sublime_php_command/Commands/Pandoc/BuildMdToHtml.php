@@ -93,6 +93,8 @@ class BuildMdToHtml extends BaseCommand {
         try {
             if (in_array(Environment::getInstance()->getViewsManager()->getCurrentView()->getFile()->extractFileSuffix(), array('md'), TRUE)) {
                 return TRUE;
+            } elseif (strpos(Environment::getInstance()->getViewsManager()->getCurrentView()->getScope(), 'text.html.markdown') !== FALSE){
+                return TRUE;
             } else {
                 return FALSE;
             }
