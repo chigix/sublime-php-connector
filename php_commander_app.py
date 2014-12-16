@@ -17,7 +17,8 @@ else:
 class PhpConnectorAppCommand(sublime_plugin.ApplicationCommand):
     def __init__(self):
         setting = sublime.load_settings("phpConnector.sublime-settings");
-        CheckEnvironmentCommandThread().start();
+        if CheckEnvironmentCommandThread.GetInstance().running is False:
+            CheckEnvironmentCommandThread.GetInstance().start();
     def __del__(self):
         # sulime.error_message(ChigiArgs.PHP_MAIN);
         ChigiArgs.GetInstance().phpMain.stdin.write("quit\n");

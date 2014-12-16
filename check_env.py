@@ -19,8 +19,28 @@ class CheckEnvironmentCommandThread(threading.Thread):
     A thread to prevent wizard for configure from freezing the UI
     """
 
+    instance=None;
+    mutex=threading.Lock();
+    @staticmethod
+    def GetInstance():
+        if(CheckEnvironmentCommandThread.instance==None):
+            CheckEnvironmentCommandThread.mutex.acquire()
+            if(CheckEnvironmentCommandThread.instance==None):
+                # print('初始化实例')
+                CheckEnvironmentCommandThread.instance=CheckEnvironmentCommandThread()
+            else:
+                # print('单例已经实例化')
+                pass;
+            CheckEnvironmentCommandThread.mutex.release()
+        else:
+            #print('单例已经实例化')
+            pass;
+           
+        return CheckEnvironmentCommandThread.instance
+
     def __init__(self):
         threading.Thread.__init__(self);
+        self.running = False;
         self.setting = sublime.load_settings("phpConnector.sublime-settings");
         self.encoding = self.setting.get("filesystem_encoding");
         self.namespace = self.setting.get("namespaces");
@@ -30,6 +50,7 @@ class CheckEnvironmentCommandThread(threading.Thread):
         self.windows = [];
 
     def run(self):
+        self.running = True;
         # 检测 PHP 环境
         def freshSettings():
             self.setting = sublime.load_settings("phpConnector.sublime-settings");
