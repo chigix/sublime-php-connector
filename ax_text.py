@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import sublime, sublime_plugin, sys
-import os, subprocess, string, json, threading, re
+import os, subprocess, string, json, threading, re, time
 import base64
 
 ST3 = int(sublime.version()) > 3000
@@ -34,6 +34,12 @@ class AxTextCommand(sublime_plugin.TextCommand):
             }
         };
         cmd_str = base64.b64encode(json.dumps(command_to_run, sort_keys=True).encode('utf-8')).decode('utf-8');
+        if ChigiArgs.GetInstance().phpMain is None:
+            CheckEnvironmentCommandThread.GetInstance().start();
+            while True:
+                time.sleep(1);
+                if ChigiArgs.GetInstance().phpMain is not None:
+                    break;
         ChigiArgs.GetInstance().phpMain.stdin.write(cmd_str.encode("UTF-8"));
         ChigiArgs.GetInstance().phpMain.stdin.write("\n".encode("UTF-8"));
         ChigiArgs.GetInstance().phpMain.stdin.flush();
