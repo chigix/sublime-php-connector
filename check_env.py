@@ -87,7 +87,14 @@ class CheckEnvironmentCommandThread(threading.Thread):
             if self.composer:
                 popen_list.append(self.composer);
                 pass
-            php_main = subprocess.Popen(popen_list, stdin=subprocess.PIPE,stdout=subprocess.PIPE,shell=True, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NEW_CONSOLE);
+            startupinfo = None;
+            try:
+                startupinfo = subprocess.STARTUPINFO();
+                startupinfo.dwFlags = subprocess.STARTF_USESHOWWINDOW;
+            except AttributeError:
+                #print("NOT WINDOWS");
+                pass;
+            php_main = subprocess.Popen(popen_list, stdin=subprocess.PIPE,stdout=subprocess.PIPE,shell=False, stderr=subprocess.PIPE, startupinfo=startupinfo);
             ChigiArgs.GetInstance().phpMain = php_main;
             PhpOutputThread(php_main.stdout).start();
             def initPHP():
