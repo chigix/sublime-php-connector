@@ -3,7 +3,7 @@
 
 # PhpConnector for Sublime Text 2 & 3
 
-**VERSION: 3.0**
+**VERSION: 3.1.1**
 
 Author: Richard Lea (chigix@zoho.com)
 
@@ -28,7 +28,7 @@ The plugin is to add support for php developers to develop a sublime plugin usin
 
 ## Usage
 
-The only binding key map: `ctrl+shift+r`
+The only binding key map: <kbd>ctrl+shift+r</kbd>(OS X: <kbd>⇧⌘P</kbd>).
 
 You can override it via user settings.
 
@@ -58,11 +58,11 @@ You can override it via user settings.
 * Thoroughly individual php interpretor embedded 
 * Accelerate Communication between PYTHON and PHP.
 * Rewrite Markdown building script for the new version.
-* Improve the whole framework upon php with Data Model and Command Manager.
+* Improve the whole framework upon php with Data Model and Command Manager. 
 
 ## For Developers
 
-Defaultly, All commands defination were in `sublime_php_command\Commands\` and the `Chigi.phpconnector-commands` file in the root directory of `sublime_php_command`, and every execute class should under a unique namespace and within a method called `run`.
+Defaultly, All commands defination were in `sublime_php_command\Commands\` and the `Chigi.phpconnector-commands` file in the root directory of `sublime_php_command`, and every execute class should be under a unique namespace and within a method called `run`.
 
 Demos are in the `sublime_php_command\Commands\Chigi\`, so as you can see, their namespace was `Chigi`.
 
