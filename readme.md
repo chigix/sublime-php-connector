@@ -62,9 +62,9 @@ You can override it via user settings.
 
 ## For Developers
 
-Defaultly, All commands defination were in `sublime_php_command\Commands\` and the `Chigi.phpconnector-commands` file in the root directory of `sublime_php_command`, and every execute class should be under a unique namespace and within a method called `run`.
+As demo, All built-in commands definition were in `sublime_php_command\Core\Commands\`, and every execute class should be under a unique namespace and extends the abstract class `BaseCommand` to finish the registration into the `PhpConnector Context`.
 
-Demos are in the `sublime_php_command\Commands\Chigi\`, so as you can see, their namespace was `Chigi`.
+Demos are in the `sublime_php_command\Core\Commands\`, so as you can see, their namespace was `Chigi\Sublime\Commands`. We suggest you open the COMPOSER support, so that you could define the namespace map by your self, which is though still in Experiment (Really too busy to commit without other supermans π_π).
 
 # License
 The plugin is licensed under the MIT license.

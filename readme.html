@@ -43,7 +43,7 @@
 </div>
 <div class="span8">
 <h1 id="phpconnector-for-sublime-text-2-3">PhpConnector for Sublime Text 2 &amp; 3</h1>
-<p><strong>VERSION: 3.0</strong></p>
+<p><strong>VERSION: 3.1.1</strong></p>
 <p>Author: Richard Lea (chigix@zoho.com)</p>
 <p>Weibo: <a href="http://weibo.com/chigix">@千木郷</a></p>
 <h2 id="introduction">Introduction</h2>
@@ -90,8 +90,8 @@
 <li>Improve the whole framework upon php with Data Model and Command Manager.</li>
 </ul>
 <h2 id="for-developers">For Developers</h2>
-<p>Defaultly, All commands defination were in <code>sublime_php_command\Commands\</code> and the <code>Chigi.phpconnector-commands</code> file in the root directory of <code>sublime_php_command</code>, and every execute class should under a unique namespace and within a method called <code>run</code>.</p>
-<p>Demos are in the <code>sublime_php_command\Commands\Chigi\</code>, so as you can see, their namespace was <code>Chigi</code>.</p>
+<p>As demo, All built-in commands definition were in <code>sublime_php_command\Core\Commands\</code>, and every execute class should be under a unique namespace and extends the abstract class <code>BaseCommand</code> to finish the registration into the <code>PhpConnector Context</code>.</p>
+<p>Demos are in the <code>sublime_php_command\Core\Commands\</code>, so as you can see, their namespace was <code>Chigi\Sublime\Commands</code>. We suggest you open the COMPOSER support, so that you could define the namespace map by your self, which is though still in Experiment (Really too busy to commit without other supermans π_π).</p>
 <h1 id="license">License</h1>
 <p>The plugin is licensed under the MIT license.</p>
 <p>Copyright (C) &lt;2014&gt; Richard Lea <script type="text/javascript">
